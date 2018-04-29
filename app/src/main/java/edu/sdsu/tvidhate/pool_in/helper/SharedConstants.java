@@ -10,6 +10,17 @@ public interface SharedConstants {
     String INVALID_EMAIL = "Invalid Email ID";
     String REGISTRATION_FAILED = "Registration failed";
     String ENTER_REQUIRED_FIELDS = "Enter Required Fields";
+
+    String TRIP_STARTED = "Started";
+    String TRIP_ENDED = "Ended";
+    String TRIP_ON = "On Going";
+    String TRIP_CANCELLED = "Cancelled";
+    String TRIP_COMPLETED = "Completed";
+    String TRIP_CREATED = "Created";
+
+    boolean SUCCESS = true;
+    boolean FAILURE = false;
+
     String VALIDATION_FAILURE = "Validation Failure";
     String TAG_HOME = "home";
     String TAG_ADD_TRIP = "add_trip";
