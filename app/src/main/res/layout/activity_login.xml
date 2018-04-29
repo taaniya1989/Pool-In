@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="@dimen/logo_w_h"
             android:layout_height="@dimen/logo_w_h"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/car"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"/>
 
