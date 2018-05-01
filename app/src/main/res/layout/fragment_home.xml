@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    tools:context=".fragment.HomeFragment">
+
+    <ListView
+        android:id="@+id/trip_list_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:divider="@color/white"
+        android:dividerHeight="5.0sp"
+        android:focusable="false"
+        android:padding="5dp">
+
+    </ListView>
+</RelativeLayout>

@@ -16,4 +16,32 @@
     <string name="reset">Reset</string>
     <string name="submit">Submit</string>
     <string name="sign_up_text">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="car">Car Details</string>
+    <string name="car_color">Car Color</string>
+    <string name="registration_no">Registration Number</string>
+    <string name="update">Update Details</string>
+    <string name="update_your_profile">Update Your Profile</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="seats_available">Seats Available</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="car_brand_name">Car Brand Name</string>
+    <string name="updateUserInfo">Update User Info</string>
+    <string name="home_address">Home Address</string>
+    <string name="work_address">Work Address</string>
+    <string name="car_model_name">Car Model</string>
+    <string name="car_number_plate">Registration Number</string>
+    <string name="back">Back</string>
+
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Add Trip</item>
+        <item>My Trips</item>
+        <item>My Profile</item>
+        <item>Requests</item>
+    </string-array>
 </resources>

@@ -1,13 +1,25 @@
 package edu.sdsu.tvidhate.pool_in.entity;
 
-public class Car {
-    private String mModel,mBrand,mColor,mNumberPlate;
+import java.io.Serializable;
 
-    public Car(String mModel, String mBrand, String mColor, String mNumberPlate) {
+public class Car implements Serializable{
+    private String mModel,mBrand,mColor,mNumberPlate;
+    private String mCarId;
+
+    public Car(String mCarId,String mModel, String mBrand, String mColor, String mNumberPlate) {
         this.mModel = mModel;
         this.mBrand = mBrand;
         this.mColor = mColor;
         this.mNumberPlate = mNumberPlate;
+        this.mCarId = mCarId;
+    }
+
+    public String getmCarId() {
+        return mCarId;
+    }
+
+    public void setmCarId(String mCarId) {
+        this.mCarId = mCarId;
     }
 
     public String getmModel() {

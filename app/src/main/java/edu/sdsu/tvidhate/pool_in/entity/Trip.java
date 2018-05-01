@@ -1,32 +1,74 @@
 package edu.sdsu.tvidhate.pool_in.entity;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
-public class Trip implements SharedConstants{
+public class Trip implements Serializable {
     private String mTripId,mSourceAddress,mDestinationAddress;
-    private Timestamp mStartTimestamp,mCreationTimestamp,mEndTimestamp;
+    private Long mCreationTimestamp,mEndTimestamp;
     private int mSeatsAvailable;
     private User mTripDriver;
-    private ArrayList<User> mTripPassegers;
+    private ArrayList<User> mTripPassengers;
     private boolean mTripVisible;
     private String mTripStatus;
+    private String mStartTime,mStartDate;
+    private Car mTripCar;
 
-    public Trip(String mTripId, String mSourceAddress, String mDestinationAddress, Timestamp mStartTimestamp, Timestamp mCreationTimestamp,
+    public Trip()
+    {
+
+    }
+
+    public Trip(String mTripId, String mSourceAddress, String mDestinationAddress,
+                String mStartDate,String mStartTime, Long mCreationTimestamp,
                 int mSeatsAvailable, User mTripDriver) {
         this.mTripId = mTripId;
         this.mSourceAddress = mSourceAddress;
         this.mDestinationAddress = mDestinationAddress;
-        this.mStartTimestamp = mStartTimestamp;
+        this.mStartDate = mStartDate;
+        this.mStartTime = mStartTime;
         this.mCreationTimestamp = mCreationTimestamp;
-        this.mEndTimestamp = mEndTimestamp;
+        this.mEndTimestamp = null;
         this.mSeatsAvailable = mSeatsAvailable;
         this.mTripDriver = mTripDriver;
-        this.mTripStatus = TRIP_CREATED;
-        this.mTripPassegers = null;
+        this.mTripStatus = "Created";
+        this.mTripPassengers = null;
         this.mTripVisible = true;
+        this.mTripCar = mTripDriver.getmCar();
+    }
+
+    public Car getmTripCar() {
+        return mTripCar;
+    }
+
+    public void setmTripCar(Car mTripCar) {
+        this.mTripCar = mTripCar;
+    }
+
+    public ArrayList<User> getmTripPassengers() {
+        return mTripPassengers;
+    }
+
+    public void setmTripPassengers(ArrayList<User> mTripPassengers) {
+        this.mTripPassengers = mTripPassengers;
+    }
+
+    public String getmStartTime() {
+        return mStartTime;
+    }
+
+    public void setmStartTime(String mStartTime) {
+        this.mStartTime = mStartTime;
+    }
+
+    public String getmStartDate() {
+        return mStartDate;
+    }
+
+    public void setmStartDate(String mStartDate) {
+        this.mStartDate = mStartDate;
     }
 
     public String getmTripId() {
@@ -53,27 +95,19 @@ public class Trip implements SharedConstants{
         this.mDestinationAddress = mDestinationAddress;
     }
 
-    public Timestamp getmStartTimestamp() {
-        return mStartTimestamp;
-    }
-
-    public void setmStartTimestamp(Timestamp mStartTimestamp) {
-        this.mStartTimestamp = mStartTimestamp;
-    }
-
-    public Timestamp getmCreationTimestamp() {
+    public Long getmCreationTimestamp() {
         return mCreationTimestamp;
     }
 
-    public void setmCreationTimestamp(Timestamp mCreationTimestamp) {
+    public void setmCreationTimestamp(Long mCreationTimestamp) {
         this.mCreationTimestamp = mCreationTimestamp;
     }
 
-    public Timestamp getmEndTimestamp() {
+    public Long getmEndTimestamp() {
         return mEndTimestamp;
     }
 
-    public void setmEndTimestamp(Timestamp mEndTimestamp) {
+    public void setmEndTimestamp(Long mEndTimestamp) {
         this.mEndTimestamp = mEndTimestamp;
     }
 
@@ -94,11 +128,11 @@ public class Trip implements SharedConstants{
     }
 
     public ArrayList<User> getmTripPassegers() {
-        return mTripPassegers;
+        return mTripPassengers;
     }
 
     public void setmTripPassegers(ArrayList<User> mTripPassegers) {
-        this.mTripPassegers = mTripPassegers;
+        this.mTripPassengers = mTripPassegers;
     }
 
     public boolean ismTripVisible() {
