@@ -91,4 +91,17 @@ public class User implements SharedConstants,Serializable
     public void setmWorkAddress(String mWorkAddress) {
         this.mWorkAddress = mWorkAddress;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "mFirstName='" + mFirstName + '\'' +
+                ", mLastName='" + mLastName + '\'' +
+                ", mContactNumber='" + mContactNumber + '\'' +
+                ", mEmailAddress='" + mEmailAddress + '\'' +
+                ", mHomeAddress='" + mHomeAddress + '\'' +
+                ", mWorkAddress='" + mWorkAddress + '\'' +
+                ", mCar=" + mCar +
+                '}';
+    }
 }

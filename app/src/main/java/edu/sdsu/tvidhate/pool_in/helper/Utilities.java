@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.sdsu.tvidhate.pool_in.R;
+import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
 
 public class Utilities implements SharedConstants
@@ -40,6 +41,18 @@ public class Utilities implements SharedConstants
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area,updateProfileFragment);
                     fragmentTransaction.commitAllowingStateLoss();
+                }
+                else
+                {
+                    User currentUser = dataSnapshot.getValue(User.class);
+                    if (currentUser.getmCar() == null)
+                    {
+                        Log.i("NIK","no car info");
+                        Fragment updateProfileFragment = new UpdateProfileFragment();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area,updateProfileFragment);
+                        fragmentTransaction.commitAllowingStateLoss();
+                    }
                 }
             }
             @Override

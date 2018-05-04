@@ -36,6 +36,20 @@
     <string name="car_model_name">Car Model</string>
     <string name="car_number_plate">Registration Number</string>
     <string name="back">Back</string>
+    <string name="show_from">From :</string>
+    <string name="show_to">To :</string>
+    <string name="show_start_time">Time :</string>
+    <string name="show_start_date">Start Date :</string>
+    <string name="show_start">Start</string>
+    <string name="join">Join</string>
+    <string name="update_trip">Update</string>
+    <string name="completed">Finish</string>
+    <string name="delete">Delete</string>
+    <string name="complete">Complete</string>
+    <string name="color">Color</string>
+    <string name="posted_by">Posted By</string>
+    <string name="time">Start Time</string>
+    <string name="date">Start Date</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

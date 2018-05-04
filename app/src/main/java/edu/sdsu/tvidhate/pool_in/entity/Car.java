@@ -14,6 +14,9 @@ public class Car implements Serializable{
         this.mCarId = mCarId;
     }
 
+    public Car() {
+    }
+
     public String getmCarId() {
         return mCarId;
     }
@@ -52,5 +55,10 @@ public class Car implements Serializable{
 
     public void setmNumberPlate(String mNumberPlate) {
         this.mNumberPlate = mNumberPlate;
+    }
+
+    @Override
+    public String toString() {
+        return (mBrand+" "+mModel);
     }
 }

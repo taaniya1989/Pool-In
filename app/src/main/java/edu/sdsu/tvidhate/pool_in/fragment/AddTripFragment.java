@@ -32,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import edu.sdsu.tvidhate.pool_in.R;
+import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -45,6 +46,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
 
     private String currentUserDisplayName;
     private User mTripDriver;
+    private Car thisTripCar;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private FirebaseDatabase firebaseDatabaseInstance;
 
@@ -119,6 +121,40 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
 
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                if(dataSnapshot.getChildrenCount()>0)
+                {
+                    User currentUser = dataSnapshot.getValue(User.class);
+
+                    if(currentUser != null) {
+                        if(currentUser.hasACar())
+                        {
+                            Log.i("TPV-NOTE","User already has a car");
+                            thisTripCar = currentUser.getmCar();
+                        }
+                        else
+                        {
+                            Log.i("TPV-NOTE","Please add car details first");
+                            Utilities utilities = new Utilities(getFragmentManager());
+                            utilities.checkProfile();
+                        }
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        DatabaseReference people = firebaseDatabaseInstance.getReference(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
+        people.addValueEventListener(valueEventListener);
+
         return view;
     }
 
@@ -173,7 +209,8 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 {
                     //Handle Timestamp
                     int noOfSeats = Integer.parseInt(mSeatsAvailable.getText().toString());
-                    Log.i("TPV-NOTE","Date"+mStartDate.toString());
+                    Log.i("NIK",mTripDriver.toString());
+                    //User tripDriver = firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
                     Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).push().getKey(),
                             mSourceAddress.getText().toString().trim(),mDestinationAddress.getText().toString().trim(),
                             mStartDate.getText().toString(),mStartTime.getText().toString(), System.currentTimeMillis(),noOfSeats,mTripDriver);
@@ -217,7 +254,10 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 User currentUser = dataSnapshot.getValue(User.class);
                 if(currentUser != null)
+                {
                     mTripDriver = currentUser;
+                    Log.i("NIK",currentUser.toString());
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

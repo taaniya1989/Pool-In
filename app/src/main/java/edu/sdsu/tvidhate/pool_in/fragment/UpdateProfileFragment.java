@@ -142,7 +142,20 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                     Log.d("rew","update button clicked");
                     //Handle Name & Address
                     User currentUser = new User(mUserFirstname.getText().toString().trim(),mUserLastname.getText().toString().trim(),mUserContact.getText().toString().trim(),
-                            mUserEmailId.getText().toString().trim(),"Add Home Address");
+                            mUserEmailId.getText().toString().trim(),mUserHomeAddress.getText().toString().trim());
+                    Car currentUserCar = currentUser.getmCar();
+                    if(currentUserCar == null)
+                        currentUser.setmCar(new Car(mUserContact.getText().toString()+"-"+mCarRegistrationNumber.getText().toString()
+                            ,mCarBrand.getText().toString(),mCarModel.getText().toString(),mCarColor.getText().toString(),mCarRegistrationNumber.getText().toString()));
+                    else
+                    {
+                        currentUserCar.setmBrand(mCarBrand.getText().toString());
+                        currentUserCar.setmModel(mCarModel.getText().toString());
+                        currentUserCar.setmColor(mCarColor.getText().toString());
+                        currentUserCar.setmNumberPlate(mCarRegistrationNumber.getText().toString());
+                        currentUserCar.setmCarId(currentUser.getmContactNumber()+"-"+mCarRegistrationNumber.getText().toString());
+                    }
+
                     //boolean updated = databaseHelper.updateProfileData(signUpDetailsPOJO);
                     try{
                         firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(mUserContact.getText().toString()).removeValue();
