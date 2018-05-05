@@ -27,12 +27,13 @@ import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.HomeFragment;
+import edu.sdsu.tvidhate.pool_in.fragment.MyProfileFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
-        AddTripFragment.OnFragmentInteractionListener,/*MyTripsFragment.OnFragmentInteractionListener,
-        MyProfileFragment.OnFragmentInteractionListener,RequestsFragment.OnFragmentInteractionListener,*/
+        AddTripFragment.OnFragmentInteractionListener,MyProfileFragment.OnFragmentInteractionListener,/*MyTripsFragment.OnFragmentInteractionListener,
+        RequestsFragment.OnFragmentInteractionListener,*/
         UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants
 {
     List<User> userDetailsList = new ArrayList<>();
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             loadHomeFragment();
         }
     }
+
     private void loadHomeFragment() {
         selectNavMenu();
         if(getSupportActionBar()!=null){
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         drawer.closeDrawers();
         invalidateOptionsMenu();
     }
+
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
@@ -137,14 +140,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 return addTripFragment;
         /*    case 2:
                 MyTripsFragment myTripsFragment = new MyTripsFragment();
-                return myTripsFragment;
+                return myTripsFragment;*/
             case 3:
                 MyProfileFragment myProfileFragment = new MyProfileFragment();
                 return myProfileFragment;
+/*
             case 4:
                 RequestsFragment requestsFragment = new RequestsFragment();
                 return requestsFragment;
-        */    default:
+*/
+            default:
                 return new HomeFragment();
         }
     }
