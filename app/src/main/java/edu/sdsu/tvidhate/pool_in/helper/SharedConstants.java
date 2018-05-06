@@ -60,8 +60,8 @@ public interface SharedConstants {
     String REMOVE_PASSENGER = "Remove Passenger";
     String REMOVAL_CONFIRMATION = "Are you sure?";
     String REMOVE = "Remove";
-    String SEATS_AVAILABLE_CHILD_ELEMENT = "seatsAvailable";
-    String JOINEE_CHILD_ELEMENT = "joinee";
+    String SEATS_AVAILABLE_CHILD_ELEMENT = "mSeatsAvailable";
+    String JOINEE_CHILD_ELEMENT = "mTripJoinees";
     String ENTER_NAME = "Enter Name";
     String ENTER_CAR = "Enter Car";
     String ENTER_CAR_COLOR = "Enter Car Color";

@@ -25,6 +25,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.TripDetailsActivity" />
         <activity android:name=".activity.UpdateRideActivity"/>
+        <activity android:name=".activity.RideHistoryDetailsActivity"/>
+
     </application>
 
 </manifest>

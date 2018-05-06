@@ -3,8 +3,6 @@ package edu.sdsu.tvidhate.pool_in.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
-
 public class Trip implements Serializable {
     private String mTripId,mSourceAddress,mDestinationAddress;
     private Long mCreationTimestamp,mEndTimestamp;

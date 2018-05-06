@@ -50,6 +50,7 @@
     <string name="posted_by">Posted By</string>
     <string name="time">Start Time</string>
     <string name="date">Start Date</string>
+    <string name="people_in_the_ride">Fellow Riders</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

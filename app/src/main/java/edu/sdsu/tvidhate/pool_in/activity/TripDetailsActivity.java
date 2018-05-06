@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Car;
+import edu.sdsu.tvidhate.pool_in.entity.Request;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -120,7 +121,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         DatabaseReference people = database.getReference(FIREBASE_TRIP_DETAILS).child(posterContact.getText().toString());
         people.addValueEventListener(valueEventListener);
 
-       // requestedPassengersData(phNo);
+        requestedPassengersData(phNo);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -294,11 +295,11 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
             DatabaseReference people1 = database1.getReference(FIREBASE_PERSONAL_DATA).child(phNo);
             people1.addValueEventListener(valueEventListener1);
             final String finalPhNo = phNo;
-/*            join.setOnClickListener(new View.OnClickListener() {
+            join.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("TPV-NOTE","Different contact");
-                    RequestDetailsPOJO requestDetails = new RequestDetailsPOJO();
+                    Request requestDetails = new Request();
                     requestDetails.setRequestorName(requestorName);
                     requestDetails.setRequestorContact(finalPhNo);
                     requestDetails.setPosterName(poster.getText().toString());
@@ -311,13 +312,13 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                         Log.d("TPV-NOTE","Exception: "+e);
                     }
                 }
-            });*/
+            });
         }
 
 
     }
 
-/*    private void requestedPassengersData(final String phNo) {
+   private void requestedPassengersData(final String phNo) {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -325,7 +326,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 LinearLayout linearLayout = findViewById(R.id.text_programatically);
                 joineeList.add(posterContact.getText().toString());
                     for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
-                        RequestDetailsPOJO requestDetailsPOJO = msgSnapshot.getValue(RequestDetailsPOJO.class);
+                        Request requestDetailsPOJO = msgSnapshot.getValue(Request.class);
                         if(requestDetailsPOJO.isApprovalStatus()){
                             requestorContact = requestDetailsPOJO.getRequestorContact();
                             Log.d("TPV-NOTE","Approved for: "+requestorContact);
@@ -350,5 +351,5 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference people = database.getReference(FIREBASE_REQUESTS).child(posterContact.getText().toString());
         people.addValueEventListener(valueEventListener);
-    }*/
+    }
 }
