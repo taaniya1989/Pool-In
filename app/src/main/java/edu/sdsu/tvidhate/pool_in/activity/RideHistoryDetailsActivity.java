@@ -11,8 +11,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
+import java.util.Set;
+
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
+import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class RideHistoryDetailsActivity extends AppCompatActivity implements SharedConstants
@@ -50,8 +55,27 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                     }else{
                         status.setText(WAITING);
                     }*/
-                    String peopleInRide = myRideDetailsPOJO.getmTripPassengers().toString();
-                    joinees.setText(peopleInRide);
+
+                    Map<String,User> currentTripPassengers = myRideDetailsPOJO.getmTripPassengers();
+                    String currentTripPassengersNames = "";
+                    if(currentTripPassengers != null)
+                    {
+                        Set currentTripPassengersContact = currentTripPassengers.keySet();
+                        int passengerCount = 0;
+                        for(Object contact : currentTripPassengersContact)
+                        {
+                            passengerCount++;
+                            if(currentTripPassengersContact.size() == 1)
+                                currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
+                            else {
+                                if(passengerCount == 1)
+                                    currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
+                                else
+                                    currentTripPassengersNames = currentTripPassengersNames + "\n" + currentTripPassengers.get(contact).getFullName();
+                            }
+                        }
+                    }
+                    joinees.setText(currentTripPassengersNames);
                 }
 
             }

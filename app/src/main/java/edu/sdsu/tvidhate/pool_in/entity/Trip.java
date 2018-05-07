@@ -2,13 +2,14 @@ package edu.sdsu.tvidhate.pool_in.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Trip implements Serializable {
     private String mTripId,mSourceAddress,mDestinationAddress;
     private Long mCreationTimestamp,mEndTimestamp;
     private int mSeatsAvailable;
     private User mTripDriver;
-    private ArrayList<User> mTripPassengers;
+    private Map<String,User> mTripPassengers;
     private boolean mTripVisible;
     private String mTripStatus;
     private String mStartTime,mStartDate;
@@ -45,11 +46,11 @@ public class Trip implements Serializable {
         this.mTripCar = mTripCar;
     }
 
-    public ArrayList<User> getmTripPassengers() {
+    public Map<String,User> getmTripPassengers() {
         return mTripPassengers;
     }
 
-    public void setmTripPassengers(ArrayList<User> mTripPassengers) {
+    public void setmTripPassengers(Map<String,User> mTripPassengers) {
         this.mTripPassengers = mTripPassengers;
     }
 
@@ -123,14 +124,6 @@ public class Trip implements Serializable {
 
     public void setmTripDriver(User mTripDriver) {
         this.mTripDriver = mTripDriver;
-    }
-
-    public ArrayList<User> getmTripPassegers() {
-        return mTripPassengers;
-    }
-
-    public void setmTripPassegers(ArrayList<User> mTripPassegers) {
-        this.mTripPassengers = mTripPassegers;
     }
 
     public boolean ismTripVisible() {

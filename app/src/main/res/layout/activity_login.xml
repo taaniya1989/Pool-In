@@ -28,7 +28,7 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@android:color/black" />
+            />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -38,7 +38,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@android:color/black" />
+            />
 
         <Button
             android:id="@+id/signInButton"

@@ -173,7 +173,7 @@ public class RequestsFragment extends Fragment implements SharedConstants{
                                             .child(requestorContact).setValue(requestDetailsPOJO);
                                     seatsAvailable = seatsAvailable-1;
                                     Map map = new HashMap();
-                                    map.put(requestorContact,requestDetailsPOJO.getRequestorName());
+                                    map.put(requestorContact,joiningUser);
 
                                     mDatabase.child(FIREBASE_MY_RIDES).child(uid).getRef().child(JOINEE_CHILD_ELEMENT).updateChildren(map);
                                     mDatabase.child(FIREBASE_TRIP_DETAILS).child(currentUserContactNumber).getRef().child(JOINEE_CHILD_ELEMENT)

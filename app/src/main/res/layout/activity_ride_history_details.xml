@@ -160,7 +160,7 @@
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_margin="3dp"
                 android:background="#f0f0f4"
                 android:drawablePadding="8dp"
@@ -172,7 +172,7 @@
                 android:id="@+id/ride_history_people"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_margin="3dp"
                 android:background="#f0f0f4"
                 android:drawablePadding="8dp"
