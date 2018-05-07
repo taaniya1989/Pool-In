@@ -38,22 +38,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         RequestsFragment.OnFragmentInteractionListener,
         UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants
 {
-    List<User> userDetailsList = new ArrayList<>();
-    private TextView navigation_header_caption;
     private FirebaseAuth auth;
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private View header;
-    private Toolbar toolbar;
     private FloatingActionButton fab;
     private String[] activityTitles;
-    // index to identify current nav menu item
     public static int navItemIndex = 0;
-    // tags used to attach the fragments
     public static String CURRENT_TAG = TAG_HOME;
-
-    // flag to load home fragment when user presses back key
-    private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
 
@@ -61,25 +52,31 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        auth = FirebaseAuth.getInstance();
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
         String email="",contact="";
+        auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser()!=null){
             email = auth.getCurrentUser().getEmail();
             contact = auth.getCurrentUser().getDisplayName();
         }
-        toolbar = findViewById(R.id.toolbar);
+
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        fab = findViewById(R.id.fab);
+        navigationView = findViewById(R.id.nav_view);
+
         setSupportActionBar(toolbar);
         mHandler = new Handler();
-        drawer = findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        fab = findViewById(R.id.fab);
-        navigationView = findViewById(R.id.nav_view);
-        header = navigationView.getHeaderView(0);
-        navigation_header_caption = header.findViewById(R.id.nav_header_small_text);
+
+        View header = navigationView.getHeaderView(0);
+        TextView navigation_header_caption = header.findViewById(R.id.nav_header_small_text);
         navigation_header_caption.setText(contact);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             case 3:
                 MyProfileFragment myProfileFragment = new MyProfileFragment();
                 return myProfileFragment;
-
             case 4:
                 RequestsFragment requestsFragment = new RequestsFragment();
                 return requestsFragment;
@@ -155,9 +151,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 return new HomeFragment();
         }
     }
+
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
+
     @Override
     public void onBackPressed() {
         Log.d("rew","in back pressed");
@@ -167,6 +165,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         }
         // This code loads home fragment when back key is pressed
         // when user is in other fragment than home
+
+        boolean shouldLoadHomeFragOnBackPress = true;
         if (shouldLoadHomeFragOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home

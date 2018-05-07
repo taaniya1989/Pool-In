@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/car"
+            android:src="@drawable/ic_action_user"
             android:contentDescription="image"/>
     </LinearLayout>
     <LinearLayout

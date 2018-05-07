@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/car" />
+                android:src="@drawable/ic_action_arrow" />
             <TextView
                 android:id="@+id/trip_list_destination"
                 android:layout_width="wrap_content"

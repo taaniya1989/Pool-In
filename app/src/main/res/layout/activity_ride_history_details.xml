@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:padding="@dimen/ten_dp"
-                android:src="@mipmap/car"/>
+                android:src="@drawable/ic_action_arrow"/>
             <TextView
                 android:id="@+id/ride_history_destination"
                 android:layout_width="wrap_content"

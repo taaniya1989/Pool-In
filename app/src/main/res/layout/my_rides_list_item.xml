@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/car" />
+                android:src="@drawable/ic_action_arrow" />
 
             <TextView
                 android:id="@+id/my_ride_destination"
