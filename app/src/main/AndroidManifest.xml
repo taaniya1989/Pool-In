@@ -18,14 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.SignUpActivity"
+            android:label="@string/signUpTitle"/>
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/homeScreen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.TripDetailsActivity" />
-        <activity android:name=".activity.UpdateRideActivity"/>
-        <activity android:name=".activity.RideHistoryDetailsActivity"/>
+        <activity android:name=".activity.TripDetailsActivity"
+            android:label="@string/tripDetailsTitle"/>
+        <activity android:name=".activity.UpdateRideActivity"
+            android:label="@string/updateRideTitle"/>
+        <activity android:name=".activity.RideHistoryDetailsActivity"
+            android:label="@string/rideHistoryTitle"/>
 
     </application>
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nikhil.sdsu.comeletsgo.Fragments.RequestsFragment">
+    tools:context=".fragment.RequestsFragment">
 
     <ListView
         android:id="@+id/requests_list_view"

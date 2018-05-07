@@ -59,6 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/select_date"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:id="@+id/update_trip_date_button"/>
         </LinearLayout>
         <LinearLayout
@@ -82,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/select_time"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:id="@+id/update_trip_time_button"/>
         </LinearLayout>
         <EditText
@@ -112,6 +116,8 @@
                 android:layout_marginEnd="14dp"
                 android:layout_weight="1"
                 android:text="@string/back"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
 
             <Button
@@ -121,6 +127,8 @@
                 android:layout_marginStart="14dp"
                 android:layout_weight="1"
                 android:text="@string/update"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
     </LinearLayout>

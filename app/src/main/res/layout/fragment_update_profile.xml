@@ -24,118 +24,322 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity=""
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/activity_vertical_margin">
 
-                <EditText
-                    android:id="@+id/updateEmailAddressEditText"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_address"
-                    android:inputType="textEmailAddress"
+                    android:text="@string/user"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/updateContactEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/contact"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="center"
+                    android:textAllCaps="true"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/emailAddressTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/email_address"
+                        android:maxLines="1"
+                        android:padding="4dp"
+                        android:singleLine="true"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
+
+                    <EditText
+                        android:id="@+id/updateEmailAddressEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/contactTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/contact"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateContactEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/firstNameTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/first_name"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
 
                     <EditText
                         android:id="@+id/updateFirstNameEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/first_name"
-                        android:inputType="textEmailAddress"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
                         android:maxLines="1"
                         android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
                         android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
                         android:layout_weight="1"/>
-                    <EditText
-                        android:id="@+id/updateLastNameEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/lastNameTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
                         android:hint="@string/last_name"
-                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
                         android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
                         android:layout_weight="1"/>
 
+                    <EditText
+                        android:id="@+id/updateLastNameEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
                 </LinearLayout>
-                <EditText
-                    android:id="@+id/updateHomeAddressEditText"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/home_address"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/updateWorkAddressEditText"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/homeAddressTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/home_address"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateHomeAddressEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/work_address"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/workAddressTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/work_address"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateWorkAddressEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/car"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="2dp"
-                    android:gravity="center"/>
-                <EditText
-                    android:id="@+id/updateCarBrandEditText"
+                    android:gravity="center"
+                    android:textAllCaps="true"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/car_brand_name"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/updateCarModelEditText"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/carBrandTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/car_brand_name"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateCarBrandEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/car_model_name"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/updateCarColorEditText"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/carModelTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/car_model_name"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateCarModelEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/car_color"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/updateCarNumberPlateEditText"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/carColorTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/car_color"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateCarColorEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/car_number_plate"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/carNumberPlateTextView"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/car_number_plate"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/updateCarNumberPlateEditText"
+                        android:layout_width="@dimen/zero_dp"
+                        android:layout_height="fill_parent"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textviewsize"
+                        android:padding="4dp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="textStart"
+                        android:layout_weight="1"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -148,12 +352,26 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/update_user_profile_button"
-                    android:layout_width="match_parent"
+                    android:id="@+id/update_user_profile_back_button"
+                    android:layout_width="@dimen/zero_dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:text="@string/updateUserInfo"
-                    tools:ignore="ButtonStyle" />
+                    android:text="@string/back"
+                    tools:ignore="ButtonStyle"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/update_user_profile_button"
+                    android:layout_width="@dimen/zero_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="@string/update_trip"
+                    tools:ignore="ButtonStyle"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 

@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/ten_dp"
         android:orientation="vertical"
-        tools:context="com.nikhil.sdsu.comeletsgo.Activities.RideHistoryDetailsActivity">
+        tools:context=".activity.RideHistoryDetailsActivity">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,17 +21,19 @@
             <TextView
                 android:id="@+id/ride_history_source"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/ten_dp"
                 android:src="@mipmap/car"/>
             <TextView
                 android:id="@+id/ride_history_destination"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
         </LinearLayout>
         <LinearLayout
@@ -43,25 +45,25 @@
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"
                 android:text="@string/date"/>
             <TextView
                 android:id="@+id/ride_history_date"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"/>
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <LinearLayout
@@ -73,83 +75,25 @@
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"
                 android:text="@string/time"/>
             <TextView
                 android:id="@+id/ride_history_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:gravity="center"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
-            <TextView
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="#f0f0f4"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:text="@string/posted_by"/>
-            <TextView
-                android:id="@+id/ride_history_posted_by"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="#f0f0f4"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
-            <TextView
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="#f0f0f4"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:text="@string/contact"/>
-            <TextView
-                android:id="@+id/ride_history_poster_contact"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="#f0f0f4"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"/>
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -162,11 +106,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"
+                android:text="@string/posted_by"/>
+            <TextView
+                android:id="@+id/ride_history_posted_by"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dp"
+                android:background="@color/grey"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dp"
+                android:background="@color/grey"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"
+                android:text="@string/contact"/>
+            <TextView
+                android:id="@+id/ride_history_poster_contact"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dp"
+                android:background="@color/grey"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dp"
+                android:background="@color/grey"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"
                 android:text="@string/people_in_the_ride"/>
             <TextView
                 android:id="@+id/ride_history_people"
@@ -174,29 +176,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_margin="3dp"
-                android:background="#f0f0f4"
+                android:background="@color/grey"
                 android:drawablePadding="8dp"
                 android:ems="10"
-                android:padding="10dp"
-                android:textColor="#000"/>
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/black"/>
         </LinearLayout>
         <TextView
             android:id="@+id/ride_history_status"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_margin="12dp"
             android:drawablePadding="8dp"
             android:ems="10"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:padding="14dp"
-            android:textColor="#000"/>
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/ride_history_back"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_margin="15dp"
-            android:text="@string/back"/>
+            android:text="@string/back"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 </ScrollView>

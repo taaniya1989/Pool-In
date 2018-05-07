@@ -27,6 +27,8 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_history_details);
+
+
         source = findViewById(R.id.ride_history_source);
         destination = findViewById(R.id.ride_history_destination);
         date = findViewById(R.id.ride_history_date);

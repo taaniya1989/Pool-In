@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,6 +93,8 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
         mCarRegistrationNumber = view.findViewById(R.id.updateCarNumberPlateEditText);
 
         Button updateUserInfoButton = view.findViewById(R.id.update_user_profile_button);
+        Button backButton = view.findViewById(R.id.update_user_profile_back_button);
+        backButton.setOnClickListener(this);
         updateUserInfoButton.setOnClickListener(this);
 
         if(firebaseAuthInstance.getCurrentUser()!=null){
@@ -170,6 +173,13 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                 }else{
                     Toast.makeText(getContext(), VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
                 }
+                break;
+
+            case R.id.update_user_profile_back_button:
+                Fragment myProfileFragment = new MyProfileFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area,myProfileFragment);
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
         }
     }
