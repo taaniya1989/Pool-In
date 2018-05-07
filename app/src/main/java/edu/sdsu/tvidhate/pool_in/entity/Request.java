@@ -11,6 +11,19 @@ public class Request {
     private User mJoinTripRequester;
     private User mTripApprover;
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "requestorContact='" + requestorContact + '\'' +
+                ", requestorName='" + requestorName + '\'' +
+                ", posterName='" + posterName + '\'' +
+                ", posterContact='" + posterContact + '\'' +
+                ", approvalStatus=" + approvalStatus +
+                ", mJoinTripRequester=" + mJoinTripRequester +
+                ", mTripApprover=" + mTripApprover +
+                '}';
+    }
+
     public User getmJoinTripRequester() {
         return mJoinTripRequester;
     }

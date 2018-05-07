@@ -13,6 +13,7 @@ import java.util.List;
 
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Request;
+import edu.sdsu.tvidhate.pool_in.entity.User;
 
 
 public class RequestsAdapter extends ArrayAdapter implements SharedConstants{
@@ -35,8 +36,12 @@ public class RequestsAdapter extends ArrayAdapter implements SharedConstants{
         TextView requestorContact = view.findViewById(R.id.request_list_requestor_contact);
         TextView status = view.findViewById(R.id.request_list_approval);
 
-        requestorName.setText(userProperties.get(position).getRequestorName());
-        requestorContact.setText(userProperties.get(position).getRequestorContact());
+        /*requestorName.setText(userProperties.get(position).getRequestorName());
+        requestorContact.setText(userProperties.get(position).getRequestorContact());*/
+
+        User currentRequester = userProperties.get(position).getmJoinTripRequester();
+        requestorName.setText(currentRequester.getFullName());
+        requestorContact.setText(currentRequester.getmContactNumber());
 
         if(userProperties.get(position).isApprovalStatus()){
             status.setText(REQUEST_STATUS_APPROVED);

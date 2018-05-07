@@ -50,7 +50,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                     }else{
                         status.setText(WAITING);
                     }*/
-                    String peopleInRide = myRideDetailsPOJO.getmTripJoinees().toString();
+                    String peopleInRide = myRideDetailsPOJO.getmTripPassengers().toString();
                     joinees.setText(peopleInRide);
                 }
 

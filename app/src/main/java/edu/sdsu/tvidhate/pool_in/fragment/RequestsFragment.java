@@ -133,6 +133,7 @@ public class RequestsFragment extends Fragment implements SharedConstants{
                     for (DataSnapshot msgSnapshot : dataSnapshot.getChildren())
                     {
                         Request requestDetailsPOJO = msgSnapshot.getValue(Request.class);
+                        Log.i("NIK","Request :-" + requestDetailsPOJO.toString());
                         requestList.add(requestDetailsPOJO);
                     }
 
@@ -157,37 +158,37 @@ public class RequestsFragment extends Fragment implements SharedConstants{
                         final Request requestDetailsPOJO = (Request) adapterView.getItemAtPosition(i);
                         final String requestorContact = ((Request) adapterView.getItemAtPosition(i)).getRequestorContact();
 
+                        final User joiningUser = ((Request) adapterView.getItemAtPosition(i)).getmJoinTripRequester();
+
                         if(!requestDetailsPOJO.isApprovalStatus() && seatsAvailable > 0)
                         {
                             AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                             alert.setTitle(PASSENGER_REQUEST);
                             alert.setMessage(ACCEPT_REQUEST);
-
-                            alert.setPositiveButton(ADD, new DialogInterface.OnClickListener()
-                            {
+                            alert.setPositiveButton(ADD, new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which)
-                                {
+                                public void onClick(DialogInterface dialog, int which) {
                                     requestDetailsPOJO.setApprovalStatus(true);
-
                                     mDatabase.child(FIREBASE_REQUESTS).child(currentUserContactNumber)
                                             .child(requestorContact).setValue(requestDetailsPOJO);
-
-                                    seatsAvailable = seatsAvailable - 1;
-
+                                    seatsAvailable = seatsAvailable-1;
                                     Map map = new HashMap();
-
                                     map.put(requestorContact,requestDetailsPOJO.getRequestorName());
 
-                                    mDatabase.child(FIREBASE_TRIP_DETAILS).child(currentUserContactNumber).child(JOINEE_CHILD_ELEMENT)
-                                            .setValue(requestorContact);
+                                    mDatabase.child(FIREBASE_MY_RIDES).child(uid).getRef().child(JOINEE_CHILD_ELEMENT).updateChildren(map);
+                                    mDatabase.child(FIREBASE_TRIP_DETAILS).child(currentUserContactNumber).getRef().child(JOINEE_CHILD_ELEMENT)
+                                            .updateChildren(map);
                                     mDatabase.child(FIREBASE_TRIP_DETAILS)
                                             .child(currentUserContactNumber).child(SEATS_AVAILABLE_CHILD_ELEMENT).setValue(seatsAvailable);
-
+                                    Map map2 = new HashMap();
+                                    String key = mDatabase.child(FIREBASE_CURRENT_RIDES).child(requestorContact).push().getKey();
+                                    map2.put(key,uid);
+                                    mDatabase.child(FIREBASE_CURRENT_RIDES).child(requestorContact).updateChildren(map2);
                                     listadapter.notifyDataSetChanged();
                                     dialog.dismiss();
                                 }
                             });
+
 
                             alert.setNegativeButton(CANCEL, new DialogInterface.OnClickListener() {
 

@@ -45,6 +45,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
     private String uid;
 
     private FirebaseDatabase firebaseDatabaseInstance;
+    private User joiningRequester,approverUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,7 +82,9 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         update = findViewById(R.id.trip_update_button);
         delete = findViewById(R.id.trip_delete_button);
         complete = findViewById(R.id.trip_complete_button);
-        posterContact.setText(currentTrip.getmTripDriver().getmContactNumber());
+
+        approverUser = currentTrip.getmTripDriver();
+        posterContact.setText(approverUser.getmContactNumber());
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -279,6 +282,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                     Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " trips available");
                     if (dataSnapshot.getChildrenCount() > 0) {
                         User currentUser = dataSnapshot.getValue(User.class);
+                        joiningRequester = currentUser;
                         requestorName = currentUser.getFullName();
                         requestorContact = currentUser.getmContactNumber();
                         Log.d("TPV-NOTE", requestorName);
@@ -300,6 +304,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 public void onClick(View view) {
                     Log.d("TPV-NOTE","Different contact");
                     Request requestDetails = new Request();
+                    requestDetails.setmJoinTripRequester(joiningRequester);
+                    requestDetails.setmTripApprover(approverUser);
                     requestDetails.setRequestorName(requestorName);
                     requestDetails.setRequestorContact(finalPhNo);
                     requestDetails.setPosterName(poster.getText().toString());
