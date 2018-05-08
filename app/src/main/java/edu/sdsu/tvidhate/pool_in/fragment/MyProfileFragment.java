@@ -114,7 +114,7 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 if(dataSnapshot.getChildrenCount()>0){
                     User currentUser = dataSnapshot.getValue(User.class);
                     if(currentUser != null) {
@@ -184,8 +184,12 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
         switch (v.getId())
         {
             case R.id.update_user_profile_button:
-                Log.d("rew","Update button clicked");
+                Log.d("TPV-NOTE","Update button clicked");
+                String updateData = "User";
+                Bundle bundle = new Bundle();
+                bundle.putString("updateData",updateData);
                 Fragment updateProfileFragment = new UpdateProfileFragment();
+                updateProfileFragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.screen_area,updateProfileFragment);
                 fragmentTransaction.commitAllowingStateLoss();

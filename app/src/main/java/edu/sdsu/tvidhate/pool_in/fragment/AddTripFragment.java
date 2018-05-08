@@ -49,7 +49,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private Car thisTripCar;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private FirebaseDatabase firebaseDatabaseInstance;
-
+    private String hasCar;
     //Member Variables
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
     private TextView mStartDate,mStartTime;
@@ -98,10 +98,10 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
         }
 
+        hasCar = "Car";
         Utilities utilities = new Utilities(getFragmentManager());
-        utilities.checkProfile();
+        utilities.checkProfile(hasCar);
         utilities.checkForExistingRide(getActivity());
-        
 
         firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
@@ -125,7 +125,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 if(dataSnapshot.getChildrenCount()>0)
                 {
                     User currentUser = dataSnapshot.getValue(User.class);
@@ -140,7 +140,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         {
                             Log.i("TPV-NOTE","Please add car details first");
                             Utilities utilities = new Utilities(getFragmentManager());
-                            utilities.checkProfile();
+                            utilities.checkProfile(hasCar);
                         }
                     }
                 }
@@ -209,7 +209,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 {
                     //Handle Timestamp
                     int noOfSeats = Integer.parseInt(mSeatsAvailable.getText().toString());
-                    Log.i("NIK",mTripDriver.toString());
+                    Log.i("TPV-NOTE",mTripDriver.toString());
                     //User tripDriver = firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
                     Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).push().getKey(),
                             mSourceAddress.getText().toString().trim(),mDestinationAddress.getText().toString().trim(),
@@ -256,7 +256,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 if(currentUser != null)
                 {
                     mTripDriver = currentUser;
-                    Log.i("NIK",currentUser.toString());
+                    Log.i("TPV-NOTE",currentUser.toString());
                 }
             }
             @Override

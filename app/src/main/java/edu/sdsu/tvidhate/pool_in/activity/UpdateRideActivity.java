@@ -47,7 +47,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         setContentView(R.layout.activity_update_ride);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        Log.d("rew","firebase ref: "+mDatabase.toString());
+        Log.d("TPV-NOTE","firebase ref: "+mDatabase.toString());
         source = findViewById(R.id.update_trip_from);
         destination = findViewById(R.id.update_trip_to);
         date = findViewById(R.id.update_trip_date_text);
@@ -65,7 +65,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 Trip currentTrip = dataSnapshot.getValue(Trip.class);
                 if(currentTrip != null){
                     currentTripPoster = currentTrip.getmTripDriver();
@@ -117,10 +117,10 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
                     try{
                         mDatabase.child(FIREBASE_TRIP_DETAILS).child(contact).setValue(currentTrip);
-                        Log.d("rew","Data updated successfully");
+                        Log.d("TPV-NOTE","Data updated successfully");
                         finish();
                     }catch(Exception e){
-                        Log.d("rew","Exception: "+e);
+                        Log.d("TPV-NOTE","Exception: "+e);
                     }
                 }else{
                     Toast.makeText(UpdateRideActivity.this,ENTER_REQUIRED_FIELDS, Toast.LENGTH_SHORT).show();
@@ -169,13 +169,13 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             date = formatter.parse(dateString);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            Log.d("rew", "formatted time: " + date);
-            Log.d("rew", "current time: " + Calendar.getInstance().getTime());
+            Log.d("TPV-NOTE", "formatted time: " + date);
+            Log.d("TPV-NOTE", "current time: " + Calendar.getInstance().getTime());
             if(date.before(Calendar.getInstance().getTime())){
                 dataValid = false;
             }
         }catch (Exception e){
-            Log.d("rew","Exception: "+e);
+            Log.d("TPV-NOTE","Exception: "+e);
         }
         return dataValid;
     }

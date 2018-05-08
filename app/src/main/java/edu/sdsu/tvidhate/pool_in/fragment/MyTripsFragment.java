@@ -50,6 +50,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
     MyRidesListAdapter listadapter;
     private String myPhoneNo="";
     private OnFragmentInteractionListener mListener;
+    private String hasUserDetails;
 
     public MyTripsFragment() {
         // Required empty public constructor
@@ -88,8 +89,9 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_my_trips, container, false);
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        hasUserDetails = "User";
         Utilities utilities = new Utilities(getFragmentManager());
-        utilities.checkProfile();
+        utilities.checkProfile(hasUserDetails);
         myRidesListView = view.findViewById(R.id.my_rides_list_view);
         if(auth.getCurrentUser()!=null){
             myPhoneNo = auth.getCurrentUser().getDisplayName();
@@ -115,19 +117,19 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         ValueEventListener valueEventListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " uids");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " uids");
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Log.d("rew","snapshot uid value: "+snapshot.getValue());
+                    Log.d("TPV-NOTE","snapshot uid value: "+snapshot.getValue());
                     uids.add(snapshot.getValue().toString());
                 }
-                Log.d("rew","uid size: "+uids.size());
+                Log.d("TPV-NOTE","uid size: "+uids.size());
                 if(uids!=null){
                     final Map<String,String> map = new HashMap<>();
                     for(int i=0;i<uids.size();i++){
                         ValueEventListener valueEventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                                 if (dataSnapshot.getChildrenCount() > 0) {
                                     Trip myRideDetailsPOJO = dataSnapshot.getValue(Trip.class);
                                     myRideDetailsList.add(myRideDetailsPOJO);
@@ -143,7 +145,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
                                     if (listadapter != null) {
                                         listadapter.notifyDataSetChanged();
                                     }
-                                    Log.d("rew","No Data yet");
+                                    Log.d("TPV-NOTE","No Data yet");
                                 }
                             }
                             @Override

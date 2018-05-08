@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
 
     private EditText mUserFirstname,mUserLastname,mUserContact,mUserEmailId,mUserHomeAddress;
     private EditText mCarBrand,mCarModel,mCarColor,mCarRegistrationNumber;
+    private String updateData;
 
     public UpdateProfileFragment() {
         // Required empty public constructor
@@ -68,6 +70,7 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
         if (getArguments() != null) {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
+            updateData = getArguments().getString("updateData");
         }
     }
 
@@ -105,7 +108,7 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 if(dataSnapshot.getChildrenCount()>0)
                 {
                     User currentUser = dataSnapshot.getValue(User.class);
@@ -142,14 +145,20 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
         {
             case R.id.update_user_profile_button:
                 if(validInput()){
-                    Log.d("rew","update button clicked");
+                    Log.d("TPV-NOTE","update button clicked");
                     //Handle Name & Address
                     User currentUser = new User(mUserFirstname.getText().toString().trim(),mUserLastname.getText().toString().trim(),mUserContact.getText().toString().trim(),
                             mUserEmailId.getText().toString().trim(),mUserHomeAddress.getText().toString().trim());
                     Car currentUserCar = currentUser.getmCar();
-                    if(currentUserCar == null)
-                        currentUser.setmCar(new Car(mUserContact.getText().toString()+"-"+mCarRegistrationNumber.getText().toString()
-                            ,mCarBrand.getText().toString(),mCarModel.getText().toString(),mCarColor.getText().toString(),mCarRegistrationNumber.getText().toString()));
+                    if(currentUserCar == null) {
+                        if(updateData == "Car" && checkCarDetails())
+                        {
+                            currentUser.setmCar(new Car(mUserContact.getText().toString() + "-" + mCarRegistrationNumber.getText().toString()
+                                    , mCarBrand.getText().toString(), mCarModel.getText().toString(), mCarColor.getText().toString(), mCarRegistrationNumber.getText().toString()));
+                        }
+                        else
+                            currentUser.setmCar(null);
+                    }
                     else
                     {
                         currentUserCar.setmBrand(mCarBrand.getText().toString());
@@ -163,12 +172,12 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                     try{
                         firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(mUserContact.getText().toString()).removeValue();
                         firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(mUserContact.getText().toString()).setValue(currentUser);
-                        Log.d("rew","Data submitted successfully");
+                        Log.d("TPV-NOTE","Data submitted successfully");
                         Intent intent = getActivity().getIntent();
                         getActivity().finish();
                         startActivity(intent);
                     }catch(Exception e){
-                        Log.d("rew","Exception: "+e);
+                        Log.d("TPV-NOTE","Exception: "+e);
                     }
                 }else{
                     Toast.makeText(getContext(), VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
@@ -176,10 +185,19 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                 break;
 
             case R.id.update_user_profile_back_button:
-                Fragment myProfileFragment = new MyProfileFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.screen_area,myProfileFragment);
-                fragmentTransaction.commitAllowingStateLoss();
+                if(updateData == "Car")
+                {
+                    Intent intent = getActivity().getIntent();
+                    getActivity().finish();
+                    startActivity(intent);
+                }
+                else
+                {
+                    Fragment myProfileFragment = new MyProfileFragment();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area,myProfileFragment);
+                    fragmentTransaction.commitAllowingStateLoss();
+                }
                 break;
         }
     }
@@ -190,6 +208,9 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
     }
 
     private boolean validInput() {
+        boolean carValid = SUCCESS;
+        if(updateData == "Car")
+            carValid = checkCarDetails();
         boolean dataValid = SUCCESS;
         if (TextUtils.isEmpty(mUserFirstname.getText().toString())) {
             mUserFirstname.setError(ENTER_NAME);
@@ -199,7 +220,11 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
             mUserLastname.setError(ENTER_NAME);
             dataValid = FAILURE;
         }
+        return dataValid; //&& carValid;
+    }
 
+    public boolean checkCarDetails(){
+        boolean dataValid = SUCCESS;
         if (TextUtils.isEmpty(mCarBrand.getText().toString())) {
             mCarBrand.setError(ENTER_CAR);
             dataValid = FAILURE;

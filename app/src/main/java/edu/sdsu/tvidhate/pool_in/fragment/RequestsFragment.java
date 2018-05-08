@@ -102,14 +102,15 @@ public class RequestsFragment extends Fragment implements SharedConstants{
         auth = FirebaseAuth.getInstance();
 
         Utilities utilities = new Utilities(getFragmentManager());
-        utilities.checkProfile();
+        String hasAll = "All";
+        utilities.checkProfile(hasAll);
 
         if(auth.getCurrentUser()!=null){
             currentUserContactNumber = auth.getCurrentUser().getDisplayName();
         }
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        Log.d("rew","in oncreate view");
+        Log.d("TPV-NOTE","in oncreate view");
         requestsListView = view.findViewById(R.id.requests_list_view);
 
         checkNumberOfSeats();
@@ -126,14 +127,14 @@ public class RequestsFragment extends Fragment implements SharedConstants{
 
                 requestList.clear();
 
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " trips available");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " trips available");
 
                 if (dataSnapshot.getChildrenCount() > 0)
                 {
                     for (DataSnapshot msgSnapshot : dataSnapshot.getChildren())
                     {
                         Request requestDetailsPOJO = msgSnapshot.getValue(Request.class);
-                        Log.i("NIK","Request :-" + requestDetailsPOJO.toString());
+                        Log.i("TPV-NOTE","Request :-" + requestDetailsPOJO.toString());
                         requestList.add(requestDetailsPOJO);
                     }
 
@@ -257,7 +258,7 @@ public class RequestsFragment extends Fragment implements SharedConstants{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
 
                 if(dataSnapshot.getChildrenCount()!=0)
                 {

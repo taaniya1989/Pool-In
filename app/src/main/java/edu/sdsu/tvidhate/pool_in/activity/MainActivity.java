@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.HomeFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyProfileFragment;
@@ -36,7 +33,7 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
         AddTripFragment.OnFragmentInteractionListener,MyProfileFragment.OnFragmentInteractionListener,MyTripsFragment.OnFragmentInteractionListener,
         RequestsFragment.OnFragmentInteractionListener,
-        UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants
+        UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants,NavigationView.OnNavigationItemSelectedListener,View.OnClickListener
 {
     private FirebaseAuth auth;
     private NavigationView navigationView;
@@ -53,16 +50,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String email="",contact="";
+        String contact="";
         auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser()!=null){
-            email = auth.getCurrentUser().getEmail();
             contact = auth.getCurrentUser().getDisplayName();
         }
 
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        
         drawer = findViewById(R.id.drawer_layout);
         fab = findViewById(R.id.fab);
         navigationView = findViewById(R.id.nav_view);
@@ -79,18 +76,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         TextView navigation_header_caption = header.findViewById(R.id.nav_header_small_text);
         navigation_header_caption.setText(contact);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navItemIndex = 1;
-                CURRENT_TAG = TAG_ADD_TRIP;
-                loadHomeFragment();
-            }
-        });
-        Log.d("rew","inside main activity oncreate");
-        Log.d("rew","email in main activity"+email);
+        fab.setOnClickListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        setUpNavigationView();
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
@@ -99,7 +87,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     }
 
     private void loadHomeFragment() {
+
+        Log.i("TPV-NOTE","in load fragment");
         selectNavMenu();
+
         if(getSupportActionBar()!=null){
             getSupportActionBar().setTitle(activityTitles[navItemIndex]);
         }
@@ -112,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             @Override
             public void run() {
                 Fragment fragment = getHomeFragment();
+                Log.i("TPV-NOTE","curent fragement"+fragment.toString()+CURRENT_TAG);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -158,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public void onBackPressed() {
-        Log.d("rew","in back pressed");
+        Log.d("TPV-NOTE","in back pressed");
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
@@ -201,55 +193,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUpNavigationView() {
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_home:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
-                        break;
-                    case R.id.nav_add_trip:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_ADD_TRIP;
-                        break;
-                    case R.id.nav_my_trips:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_MY_TRIPS;
-                        break;
-                    case R.id.nav_my_profile:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_MY_PROFILE;
-                        break;
-                    case R.id.nav_requests:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_REQUESTS;
-                        break;
-                    case R.id.nav_sign_out:
-                        auth.signOut();
-                        Intent login = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(login);
-                        finish();
-                        break;
-                    default:
-                        navItemIndex = 0;
-                }
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-                menuItem.setChecked(true);
-                loadHomeFragment();
-                return true;
-            }
-        });
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -259,12 +202,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Log.d("rew","in onstart:"+user.getUid());
+            Log.d("TPV-NOTE","in onstart:"+user.getUid());
         } else {
-            Log.d("rew","in onstart user is null:");
+            Log.d("TPV-NOTE","in onstart user is null:");
         }
     }
-
 
     @Override
     public void onFragmentInteraction(Uri uri){
@@ -276,5 +218,62 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             fab.show();
         else
             fab.hide();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+            switch (menuItem.getItemId()) {
+                case R.id.nav_home:
+                    navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME;
+                    break;
+                case R.id.nav_add_trip:
+                    navItemIndex = 1;
+                    CURRENT_TAG = TAG_ADD_TRIP;
+                    break;
+                case R.id.nav_my_trips:
+                    navItemIndex = 2;
+                    CURRENT_TAG = TAG_MY_TRIPS;
+                    break;
+                case R.id.nav_my_profile:
+                    navItemIndex = 3;
+                    CURRENT_TAG = TAG_MY_PROFILE;
+                    break;
+                case R.id.nav_requests:
+                    navItemIndex = 4;
+                    CURRENT_TAG = TAG_REQUESTS;
+                    break;
+                case R.id.nav_sign_out:
+                    auth.signOut();
+                    Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(login);
+                    finish();
+                    break;
+                default:
+                    navItemIndex = 0;
+            }
+            //Checking if the item is in checked state or not, if not make it in checked state
+            if (menuItem.isChecked()) {
+                menuItem.setChecked(false);
+            } else {
+                menuItem.setChecked(true);
+            }
+            menuItem.setChecked(true);
+            loadHomeFragment();
+            return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.fab:
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_ADD_TRIP;
+                loadHomeFragment();
+                break;
+        }
+
     }
 }

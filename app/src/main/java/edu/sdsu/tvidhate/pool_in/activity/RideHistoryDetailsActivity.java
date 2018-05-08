@@ -43,7 +43,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("rew", "There are " + dataSnapshot.getChildrenCount() + " people");
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 Trip myRideDetailsPOJO = dataSnapshot.getValue(Trip.class);
                 if(myRideDetailsPOJO!=null){
                     source.setText(myRideDetailsPOJO.getmSourceAddress());
