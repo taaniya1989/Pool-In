@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,6 +134,13 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
                                 if (dataSnapshot.getChildrenCount() > 0) {
                                     Trip myRideDetailsPOJO = dataSnapshot.getValue(Trip.class);
                                     myRideDetailsList.add(myRideDetailsPOJO);
+                                    Collections.sort(myRideDetailsList, new Comparator<Trip>() {
+                                        @Override
+                                        public int compare(Trip o1, Trip o2) {
+                                            Log.i("TPV-NOTE",o1.toString()+"----\n---"+o2.toString());
+                                            return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                                        }
+                                    });
                                     Collections.reverse(myRideDetailsList);
                                     if(getActivity() != null){
                                         listadapter = new MyRidesListAdapter(getActivity(), 0, myRideDetailsList);

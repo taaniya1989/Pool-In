@@ -20,8 +20,27 @@ public class Trip implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "mTripId='" + mTripId + '\'' +
+                ", mSourceAddress='" + mSourceAddress + '\'' +
+                ", mDestinationAddress='" + mDestinationAddress + '\'' +
+                ", mCreationTimestamp=" + mCreationTimestamp +
+                ", mEndTimestamp=" + mEndTimestamp +
+                ", mSeatsAvailable=" + mSeatsAvailable +
+                ", mTripDriver=" + mTripDriver +
+                ", mTripPassengers=" + mTripPassengers +
+                ", mTripVisible=" + mTripVisible +
+                ", mTripStatus='" + mTripStatus + '\'' +
+                ", mStartTime='" + mStartTime + '\'' +
+                ", mStartDate='" + mStartDate + '\'' +
+                ", mTripCar=" + mTripCar +
+                '}';
+    }
+
     public Trip(String mTripId, String mSourceAddress, String mDestinationAddress,
-                String mStartDate,String mStartTime, Long mCreationTimestamp,
+                String mStartDate, String mStartTime, Long mCreationTimestamp,
                 int mSeatsAvailable, User mTripDriver) {
         this.mTripId = mTripId;
         this.mSourceAddress = mSourceAddress;

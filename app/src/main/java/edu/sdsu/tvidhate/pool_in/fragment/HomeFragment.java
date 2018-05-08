@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import edu.sdsu.tvidhate.pool_in.R;
@@ -118,7 +119,14 @@ public class HomeFragment extends Fragment implements SharedConstants
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
                     tripDataList.add(currentTrip);
                 }
-                
+
+                Collections.sort(tripDataList, new Comparator<Trip>() {
+                    @Override
+                    public int compare(Trip o1, Trip o2) {
+                        Log.i("TPV-NOTE",o1.toString()+"----\n---"+o2.toString());
+                        return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                    }
+                });
                 Collections.reverse(tripDataList);
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
