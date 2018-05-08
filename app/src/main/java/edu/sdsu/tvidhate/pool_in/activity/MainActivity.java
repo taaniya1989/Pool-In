@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FloatingActionButton fab;
+    private Button appInfoButton;
     private String[] activityTitles;
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_HOME;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         String contact="";
         auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser()!=null){
@@ -59,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        
         drawer = findViewById(R.id.drawer_layout);
         fab = findViewById(R.id.fab);
         navigationView = findViewById(R.id.nav_view);
+     //   appInfoButton = findViewById(R.id.action_app_info);
 
         setSupportActionBar(toolbar);
         mHandler = new Handler();
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         navigation_header_caption.setText(contact);
 
         fab.setOnClickListener(this);
+   //     appInfoButton.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
@@ -187,7 +191,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_app_info) {
+            Intent appInfo = new Intent(MainActivity.this, AppInfoActivity.class);
+            startActivity(appInfo);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -273,6 +280,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 CURRENT_TAG = TAG_ADD_TRIP;
                 loadHomeFragment();
                 break;
+
+
         }
 
     }

@@ -57,6 +57,8 @@
     <string name="homeScreen">Pool In</string>
     <string name="signUpTitle">Register User</string>
     <string name="user">User Details</string>
+    <string name="action_info">App Info</string>
+    <string name="app_info">This app is designed for users travelling to/from same organisation to be able to car pool.</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
