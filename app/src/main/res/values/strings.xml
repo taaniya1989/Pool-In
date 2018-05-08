@@ -59,6 +59,7 @@
     <string name="user">User Details</string>
     <string name="action_info">App Info</string>
     <string name="app_info">This app is designed for users travelling to/from same organisation to be able to car pool.</string>
+    <string name="searchByLocation">Search Location</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

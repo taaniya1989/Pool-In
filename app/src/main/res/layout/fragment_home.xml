@@ -5,15 +5,36 @@
     android:background="@null"
     tools:context=".fragment.HomeFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBar"
+        android:layout_marginLeft="20dp"
+        android:padding="5dp">
+        <EditText
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/searchTextBox"
+            android:hint="@string/searchByLocation"
+            android:layout_weight="4"/>
+        <ImageButton
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/searchButton"
+            android:src="@drawable/ic_action_serach"
+            android:backgroundTint="@color/white"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/trip_list_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:divider="@color/white"
+        android:layout_margin="@dimen/ten_dp"
+        android:padding="@dimen/five_dp"
+        android:divider="@color/grey"
         android:dividerHeight="5.0sp"
         android:focusable="false"
-        android:padding="5dp">
-
+        android:layout_below="@id/searchBar">
     </ListView>
 </RelativeLayout>

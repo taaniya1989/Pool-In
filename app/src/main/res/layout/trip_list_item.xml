@@ -43,54 +43,45 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date: " />
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:text="Date: "
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/trip_list_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time: " />
-
-            <TextView
-                android:id="@+id/trip_list_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seats: " />
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/trip_list_seats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"/>
 
+            <TextView
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:text="Time: "
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/trip_list_time"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

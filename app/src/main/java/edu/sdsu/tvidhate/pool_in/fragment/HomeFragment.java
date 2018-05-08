@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +47,9 @@ public class HomeFragment extends Fragment implements SharedConstants
     private OnFragmentInteractionListener mListener;
     private ListView tripDetailsListView;
     private FirebaseAuth auth;
+    private ImageButton mSearchButton;
+    private EditText mSearchText;
+
     TripDetailsAdapter listadapter;
     List<Trip> tripDataList = new ArrayList<>();
 
@@ -84,15 +90,23 @@ public class HomeFragment extends Fragment implements SharedConstants
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        tripDetailsListView = view.findViewById(R.id.trip_list_home);
+        mSearchButton = view.findViewById(R.id.searchButton);
+        mSearchText = view.findViewById(R.id.searchTextBox);
+
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("TPV-NOTE","Search this address : "+mSearchText.getText());
+            }
+        });
+
         auth = FirebaseAuth.getInstance();
 
         String hasUserDetails = "User";
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
-
         progressDialog = new ProgressDialog(getContext());
-        Log.d("TPV-NOTE","inoncreate view");
-        tripDetailsListView = view.findViewById(R.id.trip_list_home);
         getRideDetailsOntoTheList();
         return view;
     }
