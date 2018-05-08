@@ -52,6 +52,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private String hasCar;
     //Member Variables
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
+    private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
     private TextView mStartDate,mStartTime;
 
     public AddTripFragment() {
@@ -111,6 +112,11 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         mStartDate = view.findViewById(R.id.add_trip_date_text);
         mStartTime = view.findViewById(R.id.add_trip_time_text);
         mSeatsAvailable = view.findViewById(R.id.add_trip_number_of_seats);
+        mSourceNeighbordhood = view.findViewById(R.id.add_trip_from_neighborhood);
+        mSourcePin = view.findViewById(R.id.add_trip_from_pincode);
+        mDestinationNeighbordhood = view.findViewById(R.id.add_trip_to_neighborhood);
+        mDestinationPin = view.findViewById(R.id.add_trip_to_pincode);
+
         mDatePickerButton = view.findViewById(R.id.add_trip_date_button);
         mTimePickerButton = view.findViewById(R.id.add_trip_time_button);
         mResetButton = view.findViewById(R.id.add_trip_reset_button);
@@ -212,7 +218,9 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                     //User tripDriver = firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
                     Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).push().getKey(),
                             mSourceAddress.getText().toString().trim(),mDestinationAddress.getText().toString().trim(),
-                            mStartDate.getText().toString(),mStartTime.getText().toString(), System.currentTimeMillis(),noOfSeats,mTripDriver);
+                            mSourcePin.getText().toString().trim(),mSourceNeighbordhood.getText().toString().trim(),
+                            mDestinationPin.getText().toString().trim(), mDestinationNeighbordhood.getText().toString().trim(),
+                            System.currentTimeMillis(),noOfSeats,mTripDriver,mStartTime.getText().toString(),mStartDate.getText().toString());
 
                     Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                     try{
@@ -276,9 +284,29 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             mSourceAddress.setError(ENTER_SOURCE);
             dataValid = FAILURE;
         }
+        else if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
+        {
+            mSourceNeighbordhood.setError(ENTER_SOURCE_NEIGHBORHOOD);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mSourcePin.getText().toString()))
+        {
+            mSourcePin.setError(ENTER_SOURCE_PIN);
+            dataValid = FAILURE;
+        }
         else if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
         {
             mDestinationAddress.setError(ENTER_DESTINATION);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
+        {
+            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
+        {
+            mDestinationPin.setError(ENTER_DESTINATION_PIN);
             dataValid = FAILURE;
         }
         else if(TextUtils.isEmpty(mStartDate.getText().toString()))

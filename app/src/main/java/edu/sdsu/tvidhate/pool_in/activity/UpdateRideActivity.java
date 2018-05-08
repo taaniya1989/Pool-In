@@ -32,6 +32,7 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class UpdateRideActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener{
 
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable,mStartDate,mStartTime;
+    private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
     private DatabaseReference mDatabase;
     private String contact,color,license,uid;
     private User currentTripPoster;
@@ -51,6 +52,11 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         mStartDate = findViewById(R.id.add_trip_date_text);
         mStartTime = findViewById(R.id.add_trip_time_text);
         mSeatsAvailable = findViewById(R.id.add_trip_number_of_seats);
+        mSourceNeighbordhood = findViewById(R.id.add_trip_from_neighborhood);
+        mSourcePin = findViewById(R.id.add_trip_from_pincode);
+        mDestinationNeighbordhood = findViewById(R.id.add_trip_to_neighborhood);
+        mDestinationPin = findViewById(R.id.add_trip_to_pincode);
+
         mDatePickerButton = findViewById(R.id.add_trip_date_button);
         mTimePickerButton = findViewById(R.id.add_trip_time_button);
         mBackButton = findViewById(R.id.add_trip_reset_button);
@@ -86,6 +92,10 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     mStartDate.setText(currentTrip.getmStartDate());
                     mStartTime.setText(currentTrip.getmStartTime());
                     mSeatsAvailable.setText(String.valueOf(currentTrip.getmSeatsAvailable()));
+                    mSourceNeighbordhood.setText(String.valueOf(currentTrip.getmSourceNeighbordhood()));
+                    mDestinationNeighbordhood.setText(String.valueOf(currentTrip.getmDestinationNeighbordhood()));
+                    mSourcePin.setText(String.valueOf(currentTrip.getmSourcePin()));
+                    mDestinationPin.setText(String.valueOf(currentTrip.getmDestinationPin()));
                     uid=currentTrip.getmTripId();
                 }
             }
@@ -102,13 +112,35 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
     private boolean validInput() {
         boolean dataValid = true;
-        if (TextUtils.isEmpty(mSourceAddress.getText().toString())) {
+        if (TextUtils.isEmpty(mSourceAddress.getText().toString()))
+        {
             mSourceAddress.setError(ENTER_SOURCE);
-            dataValid = false;
+            dataValid = FAILURE;
         }
-        if (TextUtils.isEmpty(mDestinationAddress.getText().toString())) {
+        else if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
+        {
+            mSourceNeighbordhood.setError(ENTER_SOURCE_NEIGHBORHOOD);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mSourcePin.getText().toString()))
+        {
+            mSourcePin.setError(ENTER_SOURCE_PIN);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
+        {
             mDestinationAddress.setError(ENTER_DESTINATION);
-            dataValid = false;
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
+        {
+            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
+            dataValid = FAILURE;
+        }
+        else if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
+        {
+            mDestinationPin.setError(ENTER_DESTINATION_PIN);
+            dataValid = FAILURE;
         }
         if (TextUtils.isEmpty(mStartDate.getText().toString())) {
             mStartDate.setError(ENTER_DATE);
@@ -210,6 +242,10 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     currentTrip.setmCreationTimestamp(System.currentTimeMillis());
                     currentTrip.setmTripStatus(TRIP_UPDATED);
                     currentTrip.setmTripVisible(SUCCESS);
+                    currentTrip.setmSourceNeighbordhood(mSourceNeighbordhood.getText().toString());
+                    currentTrip.setmSourcePin(mSourcePin.getText().toString());
+                    currentTrip.setmDestinationNeighbordhood(mDestinationNeighbordhood.getText().toString());
+                    currentTrip.setmDestinationPin(mDestinationPin.getText().toString());
 
                     currentTrip.setmTripId(uid);
                     currentTrip.setmSeatsAvailable(Integer.parseInt(mSeatsAvailable.getText().toString()));

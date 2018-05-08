@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,6 +99,10 @@ public class HomeFragment extends Fragment implements SharedConstants
             @Override
             public void onClick(View v) {
                 Log.i("TPV-NOTE","Search this address : "+mSearchText.getText());
+                if(TextUtils.isEmpty(mSearchText.getText().toString()))
+                    getRideDetailsOntoTheList();
+                else
+                    getSpecificRideDetailsOntoTheList();
             }
         });
 
@@ -149,6 +154,81 @@ public class HomeFragment extends Fragment implements SharedConstants
                 }
                 progressDialog.dismiss();
                 Log.d("TPV-NOTE","No Data yet");
+                tripDetailsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
+                        Trip selectedTrip = (Trip) adapterView.getItemAtPosition(position);
+                        intent.putExtra(TRIP_DETAILS_SERIALIZABLE,selectedTrip);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("TPV-NOTE","database error: "+databaseError);
+                Toast.makeText(getActivity(), "Failed to load post.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference people = database.getReference(FIREBASE_TRIP_DETAILS);
+        people.addValueEventListener(valueEventListener);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage(LOADING);
+        progressDialog.show();
+    }
+
+    private void getSpecificRideDetailsOntoTheList() {
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("TPV-NOTE","in on data change home fragment");
+                if(getContext()!=null){
+                    tripDataList.clear();
+                }
+                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " list items in home fragment");
+                for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
+                    Trip currentTrip = msgSnapshot.getValue(Trip.class);
+
+                    String sourceAddress, sourcePin, sourceNeighborHood;
+                    String destinationAddress, destinationPin, destinationNeighborhood;
+
+                    String searchText = mSearchText.getText().toString().trim().toLowerCase();
+
+                    sourceAddress = currentTrip.getmSourceAddress().toLowerCase();
+                    sourceNeighborHood = currentTrip.getmSourceNeighbordhood().toLowerCase();
+                    sourcePin = currentTrip.getmSourcePin().toLowerCase();
+
+                    destinationAddress = currentTrip.getmDestinationAddress().toLowerCase();
+                    destinationNeighborhood = currentTrip.getmDestinationNeighbordhood().toLowerCase();
+                    destinationPin = currentTrip.getmDestinationPin().toLowerCase();
+
+                    if((destinationAddress.contains(searchText) || destinationNeighborhood.contains(searchText) || destinationPin.contains(searchText))
+                            || (sourceAddress.contains(searchText) || sourceNeighborHood.contains(searchText) || sourcePin.contains(searchText)))
+                        tripDataList.add(currentTrip);
+                }
+
+                Collections.sort(tripDataList, new Comparator<Trip>() {
+                    @Override
+                    public int compare(Trip o1, Trip o2) {
+                        return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                    }
+                });
+                Collections.reverse(tripDataList);
+                if(getActivity() != null){
+                    listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
+                    tripDetailsListView.setAdapter(listadapter);
+                    progressDialog.dismiss();
+                }
+                if (listadapter != null) {
+                    listadapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                }
+                progressDialog.dismiss();
+                Log.d("TPV-NOTE","No Data yet specific");
                 tripDetailsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {

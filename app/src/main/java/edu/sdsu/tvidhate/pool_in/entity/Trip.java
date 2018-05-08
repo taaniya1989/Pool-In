@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class Trip implements Serializable {
     private String mTripId,mSourceAddress,mDestinationAddress;
+    private String mSourcePin,mSourceNeighbordhood;
+    private String mDestinationPin,mDestinationNeighbordhood;
     private Long mCreationTimestamp,mEndTimestamp;
     private int mSeatsAvailable;
     private User mTripDriver;
@@ -20,41 +22,58 @@ public class Trip implements Serializable {
 
     }
 
-    @Override
-    public String toString() {
-        return "Trip{" +
-                "mTripId='" + mTripId + '\'' +
-                ", mSourceAddress='" + mSourceAddress + '\'' +
-                ", mDestinationAddress='" + mDestinationAddress + '\'' +
-                ", mCreationTimestamp=" + mCreationTimestamp +
-                ", mEndTimestamp=" + mEndTimestamp +
-                ", mSeatsAvailable=" + mSeatsAvailable +
-                ", mTripDriver=" + mTripDriver +
-                ", mTripPassengers=" + mTripPassengers +
-                ", mTripVisible=" + mTripVisible +
-                ", mTripStatus='" + mTripStatus + '\'' +
-                ", mStartTime='" + mStartTime + '\'' +
-                ", mStartDate='" + mStartDate + '\'' +
-                ", mTripCar=" + mTripCar +
-                '}';
+    public String getmSourcePin() {
+        return mSourcePin;
     }
 
-    public Trip(String mTripId, String mSourceAddress, String mDestinationAddress,
-                String mStartDate, String mStartTime, Long mCreationTimestamp,
-                int mSeatsAvailable, User mTripDriver) {
+    public void setmSourcePin(String mSourcePin) {
+        this.mSourcePin = mSourcePin;
+    }
+
+    public String getmSourceNeighbordhood() {
+        return mSourceNeighbordhood;
+    }
+
+    public void setmSourceNeighbordhood(String mSourceNeighbordhood) {
+        this.mSourceNeighbordhood = mSourceNeighbordhood;
+    }
+
+    public String getmDestinationPin() {
+        return mDestinationPin;
+    }
+
+    public void setmDestinationPin(String mDestinationPin) {
+        this.mDestinationPin = mDestinationPin;
+    }
+
+    public String getmDestinationNeighbordhood() {
+        return mDestinationNeighbordhood;
+    }
+
+    public void setmDestinationNeighbordhood(String mDestinationNeighbordhood) {
+        this.mDestinationNeighbordhood = mDestinationNeighbordhood;
+    }
+
+    public Trip(String mTripId, String mSourceAddress, String mDestinationAddress, String mSourcePin,
+                String mSourceNeighbordhood, String mDestinationPin, String mDestinationNeighbordhood,
+                Long mCreationTimestamp, int mSeatsAvailable, User mTripDriver, String mStartTime, String mStartDate) {
         this.mTripId = mTripId;
         this.mSourceAddress = mSourceAddress;
         this.mDestinationAddress = mDestinationAddress;
-        this.mStartDate = mStartDate;
-        this.mStartTime = mStartTime;
+        this.mSourcePin = mSourcePin;
+        this.mSourceNeighbordhood = mSourceNeighbordhood;
+        this.mDestinationPin = mDestinationPin;
+        this.mDestinationNeighbordhood = mDestinationNeighbordhood;
         this.mCreationTimestamp = mCreationTimestamp;
-        this.mEndTimestamp = null;
         this.mSeatsAvailable = mSeatsAvailable;
         this.mTripDriver = mTripDriver;
+        this.mStartTime = mStartTime;
+        this.mStartDate = mStartDate;
+        this.mTripCar = mTripDriver.getmCar();
+        this.mEndTimestamp = null;
         this.mTripStatus = "Created";
         this.mTripPassengers = null;
         this.mTripVisible = true;
-        this.mTripCar = mTripDriver.getmCar();
     }
 
     public Car getmTripCar() {

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -94,6 +96,12 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
         myRidesListView = view.findViewById(R.id.trip_list_home);
+        EditText searchText = view.findViewById(R.id.searchTextBox);
+        ImageButton searchButton = view.findViewById(R.id.searchButton);
+
+        searchText.setVisibility(View.GONE);
+        searchButton.setVisibility(View.GONE);
+
         if(auth.getCurrentUser()!=null){
             myPhoneNo = auth.getCurrentUser().getDisplayName();
         }

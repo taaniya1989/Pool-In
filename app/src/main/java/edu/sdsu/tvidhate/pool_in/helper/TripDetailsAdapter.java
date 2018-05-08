@@ -36,9 +36,9 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
         TextView seats = view.findViewById(R.id.trip_list_seats);
         TextView name = view.findViewById(R.id.trip_list_name);
         TextView contact = view.findViewById(R.id.trip_list_contact);
-        TextView car = view.findViewById(R.id.trip_list_car);
-        TextView color = view.findViewById(R.id.trip_list_color);
-        TextView license = view.findViewById(R.id.trip_list_license);
+       // TextView sourceNeighborhood = view.findViewById(R.id.trip_list_fromneighborhood);
+       // TextView destinationNeighborhood = view.findViewById(R.id.trip_list_toneighborhood);
+
         source.setText(userProperties.get(position).getmSourceAddress());
         destination.setText(userProperties.get(position).getmDestinationAddress());
         date.setText(userProperties.get(position).getmStartDate());
@@ -46,9 +46,9 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
         seats.setText(String.valueOf(userProperties.get(position).getmSeatsAvailable()));
         name.setText(userProperties.get(position).getmTripDriver().toString());
         contact.setText(userProperties.get(position).getmTripDriver().getmContactNumber());
-        //car.setText(userProperties.get(position).getmTripDriver());
-        //color.setText(userProperties.get(position).getCarColor());
-        //license.setText(userProperties.get(position).getLicense());
+       // sourceNeighborhood.setText(userProperties.get(position).getmSourceNeighbordhood());
+       // destinationNeighborhood.setText(userProperties.get(position).getmDestinationNeighbordhood());
+
         return view;
     }
 }

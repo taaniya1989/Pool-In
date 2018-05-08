@@ -60,6 +60,12 @@
     <string name="action_info">App Info</string>
     <string name="app_info">This app is designed for users travelling to/from same organisation to be able to car pool.</string>
     <string name="searchByLocation">Search Location</string>
+    <string name="fromStreet">From Street</string>
+    <string name="fromNeighborhood">Neighborhood</string>
+    <string name="fromPinCode">Pincode</string>
+    <string name="toStreet">To Street</string>
+    <string name="toNeighborhood">Neighborhood</string>
+    <string name="toPinCode">Pincode</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

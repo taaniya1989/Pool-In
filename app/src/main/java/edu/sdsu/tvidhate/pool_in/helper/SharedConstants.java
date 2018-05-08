@@ -47,7 +47,11 @@ public interface SharedConstants {
     String FIREBASE_PERSONAL_DATA = "personal_data";
     String JOINED = "Joined";
     String ENTER_SOURCE = "Enter Source";
+    String ENTER_SOURCE_NEIGHBORHOOD = "Enter Source Neighborhood";
+    String ENTER_SOURCE_PIN = "Enter Source Pin";
     String ENTER_DESTINATION = "Enter Destination";
+    String ENTER_DESTINATION_NEIGHBORHOOD = "Enter Destination Neighborhood";
+    String ENTER_DESTINATION_PIN = "Enter Destination Pin";
     String ENTER_DATE = "Enter Date";
     String ENTER_TIME = "Enter Time";
     String ENTER_SEATS = "Enter Seats";

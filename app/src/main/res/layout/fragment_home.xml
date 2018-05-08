@@ -16,6 +16,8 @@
             android:layout_height="fill_parent"
             android:id="@+id/searchTextBox"
             android:hint="@string/searchByLocation"
+            android:singleLine="true"
+            android:lines="1"
             android:layout_weight="4"/>
         <ImageButton
             android:layout_width="@dimen/zero_dp"

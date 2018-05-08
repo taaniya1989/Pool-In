@@ -9,7 +9,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/ten_dp">
 
         <EditText
             android:id="@+id/add_trip_from"
@@ -17,26 +18,46 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#f0f0f4"
-            android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="@string/from"
+            android:hint="@string/fromStreet"
             android:inputType="textCapWords"
-            android:layout_margin="10dp"
-            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             android:textColor="#000" />
-        <EditText
-            android:id="@+id/add_trip_to"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#f0f0f4"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="@string/to"
-            android:inputType="textCapWords"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:textColor="#000" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_trip_from_neighborhood"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="@string/fromNeighborhood"
+                android:inputType="textCapWords"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/add_trip_from_pincode"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="@string/fromPinCode"
+                android:inputType="textCapWords"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,6 +83,7 @@
                 android:textColor="@color/white"
                 android:id="@+id/add_trip_date_button"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,19 +109,67 @@
                 android:textColor="@color/white"
                 android:id="@+id/add_trip_time_button"/>
         </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/add_trip_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#f0f0f4"
+            android:ems="10"
+            android:hint="@string/toStreet"
+            android:inputType="textCapWords"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="#000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_trip_to_neighborhood"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="@string/toNeighborhood"
+                android:inputType="textCapWords"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/add_trip_to_pincode"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="@string/toPinCode"
+                android:inputType="textCapWords"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/add_trip_number_of_seats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#f0f0f4"
-            android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/seats_available"
             android:inputType="number"
-            android:layout_margin="10dp"
-            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             android:textColor="#000" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
