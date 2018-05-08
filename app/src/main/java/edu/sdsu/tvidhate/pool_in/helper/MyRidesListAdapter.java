@@ -30,26 +30,25 @@ public class MyRidesListAdapter extends ArrayAdapter implements SharedConstants{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View view = inflater.inflate(R.layout.my_rides_list_item, null);
+        View view = inflater.inflate(R.layout.trip_list_item, null);
 
-        TextView source = view.findViewById(R.id.my_ride_source);
-        TextView destination = view.findViewById(R.id.my_ride_destination);
-        TextView date = view.findViewById(R.id.my_ride_date);
-        TextView time = view.findViewById(R.id.my_ride_time);
-        TextView uid = view.findViewById(R.id.my_ride_uid);
-        TextView status = view.findViewById(R.id.my_ride_status);
-
+        TextView destination = view.findViewById(R.id.trip_list_destination);
+        TextView source = view.findViewById(R.id.trip_list_source);
+        TextView date = view.findViewById(R.id.trip_list_date);
+        TextView time = view.findViewById(R.id.trip_list_time);
+        TextView seats = view.findViewById(R.id.trip_list_seats);
+        TextView name = view.findViewById(R.id.trip_list_name);
+        TextView contact = view.findViewById(R.id.trip_list_contact);
+        TextView car = view.findViewById(R.id.trip_list_car);
+        TextView color = view.findViewById(R.id.trip_list_color);
+        TextView license = view.findViewById(R.id.trip_list_license);
         source.setText(userProperties.get(position).getmSourceAddress());
         destination.setText(userProperties.get(position).getmDestinationAddress());
         date.setText(userProperties.get(position).getmStartDate());
         time.setText(userProperties.get(position).getmStartTime());
-        uid.setText(userProperties.get(position).getmTripId());
-/*        if(userProperties.get(position).isApprovalStatus()){
-            status.setText(RIDE_STATUS_COMPLETED);
-        }else{
-            status.setText(RIDE_SCHEDULED);
-        }*/
-        status.setText(userProperties.get(position).getmTripStatus());
+        seats.setText(String.valueOf(userProperties.get(position).getmSeatsAvailable()));
+        name.setText(userProperties.get(position).getmTripDriver().toString());
+        contact.setText(userProperties.get(position).getmTripDriver().getmContactNumber());
 
         return view;
     }

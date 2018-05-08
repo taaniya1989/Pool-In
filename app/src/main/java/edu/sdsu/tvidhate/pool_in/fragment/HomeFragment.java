@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment implements SharedConstants
     private ListView tripDetailsListView;
     private FirebaseAuth auth;
     TripDetailsAdapter listadapter;
-    private String hasUserDetails;
     List<Trip> tripDataList = new ArrayList<>();
 
     public HomeFragment() {
@@ -77,19 +76,17 @@ public class HomeFragment extends Fragment implements SharedConstants
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         auth = FirebaseAuth.getInstance();
 
-        hasUserDetails = "User";
+        String hasUserDetails = "User";
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
 

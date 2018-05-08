@@ -88,12 +88,12 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_my_trips, container, false);
+        View view =  inflater.inflate(R.layout.fragment_home, container, false);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         hasUserDetails = "User";
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
-        myRidesListView = view.findViewById(R.id.my_rides_list_view);
+        myRidesListView = view.findViewById(R.id.trip_list_home);
         if(auth.getCurrentUser()!=null){
             myPhoneNo = auth.getCurrentUser().getDisplayName();
         }
