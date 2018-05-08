@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,10 +32,8 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class UpdateRideActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener{
 
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable,mStartDate,mStartTime;
-    private int mYear,mMonth,mDay,mHour,mMinute;
     private DatabaseReference mDatabase;
-    private String name,contact,car,color,license,uid;
-    private FirebaseAuth auth;
+    private String contact,color,license,uid;
     private User currentTripPoster;
     private Car thisTripCar;
 
@@ -45,7 +42,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_trip);
 
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Button mDatePickerButton,mTimePickerButton,mBackButton,mUpdateButton;
@@ -78,11 +75,9 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                 Trip currentTrip = dataSnapshot.getValue(Trip.class);
                 if(currentTrip != null){
                     currentTripPoster = currentTrip.getmTripDriver();
-                    name = currentTripPoster.getFullName();
                     thisTripCar = currentTrip.getmTripCar();
                     if(thisTripCar != null)
                     {
-                        car = thisTripCar.toString();
                         color = thisTripCar.getmColor();
                         license = thisTripCar.getmNumberPlate();
                     }
@@ -163,9 +158,9 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         {
             case R.id.add_trip_date_button:
                 final Calendar calendar = Calendar.getInstance();
-                mYear = calendar.get(Calendar.YEAR);
-                mMonth = calendar.get(Calendar.MONTH);
-                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateRideActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -180,8 +175,8 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
             case R.id.add_trip_time_button:
                 final Calendar c = Calendar.getInstance();
-                mHour = c.get(Calendar.HOUR_OF_DAY);
-                mMinute = c.get(Calendar.MINUTE);
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
                 TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateRideActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override

@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FloatingActionButton fab;
-    private Button appInfoButton;
     private String[] activityTitles;
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_HOME;
@@ -65,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         drawer = findViewById(R.id.drawer_layout);
         fab = findViewById(R.id.fab);
         navigationView = findViewById(R.id.nav_view);
-     //   appInfoButton = findViewById(R.id.action_app_info);
 
         setSupportActionBar(toolbar);
         mHandler = new Handler();
@@ -116,9 +113,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             }
         };
 
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
+        mHandler.post(mPendingRunnable);
         toggleFab();
         drawer.closeDrawers();
         invalidateOptionsMenu();
@@ -127,21 +122,17 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                return new HomeFragment();
             case 1:
                 AddTripFragment addTripFragment = new AddTripFragment();
                 Log.i("TPV-NOTE","Creating Trip");
                 return addTripFragment;
             case 2:
-                MyTripsFragment myTripsFragment = new MyTripsFragment();
-                return myTripsFragment;
+                return new MyTripsFragment();
             case 3:
-                MyProfileFragment myProfileFragment = new MyProfileFragment();
-                return myProfileFragment;
+                return new MyProfileFragment();
             case 4:
-                RequestsFragment requestsFragment = new RequestsFragment();
-                return requestsFragment;
+                return new RequestsFragment();
 
             default:
                 return new HomeFragment();
@@ -162,16 +153,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         // This code loads home fragment when back key is pressed
         // when user is in other fragment than home
 
-        boolean shouldLoadHomeFragOnBackPress = true;
-        if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
-            if (navItemIndex != 0) {
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME;
-                loadHomeFragment();
-                return;
-            }
+        // checking if user is on other navigation menu
+        // rather than home
+        if (navItemIndex != 0) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+            loadHomeFragment();
+            return;
         }
         super.onBackPressed();
     }

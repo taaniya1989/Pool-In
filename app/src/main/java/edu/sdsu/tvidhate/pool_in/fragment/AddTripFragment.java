@@ -31,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
@@ -188,7 +190,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 int mYear = calendar.get(Calendar.YEAR);
                 int mMonth = calendar.get(Calendar.MONTH);
                 int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getContext()),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
@@ -218,7 +220,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
                         firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
                         Log.d("TPV-NOTE","Data submitted successfully");
-                        Intent intent = getActivity().getIntent();
+                        Intent intent = Objects.requireNonNull(getActivity()).getIntent();
                         getActivity().finish();
                         startActivity(intent);
                     }catch(Exception e){

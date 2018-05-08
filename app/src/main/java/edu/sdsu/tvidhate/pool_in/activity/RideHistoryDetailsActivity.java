@@ -22,7 +22,14 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class RideHistoryDetailsActivity extends AppCompatActivity implements SharedConstants
 {
-    private TextView source,destination,date,time,joinees,poster,posterContact,status;
+    private TextView source;
+    private TextView destination;
+    private TextView date;
+    private TextView time;
+    private TextView joinees;
+    private TextView poster;
+    private TextView posterContact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +43,6 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
         joinees = findViewById(R.id.ride_history_people);
         poster = findViewById(R.id.ride_history_posted_by);
         posterContact = findViewById(R.id.ride_history_poster_contact);
-        status = findViewById(R.id.ride_history_status);
         Button back = findViewById(R.id.ride_history_back);
         Bundle intent = getIntent().getExtras();
         String uidFromIntent = intent != null ? intent.getString(UID) : null;
@@ -52,11 +58,6 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                     time.setText(myRideDetailsPOJO.getmStartTime());
                     poster.setText(myRideDetailsPOJO.getmTripDriver().getFullName());
                     posterContact.setText(myRideDetailsPOJO.getmTripDriver().getmContactNumber());
-/*                    if(myRideDetailsPOJO.isApprovalStatus()){
-                        status.setText(COMPLETED);
-                    }else{
-                        status.setText(WAITING);
-                    }*/
 
                     Map<String,User> currentTripPassengers = myRideDetailsPOJO.getmTripPassengers();
                     String currentTripPassengersNames = "";
@@ -73,7 +74,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                                 if(passengerCount == 1)
                                     currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
                                 else
-                                    currentTripPassengersNames = currentTripPassengersNames + "\n" + currentTripPassengers.get(contact).getFullName();
+                                    currentTripPassengersNames += "\n" + currentTripPassengers.get(contact).getFullName();
                             }
                         }
                     }
@@ -88,8 +89,11 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
 
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(uidFromIntent);
-        people.addValueEventListener(valueEventListener);
+        if (uidFromIntent != null)
+        {
+            DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(uidFromIntent);
+            people.addValueEventListener(valueEventListener);
+        }
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
