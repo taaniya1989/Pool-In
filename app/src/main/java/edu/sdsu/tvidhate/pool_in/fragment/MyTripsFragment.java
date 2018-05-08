@@ -137,7 +137,6 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
                                     Collections.sort(myRideDetailsList, new Comparator<Trip>() {
                                         @Override
                                         public int compare(Trip o1, Trip o2) {
-                                            Log.i("TPV-NOTE",o1.toString()+"----\n---"+o2.toString());
                                             return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
                                         }
                                     });

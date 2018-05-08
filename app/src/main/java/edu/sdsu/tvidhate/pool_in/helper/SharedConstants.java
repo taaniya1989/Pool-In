@@ -17,6 +17,7 @@ public interface SharedConstants {
     String TRIP_CANCELLED = "Cancelled";
     String TRIP_COMPLETED = "Completed";
     String TRIP_CREATED = "Created";
+    String TRIP_UPDATED = "Updated";
 
     boolean SUCCESS = true;
     boolean FAILURE = false;

@@ -32,7 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -46,7 +45,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
 
     private String currentUserDisplayName;
     private User mTripDriver;
-    private Car thisTripCar;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private FirebaseDatabase firebaseDatabaseInstance;
     private String hasCar;
@@ -134,7 +132,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         if(currentUser.hasACar())
                         {
                             Log.i("TPV-NOTE","User already has a car");
-                            thisTripCar = currentUser.getmCar();
                         }
                         else
                         {
