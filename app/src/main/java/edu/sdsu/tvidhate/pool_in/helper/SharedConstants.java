@@ -75,4 +75,9 @@ public interface SharedConstants {
     String REQUEST_STATUS_APPROVED = "Approved";
     String REQUEST_STATUS_WAITING = "Awaiting Approval";
     String DATE_VALIDATION_FAILURE_TOAST = "Date Validation Failed";
+
+    String FILTER_START_TIME_ASC = "Start_Time_asc";
+    String FILTER_START_TIME_DESC = "Start_Time_desc";
+    String FILTER_NO_OF_SEATS_ASC = "No_of_Seats_asc";
+    String FILTER_NO_OF_SEATS_DESC = "No_of_Seats_desc";
 }

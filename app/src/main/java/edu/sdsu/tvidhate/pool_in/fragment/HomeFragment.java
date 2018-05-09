@@ -14,10 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +51,8 @@ public class HomeFragment extends Fragment implements SharedConstants
     private FirebaseAuth auth;
     private ImageButton mSearchButton;
     private EditText mSearchText;
+    private Spinner mFilterTripSpinner;
+    private String filterString = "";
 
     TripDetailsAdapter listadapter;
     List<Trip> tripDataList = new ArrayList<>();
@@ -94,15 +97,36 @@ public class HomeFragment extends Fragment implements SharedConstants
         tripDetailsListView = view.findViewById(R.id.trip_list_home);
         mSearchButton = view.findViewById(R.id.searchButton);
         mSearchText = view.findViewById(R.id.searchTextBox);
+        mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
+
+        ArrayAdapter dataAdapter = new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.filter_items));
+        mFilterTripSpinner.setAdapter(dataAdapter);
+
+        mFilterTripSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filterString = parent.getItemAtPosition(position).toString();
+                Toast.makeText(parent.getContext(), "Selected: " + filterString, Toast.LENGTH_LONG).show();
+                if(TextUtils.isEmpty(mSearchText.getText().toString()))
+                    getRideDetailsOntoTheList(filterString);
+                else
+                    getSpecificRideDetailsOntoTheList(filterString);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                filterString = "";
+            }
+        });
 
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("TPV-NOTE","Search this address : "+mSearchText.getText());
                 if(TextUtils.isEmpty(mSearchText.getText().toString()))
-                    getRideDetailsOntoTheList();
+                    getRideDetailsOntoTheList(filterString);
                 else
-                    getSpecificRideDetailsOntoTheList();
+                    getSpecificRideDetailsOntoTheList(filterString);
             }
         });
 
@@ -112,7 +136,7 @@ public class HomeFragment extends Fragment implements SharedConstants
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
         progressDialog = new ProgressDialog(getContext());
-        getRideDetailsOntoTheList();
+        getRideDetailsOntoTheList(filterString);
         return view;
     }
 
@@ -121,7 +145,7 @@ public class HomeFragment extends Fragment implements SharedConstants
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void getRideDetailsOntoTheList() {
+    private void getRideDetailsOntoTheList(final String filterString) {
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -136,13 +160,64 @@ public class HomeFragment extends Fragment implements SharedConstants
                     tripDataList.add(currentTrip);
                 }
 
-                Collections.sort(tripDataList, new Comparator<Trip>() {
-                    @Override
-                    public int compare(Trip o1, Trip o2) {
-                        return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                if(filterString == "")
+                {
+                    Log.i("TPV-NOTE","filterString empty");
+                    Collections.sort(tripDataList, new Comparator<Trip>() {
+                        @Override
+                        public int compare(Trip o1, Trip o2) {
+                            return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                        }
+                    });
+                    Collections.reverse(tripDataList);
+                }
+                else {
+                    Log.i("TPV-NOTE", HomeFragment.this.filterString);
+                    switch (filterString) {
+                        case FILTER_START_TIME_ASC:
+                            Log.i("TPV-NOTE","Sorting in Start Time Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
+                                }
+                            });
+                            break;
+                        case FILTER_START_TIME_DESC:
+                            Log.i("TPV-NOTE","Sorting in Start Time Descending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
+                                }
+                            });
+                            Collections.reverse(tripDataList);
+                            Log.i("TPV-NOTE","Descending List "+tripDataList.get(0).toString());
+                            break;
+                        case FILTER_NO_OF_SEATS_ASC:
+                            Log.i("TPV-NOTE","Sorting in Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
+                                    return cmp;
+                                }
+                            });
+                            break;
+                        case FILTER_NO_OF_SEATS_DESC:
+                            Log.i("TPV-NOTE","Sorting in Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
+                                    return cmp;
+                                }
+                            });
+                            Collections.reverse(tripDataList);
+                            break;
                     }
-                });
-                Collections.reverse(tripDataList);
+                }
+
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
                     tripDetailsListView.setAdapter(listadapter);
@@ -180,7 +255,7 @@ public class HomeFragment extends Fragment implements SharedConstants
         progressDialog.show();
     }
 
-    private void getSpecificRideDetailsOntoTheList() {
+    private void getSpecificRideDetailsOntoTheList(final String filterString) {
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -211,13 +286,63 @@ public class HomeFragment extends Fragment implements SharedConstants
                         tripDataList.add(currentTrip);
                 }
 
-                Collections.sort(tripDataList, new Comparator<Trip>() {
-                    @Override
-                    public int compare(Trip o1, Trip o2) {
-                        return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                if(filterString == "")
+                {
+                    Log.i("TPV-NOTE","filterString empty");
+                    Collections.sort(tripDataList, new Comparator<Trip>() {
+                        @Override
+                        public int compare(Trip o1, Trip o2) {
+                            return o1.getmCreationTimestamp().compareTo(o2.getmCreationTimestamp());
+                        }
+                    });
+                    Collections.reverse(tripDataList);
+                }
+                else
+                {
+                    Log.i("TPV-NOTE",filterString);
+                    switch (filterString) {
+                        case FILTER_START_TIME_ASC:
+                            Log.i("TPV-NOTE","Sorting in Start Time Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
+                                }
+                            });
+                            break;
+                        case FILTER_START_TIME_DESC:
+                            Log.i("TPV-NOTE","Sorting in Start Time Descending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
+                                }
+                            });
+                            Collections.reverse(tripDataList);
+                            break;
+                        case FILTER_NO_OF_SEATS_ASC:
+                            Log.i("TPV-NOTE","Sorting in Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
+                                    return cmp;
+                                }
+                            });
+                            break;
+                        case FILTER_NO_OF_SEATS_DESC:
+                            Log.i("TPV-NOTE","Sorting in Ascending");
+                            Collections.sort(tripDataList, new Comparator<Trip>() {
+                                @Override
+                                public int compare(Trip o1, Trip o2) {
+                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
+                                    return cmp;
+                                }
+                            });
+                            Collections.reverse(tripDataList);
+                            break;
                     }
-                });
-                Collections.reverse(tripDataList);
+                }
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
                     tripDetailsListView.setAdapter(listadapter);
@@ -259,7 +384,7 @@ public class HomeFragment extends Fragment implements SharedConstants
     public void onResume() {
         super.onResume();
         Log.d("TPV-NOTE","in on resume");
-        getRideDetailsOntoTheList();
+        getRideDetailsOntoTheList(filterString);
     }
 
     @Override

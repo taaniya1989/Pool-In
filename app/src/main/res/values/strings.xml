@@ -74,4 +74,11 @@
         <item>My Profile</item>
         <item>Requests</item>
     </string-array>
+
+    <string-array name="filter_items">
+        <item>Start_Time_asc</item>
+        <item>Start_Time_desc</item>
+        <item>No_of_Seats_asc</item>
+        <item>No_of_Seats_desc</item>
+    </string-array>
 </resources>

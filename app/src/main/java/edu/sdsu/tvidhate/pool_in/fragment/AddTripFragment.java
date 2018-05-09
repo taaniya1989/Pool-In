@@ -54,6 +54,8 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
     private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
     private TextView mStartDate,mStartTime;
+    private String mDateString;
+    private Date mTripStartDate;
 
     public AddTripFragment() {
         // Required empty public constructor
@@ -220,7 +222,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                             mSourceAddress.getText().toString().trim(),mDestinationAddress.getText().toString().trim(),
                             mSourcePin.getText().toString().trim(),mSourceNeighbordhood.getText().toString().trim(),
                             mDestinationPin.getText().toString().trim(), mDestinationNeighbordhood.getText().toString().trim(),
-                            System.currentTimeMillis(),noOfSeats,mTripDriver,mStartTime.getText().toString(),mStartDate.getText().toString());
+                            System.currentTimeMillis(),mTripStartDate,noOfSeats,mTripDriver,mStartTime.getText().toString(),mStartDate.getText().toString());
 
                     Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                     try{
@@ -329,12 +331,13 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             dataValid = FAILURE;
         }
 
-        String dateString=mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
+        mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
         DateFormat formatter ;
         Date date;
         formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
         try {
-            date = formatter.parse(dateString);
+            date = formatter.parse(mDateString);
+            mTripStartDate = date;
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             Log.d("TPV-NOTE", "formatted time: " + date);

@@ -1,14 +1,15 @@
 package edu.sdsu.tvidhate.pool_in.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
+import java.util.Date;
 
 public class Trip implements Serializable {
     private String mTripId,mSourceAddress,mDestinationAddress;
     private String mSourcePin,mSourceNeighbordhood;
     private String mDestinationPin,mDestinationNeighbordhood;
     private Long mCreationTimestamp,mEndTimestamp;
+    private Date mStartTimestamp;
     private int mSeatsAvailable;
     private User mTripDriver;
     private Map<String,User> mTripPassengers;
@@ -16,6 +17,38 @@ public class Trip implements Serializable {
     private String mTripStatus;
     private String mStartTime,mStartDate;
     private Car mTripCar;
+
+    public Date getmStartTimestamp() {
+        return mStartTimestamp;
+    }
+
+    public void setmStartTimestamp(Date mStartTimestamp) {
+        this.mStartTimestamp = mStartTimestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "mTripId='" + mTripId + '\'' +
+                ", mSourceAddress='" + mSourceAddress + '\'' +
+                ", mDestinationAddress='" + mDestinationAddress + '\'' +
+                ", mSourcePin='" + mSourcePin + '\'' +
+                ", mSourceNeighbordhood='" + mSourceNeighbordhood + '\'' +
+                ", mDestinationPin='" + mDestinationPin + '\'' +
+                ", mDestinationNeighbordhood='" + mDestinationNeighbordhood + '\'' +
+                ", mCreationTimestamp=" + mCreationTimestamp +
+                ", mEndTimestamp=" + mEndTimestamp +
+                ", mStartTimestamp=" + mStartTimestamp +
+                ", mSeatsAvailable=" + mSeatsAvailable +
+                ", mTripDriver=" + mTripDriver +
+                ", mTripPassengers=" + mTripPassengers +
+                ", mTripVisible=" + mTripVisible +
+                ", mTripStatus='" + mTripStatus + '\'' +
+                ", mStartTime='" + mStartTime + '\'' +
+                ", mStartDate='" + mStartDate + '\'' +
+                ", mTripCar=" + mTripCar +
+                '}';
+    }
 
     public Trip()
     {
@@ -56,7 +89,7 @@ public class Trip implements Serializable {
 
     public Trip(String mTripId, String mSourceAddress, String mDestinationAddress, String mSourcePin,
                 String mSourceNeighbordhood, String mDestinationPin, String mDestinationNeighbordhood,
-                Long mCreationTimestamp, int mSeatsAvailable, User mTripDriver, String mStartTime, String mStartDate) {
+                Long mCreationTimestamp, Date mStartTripTimestamp, int mSeatsAvailable, User mTripDriver, String mStartTime, String mStartDate) {
         this.mTripId = mTripId;
         this.mSourceAddress = mSourceAddress;
         this.mDestinationAddress = mDestinationAddress;
@@ -74,6 +107,7 @@ public class Trip implements Serializable {
         this.mTripStatus = "Created";
         this.mTripPassengers = null;
         this.mTripVisible = true;
+        this.mStartTimestamp = mStartTripTimestamp;
     }
 
     public Car getmTripCar() {
