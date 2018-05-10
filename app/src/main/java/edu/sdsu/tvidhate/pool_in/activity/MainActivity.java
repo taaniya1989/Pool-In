@@ -269,7 +269,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 loadHomeFragment();
                 break;
 
-
         }
 
     }

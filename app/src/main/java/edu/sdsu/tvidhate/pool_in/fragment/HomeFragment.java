@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment implements SharedConstants
     private EditText mSearchText;
     private String filterString = "";
 
-    private TripDetailsAdapter listadapter;
-    private List<Trip> tripDataList = new ArrayList<>();
+    TripDetailsAdapter listadapter;
+    List<Trip> tripDataList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
