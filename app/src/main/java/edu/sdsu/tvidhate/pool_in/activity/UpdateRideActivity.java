@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +38,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     private String contact,color,license,uid;
     private User currentTripPoster;
     private Car thisTripCar;
+    private Date mTripStartDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,17 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     mDestinationNeighbordhood.setText(String.valueOf(currentTrip.getmDestinationNeighbordhood()));
                     mSourcePin.setText(String.valueOf(currentTrip.getmSourcePin()));
                     mDestinationPin.setText(String.valueOf(currentTrip.getmDestinationPin()));
+
+                    String mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
+                    DateFormat formatter ;
+                    Date date;
+                    formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+                    try {
+                        mTripStartDate = formatter.parse(mDateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    ;
                     uid=currentTrip.getmTripId();
                 }
             }
@@ -164,6 +177,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
         try {
             date = formatter.parse(dateString);
+            mTripStartDate = date;
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             Log.d("TPV-NOTE", "formatted time: " + date);
@@ -246,7 +260,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     currentTrip.setmSourcePin(mSourcePin.getText().toString());
                     currentTrip.setmDestinationNeighbordhood(mDestinationNeighbordhood.getText().toString());
                     currentTrip.setmDestinationPin(mDestinationPin.getText().toString());
-
+                    currentTrip.setmStartTimestamp(mTripStartDate);
                     currentTrip.setmTripId(uid);
                     currentTrip.setmSeatsAvailable(Integer.parseInt(mSeatsAvailable.getText().toString()));
 
