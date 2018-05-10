@@ -108,7 +108,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    ;
                     uid=currentTrip.getmTripId();
                 }
             }

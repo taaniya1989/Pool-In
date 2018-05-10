@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -223,7 +221,7 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
         return dataValid; //&& carValid;
     }
 
-    public boolean checkCarDetails(){
+    private boolean checkCarDetails(){
         boolean dataValid = SUCCESS;
         if (TextUtils.isEmpty(mCarBrand.getText().toString())) {
             mCarBrand.setError(ENTER_CAR);

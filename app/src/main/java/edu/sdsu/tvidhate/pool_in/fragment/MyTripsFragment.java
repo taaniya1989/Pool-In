@@ -49,13 +49,12 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    List<String> uids = new ArrayList<>();
-    List<Trip> myRideDetailsList = new ArrayList<>();
+    private List<String> uids = new ArrayList<>();
+    private List<Trip> myRideDetailsList = new ArrayList<>();
     private ListView myRidesListView;
-    MyRidesListAdapter listadapter;
+    private MyRidesListAdapter listadapter;
     private String myPhoneNo="";
     private OnFragmentInteractionListener mListener;
-    private String hasUserDetails;
 
     public MyTripsFragment() {
         // Required empty public constructor
@@ -94,7 +93,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        hasUserDetails = "User";
+        String hasUserDetails = "User";
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
         myRidesListView = view.findViewById(R.id.trip_list_home);
@@ -126,7 +125,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         return view;
     }
 
-    private List getAllUidsFromCurrentRides(final String phNo) {
+    private List<String> getAllUidsFromCurrentRides(final String phNo) {
         ValueEventListener valueEventListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

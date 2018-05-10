@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private DrawerLayout drawer;
     private FloatingActionButton fab;
     private String[] activityTitles;
-    public static int navItemIndex = 0;
-    public static String CURRENT_TAG = TAG_HOME;
+    private static int navItemIndex = 0;
+    private static String CURRENT_TAG = TAG_HOME;
     private Handler mHandler;
 
 

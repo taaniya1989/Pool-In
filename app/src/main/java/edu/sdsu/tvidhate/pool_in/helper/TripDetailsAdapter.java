@@ -18,7 +18,7 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
 {
     private Activity context;
     private List<Trip> userProperties;
-    public TripDetailsAdapter(Activity context, int resource, List list) {
+    public TripDetailsAdapter(Activity context, int resource, List<Trip> list) {
         super(context, resource, list);
         this.context = context;
         this.userProperties = list;

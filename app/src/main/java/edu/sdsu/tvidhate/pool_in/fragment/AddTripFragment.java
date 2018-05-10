@@ -54,7 +54,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
     private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
     private TextView mStartDate,mStartTime;
-    private String mDateString;
     private Date mTripStartDate;
 
     public AddTripFragment() {
@@ -331,7 +330,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             dataValid = FAILURE;
         }
 
-        mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
+        String mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
         DateFormat formatter ;
         Date date;
         formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);

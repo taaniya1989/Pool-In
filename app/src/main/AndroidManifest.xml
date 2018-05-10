@@ -24,7 +24,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/homeScreen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+            </activity>
         <activity
             android:name=".activity.TripDetailsActivity"
             android:label="@string/tripDetailsTitle" />

@@ -51,12 +51,11 @@ public class RequestsFragment extends Fragment implements SharedConstants{
     private static final String ARG_PARAM2 = "param2";
 
     private ListView requestsListView;
-    private FirebaseAuth auth;
     private DatabaseReference mDatabase;
     private String uid = "";
     private String currentUserContactNumber;
-    RequestsAdapter listadapter;
-    List<Request> requestList = new ArrayList<>();
+    private RequestsAdapter listadapter;
+    private List<Request> requestList = new ArrayList<>();
     private int seatsAvailable;
     private OnFragmentInteractionListener mListener;
     private Trip currentTrip;
@@ -99,7 +98,7 @@ public class RequestsFragment extends Fragment implements SharedConstants{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
 
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         Utilities utilities = new Utilities(getFragmentManager());
         String hasAll = "All";

@@ -17,7 +17,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/ic_action_user"
-            android:contentDescription="image"/>
+            android:contentDescription="@string/image"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name: "/>
+                android:text="@string/name_text"/>
             <TextView
                 android:id="@+id/request_list_requestor_name"
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact: "/>
+                android:text="@string/contact_text"/>
             <TextView
                 android:id="@+id/request_list_requestor_contact"
                 android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status: "/>
+                android:text="@string/status_text"/>
             <TextView
                 android:id="@+id/request_list_approval"
                 android:layout_width="wrap_content"

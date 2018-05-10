@@ -5,17 +5,13 @@
     android:id="@+id/scrollView"
     android:background="@null"
     android:scrollbars="horizontal">
-    <RelativeLayout
-        android:layout_margin="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/activity_user_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/white"
             android:gravity="center"
             android:fitsSystemWindows="true"
             tools:context=".fragment.UpdateProfileFragment">
@@ -60,13 +56,14 @@
                         android:id="@+id/updateEmailAddressEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,13 +85,14 @@
                         android:id="@+id/updateContactEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="phone"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,13 +115,14 @@
                         android:id="@+id/updateFirstNameEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textPersonName"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,13 +145,14 @@
                         android:id="@+id/updateLastNameEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textPersonName"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -175,13 +175,14 @@
                         android:id="@+id/updateHomeAddressEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textPostalAddress"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -204,13 +205,14 @@
                         android:id="@+id/updateWorkAddressEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textPostalAddress"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <TextView
@@ -245,13 +247,14 @@
                         android:id="@+id/updateCarBrandEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textLongMessage"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -274,13 +277,14 @@
                         android:id="@+id/updateCarModelEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="text|textLongMessage"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -303,13 +307,14 @@
                         android:id="@+id/updateCarColorEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textLongMessage"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,13 +337,14 @@
                         android:id="@+id/updateCarNumberPlateEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:inputType="textLongMessage"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textviewsize"
                         android:padding="4dp"
-                        android:textColor="@android:color/black"
+                        android:singleLine="true"
                         android:textAlignment="textStart"
-                        android:layout_weight="1"/>
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -376,5 +382,4 @@
             </LinearLayout>
 
         </LinearLayout>
-    </RelativeLayout>
 </ScrollView>

@@ -68,7 +68,8 @@
                 android:text="@string/reset"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/activity_horizontal_margin"/>
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                />
 
             <Button
                 android:id="@+id/submitButton"

@@ -49,13 +49,11 @@ public class HomeFragment extends Fragment implements SharedConstants
     private OnFragmentInteractionListener mListener;
     private ListView tripDetailsListView;
     private FirebaseAuth auth;
-    private ImageButton mSearchButton;
     private EditText mSearchText;
-    private Spinner mFilterTripSpinner;
     private String filterString = "";
 
-    TripDetailsAdapter listadapter;
-    List<Trip> tripDataList = new ArrayList<>();
+    private TripDetailsAdapter listadapter;
+    private List<Trip> tripDataList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -95,9 +93,9 @@ public class HomeFragment extends Fragment implements SharedConstants
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tripDetailsListView = view.findViewById(R.id.trip_list_home);
-        mSearchButton = view.findViewById(R.id.searchButton);
+        ImageButton mSearchButton = view.findViewById(R.id.searchButton);
         mSearchText = view.findViewById(R.id.searchTextBox);
-        mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
+        Spinner mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
 
         ArrayAdapter dataAdapter = new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.filter_items));
         mFilterTripSpinner.setAdapter(dataAdapter);
@@ -199,8 +197,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                             Collections.sort(tripDataList, new Comparator<Trip>() {
                                 @Override
                                 public int compare(Trip o1, Trip o2) {
-                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-                                    return cmp;
+                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
                                 }
                             });
                             break;
@@ -209,8 +206,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                             Collections.sort(tripDataList, new Comparator<Trip>() {
                                 @Override
                                 public int compare(Trip o1, Trip o2) {
-                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-                                    return cmp;
+                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
                                 }
                             });
                             Collections.reverse(tripDataList);
@@ -325,8 +321,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                             Collections.sort(tripDataList, new Comparator<Trip>() {
                                 @Override
                                 public int compare(Trip o1, Trip o2) {
-                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-                                    return cmp;
+                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
                                 }
                             });
                             break;
@@ -335,8 +330,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                             Collections.sort(tripDataList, new Comparator<Trip>() {
                                 @Override
                                 public int compare(Trip o1, Trip o2) {
-                                    int cmp = o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-                                    return cmp;
+                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
                                 }
                             });
                             Collections.reverse(tripDataList);

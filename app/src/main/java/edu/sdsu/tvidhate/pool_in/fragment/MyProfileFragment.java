@@ -20,9 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.User;

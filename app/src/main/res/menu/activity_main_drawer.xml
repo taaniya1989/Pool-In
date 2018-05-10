@@ -7,27 +7,27 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_action_home"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_add_trip"
             android:icon="@drawable/ic_action_add"
-            android:title="Add a Trip" />
+            android:title="@string/add_trip" />
         <item
             android:id="@+id/nav_my_trips"
             android:icon="@drawable/ic_action_list"
-            android:title="My Trips" />
+            android:title="@string/my_trips" />
         <item
             android:id="@+id/nav_my_profile"
             android:icon="@drawable/ic_action_user"
-            android:title="My Profile" />
+            android:title="@string/my_profile" />
         <item
             android:id="@+id/nav_requests"
             android:icon="@drawable/ic_action_requestusers"
-            android:title="Requests" />
+            android:title="@string/requests" />
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_action_logout"
-            android:title="Sign out" />
+            android:title="@string/log_out" />
     </group>
 
 

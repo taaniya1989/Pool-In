@@ -44,9 +44,9 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
     private DatabaseReference firebaseDatabaseInstanceReference;
     private String requestorName="";
     private String requestorContact="";
-    List<String> joineeList = new ArrayList<>();
+    private List<String> joineeList = new ArrayList<>();
     private String uid;
-    String phNo="";
+    private String phNo="";
 
     private User joiningRequester,approverUser;
 

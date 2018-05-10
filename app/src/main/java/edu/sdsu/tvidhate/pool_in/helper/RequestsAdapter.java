@@ -19,7 +19,7 @@ import edu.sdsu.tvidhate.pool_in.entity.User;
 public class RequestsAdapter extends ArrayAdapter implements SharedConstants{
     private Activity context;
     private List<Request> userProperties;
-    public RequestsAdapter(Activity context, int resource, List list) {
+    public RequestsAdapter(Activity context, int resource, List<Request> list) {
         super(context, resource, list);
         this.context = context;
         this.userProperties = list;

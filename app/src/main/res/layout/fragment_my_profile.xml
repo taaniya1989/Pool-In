@@ -5,11 +5,6 @@
     android:id="@+id/scrollView"
     android:background="@null"
     android:scrollbars="horizontal">
-    <RelativeLayout
-        android:layout_margin="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/activity_user_main"
@@ -17,6 +12,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:background="@color/white"
             android:fitsSystemWindows="true"
             tools:context=".fragment.UpdateProfileFragment">
 
@@ -376,5 +372,4 @@
             </LinearLayout>
 
         </LinearLayout>
-    </RelativeLayout>
 </ScrollView>
