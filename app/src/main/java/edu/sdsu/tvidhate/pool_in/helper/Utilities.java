@@ -22,12 +22,14 @@ import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
 public class Utilities implements SharedConstants
 {
     private FragmentManager fragmentManager;
-    public Utilities(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-    }
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private String phNo;
     private String updateData;
+
+    public Utilities(FragmentManager fragmentManager) {
+
+        this.fragmentManager = fragmentManager;
+    }
 
     public void checkProfile(String updateDataRequested){
         Log.d("TPV-NOTE","in utilities class"+updateDataRequested);
@@ -73,9 +75,11 @@ public class Utilities implements SharedConstants
             }
         };
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        DatabaseReference people1 = database1.getReference(FIREBASE_PERSONAL_DATA).child(phNo);
-        people1.addValueEventListener(valueEventListener1);
-
+        Log.i("TPV-NOTE","Contact "+phNo);
+        if(phNo != null) {
+            DatabaseReference people1 = database1.getReference(FIREBASE_PERSONAL_DATA).child(phNo);
+            people1.addValueEventListener(valueEventListener1);
+        }
     }
 
     public void checkForExistingRide(final Activity activity) {
@@ -84,9 +88,9 @@ public class Utilities implements SharedConstants
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 if(dataSnapshot.getChildrenCount()>0 && activity!=null){
-                    Intent intent = activity.getIntent();
+                  //  Intent intent = activity.getIntent();
                     activity.finish();
-                    activity.startActivity(intent);
+                  //  activity.startActivity(intent);
                 }
             }
             @Override

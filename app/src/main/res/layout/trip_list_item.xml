@@ -43,28 +43,58 @@
             android:layout_margin="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="@dimen/zero_dp"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="@string/date_text"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="@dimen/zero_dp"
+                    android:layout_height="fill_parent"
+                    android:text="@string/date_text"
+                    android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/trip_list_date"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/trip_list_date"
+                    android:layout_width="@dimen/zero_dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/trip_list_seats"
-                android:layout_width="@dimen/zero_dp"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/trip_list_seats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
 
+                <TextView
+                    android:id="@+id/trip_list_seats1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Seats"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_weight="2">
             <TextView
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="fill_parent"
@@ -75,7 +105,8 @@
                 android:id="@+id/trip_list_time"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="2"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

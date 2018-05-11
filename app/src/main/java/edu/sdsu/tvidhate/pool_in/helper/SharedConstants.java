@@ -80,4 +80,6 @@ public interface SharedConstants {
     String FILTER_START_TIME_DESC = "Start_Time_desc";
     String FILTER_NO_OF_SEATS_ASC = "No_of_Seats_asc";
     String FILTER_NO_OF_SEATS_DESC = "No_of_Seats_desc";
+
+    String SEAT_VALIDATION_ERROR = "Enter valid number of seats (>1 or <5)" ;
 }

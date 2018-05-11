@@ -2,6 +2,7 @@ package edu.sdsu.tvidhate.pool_in.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -149,13 +150,14 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                             mUserEmailId.getText().toString().trim(),mUserHomeAddress.getText().toString().trim());
                     Car currentUserCar = currentUser.getmCar();
                     if(currentUserCar == null) {
-                        if(updateData == "Car" && checkCarDetails())
-                        {
+                        if(checkCarDetails()){
                             currentUser.setmCar(new Car(mUserContact.getText().toString() + "-" + mCarRegistrationNumber.getText().toString()
-                                    , mCarBrand.getText().toString(), mCarModel.getText().toString(), mCarColor.getText().toString(), mCarRegistrationNumber.getText().toString()));
+                                        , mCarBrand.getText().toString(), mCarModel.getText().toString(), mCarColor.getText().toString(), mCarRegistrationNumber.getText().toString()));
                         }
-                        else
-                            currentUser.setmCar(null);
+                        else {
+                            Toast.makeText(getContext(),"Please add all car details!",Toast.LENGTH_LONG).show();
+                            return;
+                        }
                     }
                     else
                     {

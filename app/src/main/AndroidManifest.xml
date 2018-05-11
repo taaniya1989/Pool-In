@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/launcher_symbol"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/launcher_symbol_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,25 +22,38 @@
         </activity>
         <activity
             android:name=".activity.SignUpActivity"
-            android:label="@string/signUpTitle" />
+            android:screenOrientation="portrait"
+            android:label="@string/signUpTitle"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/homeScreen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
             </activity>
         <activity
             android:name=".activity.TripDetailsActivity"
-            android:label="@string/tripDetailsTitle" />
+            android:label="@string/tripDetailsTitle"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.UpdateRideActivity"
-            android:label="@string/updateRideTitle" />
+            android:label="@string/updateRideTitle"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.RideHistoryDetailsActivity"
-            android:label="@string/rideHistoryTitle" />
-        <activity android:name=".activity.AppInfoActivity"></activity>
+            android:label="@string/rideHistoryTitle"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.AppInfoActivity"
+            android:label="App Info"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

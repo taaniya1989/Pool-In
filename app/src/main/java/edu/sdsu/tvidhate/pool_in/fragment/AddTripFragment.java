@@ -4,11 +4,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import edu.sdsu.tvidhate.pool_in.R;
+import edu.sdsu.tvidhate.pool_in.activity.MainActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -229,10 +232,10 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(currentUserDisplayName).setValue(newTrip);
                         firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
                         firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-                        Log.d("TPV-NOTE","Data submitted successfully");
-                        Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+                        Log.d("TPV-NOTE","Data submitted successfully"+getActivity().getLocalClassName());
+                       // Intent intent = new Intent(getContext(), MainActivity.class);
                         getActivity().finish();
-                        startActivity(intent);
+                        //startActivity(intent);
                     }catch(Exception e){
                         Log.d("TPV-NOTE","Exception: "+e);
                     }
@@ -286,50 +289,58 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             mSourceAddress.setError(ENTER_SOURCE);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
+        if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
         {
             mSourceNeighbordhood.setError(ENTER_SOURCE_NEIGHBORHOOD);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mSourcePin.getText().toString()))
+        if(TextUtils.isEmpty(mSourcePin.getText().toString()))
         {
             mSourcePin.setError(ENTER_SOURCE_PIN);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
         {
             mDestinationAddress.setError(ENTER_DESTINATION);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
         {
             mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
         {
             mDestinationPin.setError(ENTER_DESTINATION_PIN);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mStartDate.getText().toString()))
+        if(TextUtils.isEmpty(mStartDate.getText().toString()))
         {
             mStartDate.setError(ENTER_DATE);
             dataValid = FAILURE;
+        }else{
+            mStartDate.setError(null);
         }
-        else if(TextUtils.isEmpty(mStartTime.getText().toString()))
+        if(TextUtils.isEmpty(mStartTime.getText().toString()))
         {
             mStartTime.setError(ENTER_TIME);
             dataValid = FAILURE;
+        }else{
+            mStartTime.setError(null);
         }
-        else if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
+        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
         {
             mSeatsAvailable.setError(ENTER_SEATS);
             dataValid = FAILURE;
         }
-        else if(!TextUtils.isEmpty(mStartTime.getText().toString()) && Integer.parseInt(mSeatsAvailable.getText().toString())<1) {
-            mSeatsAvailable.setError(SEATS_ZERO);
-            dataValid = FAILURE;
+        else
+        {
+            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
+            if(seats > 5 || seats < 1) {
+                dataValid = FAILURE;
+            }
         }
+
 
         mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
         DateFormat formatter ;

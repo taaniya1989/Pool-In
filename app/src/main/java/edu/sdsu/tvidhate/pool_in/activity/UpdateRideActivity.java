@@ -129,47 +129,58 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             mSourceAddress.setError(ENTER_SOURCE);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
+        if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
         {
             mSourceNeighbordhood.setError(ENTER_SOURCE_NEIGHBORHOOD);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mSourcePin.getText().toString()))
+        if(TextUtils.isEmpty(mSourcePin.getText().toString()))
         {
             mSourcePin.setError(ENTER_SOURCE_PIN);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
         {
             mDestinationAddress.setError(ENTER_DESTINATION);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
         {
             mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
             dataValid = FAILURE;
         }
-        else if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
+        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
         {
             mDestinationPin.setError(ENTER_DESTINATION_PIN);
             dataValid = FAILURE;
         }
-        if (TextUtils.isEmpty(mStartDate.getText().toString())) {
+        if(TextUtils.isEmpty(mStartDate.getText().toString()))
+        {
             mStartDate.setError(ENTER_DATE);
-            dataValid = false;
+            dataValid = FAILURE;
+        }else{
+            mStartDate.setError(null);
         }
-        if (TextUtils.isEmpty(mStartTime.getText().toString())) {
+        if(TextUtils.isEmpty(mStartTime.getText().toString()))
+        {
             mStartTime.setError(ENTER_TIME);
-            dataValid = false;
+            dataValid = FAILURE;
+        }else{
+            mStartTime.setError(null);
         }
-        if (TextUtils.isEmpty(mSeatsAvailable.getText().toString())) {
+        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
+        {
             mSeatsAvailable.setError(ENTER_SEATS);
-            dataValid = false;
+            dataValid = FAILURE;
         }
-        if (Integer.parseInt(mSeatsAvailable.getText().toString())<1) {
-            mSeatsAvailable.setError(SEATS_ZERO);
-            dataValid = false;
+        else
+        {
+            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
+            if(seats > 5 || seats < 1) {
+                dataValid = FAILURE;
+            }
         }
+
         String dateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
         DateFormat formatter ;
         Date date ;
