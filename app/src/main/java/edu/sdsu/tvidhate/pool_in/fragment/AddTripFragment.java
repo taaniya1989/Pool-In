@@ -42,68 +42,68 @@ import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 import edu.sdsu.tvidhate.pool_in.helper.Utilities;
 
-public class AddTripFragment extends Fragment implements SharedConstants,View.OnClickListener {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private OnFragmentInteractionListener mListener;
+public class
+        AddTripFragment extends Fragment implements SharedConstants,View.OnClickListener {
+            // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+            private static final String ARG_PARAM1 = "param1";
+            private static final String ARG_PARAM2 = "param2";
+            private OnFragmentInteractionListener mListener;
 
-    private String currentUserDisplayName;
-    private User mTripDriver;
-    private DatabaseReference firebaseDatabaseInstanceReference;
-    private FirebaseDatabase firebaseDatabaseInstance;
-    private String hasCar;
-    //Member Variables
-    private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
-    private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
-    private TextView mStartDate,mStartTime;
-    private String mDateString;
-    private Date mTripStartDate;
+            private String currentUserDisplayName;
+            private User mTripDriver;
+            private DatabaseReference firebaseDatabaseInstanceReference;
+            private FirebaseDatabase firebaseDatabaseInstance;
+            private String hasCar;
+            //Member Variables
+            private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
+            private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
+            private TextView mStartDate,mStartTime;
+            private String mDateString;
+            private Date mTripStartDate;
 
     public AddTripFragment() {
-        // Required empty public constructor
-    }
+                // Required empty public constructor
+            }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddTripFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddTripFragment newInstance(String param1, String param2) {
-        AddTripFragment fragment = new AddTripFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+            /**
+             * Use this factory method to create a new instance of
+             * this fragment using the provided parameters.
+             *
+             * @param param1 Parameter 1.
+             * @param param2 Parameter 2.
+             * @return A new instance of fragment AddTripFragment.
+             */
+            // TODO: Rename and change types and number of parameters
+            public static AddTripFragment newInstance(String param1, String param2) {
+                AddTripFragment fragment = new AddTripFragment();
+                Bundle args = new Bundle();
+                args.putString(ARG_PARAM1, param1);
+                args.putString(ARG_PARAM2, param2);
+                fragment.setArguments(args);
+                return fragment;
+            }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String mParam1 = getArguments().getString(ARG_PARAM1);
-            String mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+            @Override
+            public void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                if (getArguments() != null) {
+                    String mParam1 = getArguments().getString(ARG_PARAM1);
+                    String mParam2 = getArguments().getString(ARG_PARAM2);
+                }
+            }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        
-        View view =  inflater.inflate(R.layout.fragment_add_trip,null);
-        FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
-        Button mDatePickerButton,mTimePickerButton,mResetButton,mSubmitButton;
+            @Override
+            public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                    Bundle savedInstanceState) {
 
-        if(firebaseAuthInstance.getCurrentUser()!=null){
-            currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
-            Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
-        }
+                View view =  inflater.inflate(R.layout.fragment_add_trip,null);
+                FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
+                Button mDatePickerButton,mTimePickerButton,mResetButton,mSubmitButton;
 
+                if(firebaseAuthInstance.getCurrentUser()!=null){
+                    currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
+                    Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
+                }
         hasCar = "Car";
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasCar);

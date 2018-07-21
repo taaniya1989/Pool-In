@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "770830288728",
-    "firebase_url": "https://pool-in-5d63e.firebaseio.com",
-    "project_id": "pool-in-5d63e",
-    "storage_bucket": "pool-in-5d63e.appspot.com"
+    "project_number": "774241878224",
+    "firebase_url": "https://pool-in-66e90.firebaseio.com",
+    "project_id": "pool-in-66e90",
+    "storage_bucket": "pool-in-66e90.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:770830288728:android:378a80bdf0e637c1",
+        "mobilesdk_app_id": "1:774241878224:android:378a80bdf0e637c1",
         "android_client_info": {
           "package_name": "edu.sdsu.tvidhate.pool_in"
         }
       },
       "oauth_client": [
         {
-          "client_id": "770830288728-r35oq0moh7737418kqckvqlg2cen6lm8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.sdsu.tvidhate.pool_in",
-            "certificate_hash": "d6304ef70fcc8f8ad4cc6d9ab5f16211c19360b6"
-          }
-        },
-        {
-          "client_id": "770830288728-4oad4fhjaaoimgcsdgkmpeoo88enjoha.apps.googleusercontent.com",
+          "client_id": "774241878224-8j2khbls46tg20lhlqpuccsr2hu22c31.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAvar2rwlXdtbhhI8TnHrBqLWA54qwk96U"
+          "current_key": "AIzaSyAKdn2z6EEspngIeztuQtliccEuCo0Jmek"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "770830288728-4oad4fhjaaoimgcsdgkmpeoo88enjoha.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
