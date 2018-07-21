@@ -56,7 +56,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                     destination.setText(myRideDetailsPOJO.getmDestinationAddress());
                     date.setText(myRideDetailsPOJO.getmStartDate());
                     time.setText(myRideDetailsPOJO.getmStartTime());
-                    poster.setText(myRideDetailsPOJO.getmTripDriver().getFullName());
+                  //  poster.setText(myRideDetailsPOJO.getmTripDriver().getFullName());
                     posterContact.setText(myRideDetailsPOJO.getmTripDriver().getmContactNumber());
 
                     Map<String,User> currentTripPassengers = myRideDetailsPOJO.getmTripPassengers();
@@ -68,14 +68,14 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
                         for(Object contact : currentTripPassengersContact)
                         {
                             passengerCount++;
-                            if(currentTripPassengersContact.size() == 1)
-                                currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
-                            else {
-                                if(passengerCount == 1)
-                                    currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
-                                else
-                                    currentTripPassengersNames += "\n" + currentTripPassengers.get(contact).getFullName();
-                            }
+//                            if(currentTripPassengersContact.size() == 1)
+//                                currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
+//                            else {
+//                                if(passengerCount == 1)
+//                                    currentTripPassengersNames = currentTripPassengers.get(contact).getFullName();
+//                                else
+//                                    currentTripPassengersNames += "\n" + currentTripPassengers.get(contact).getFullName();
+//                            }
                         }
                     }
                     joinees.setText(currentTripPassengersNames);

@@ -110,7 +110,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                     date.setText(selectedTrip.getmStartDate());
                     time.setText(selectedTrip.getmStartTime());
                     seats.setText(String.valueOf(selectedTrip.getmSeatsAvailable()));
-                    poster.setText(selectedTrip.getmTripDriver().getFullName());
+                    //poster.setText(selectedTrip.getmTripDriver().getFullName());
                     uid = selectedTrip.getmTripId();
 
                     Log.d("TPV-NOTE","contact from cloud: "+posterContact.getText().toString());
@@ -190,7 +190,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                         User currentUser = dataSnapshot.getValue(User.class);
                         joiningRequester = currentUser;
                         if (currentUser != null) {
-                            requestorName = currentUser.getFullName();
+                          //  requestorName = currentUser.getFullName();
                             requestorContact = currentUser.getmContactNumber();
                         }
                     } else {

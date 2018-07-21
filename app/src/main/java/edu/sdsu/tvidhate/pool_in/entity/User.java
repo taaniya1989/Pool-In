@@ -6,33 +6,34 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class User implements SharedConstants,Serializable
 {
-    private String mFirstName,mLastName,mContactNumber,mEmailAddress;
+    private String mUserName,mContactNumber,mEmailAddress;;
+    /*,mLastName
     private String mHomeAddress,mWorkAddress;
     private Car mCar;
-
+*/
     public User()
     {
 
     }
 
-    public User(String mFirstName, String mLastName, String mContactNumber, String mEmailAddress, String mHomeAddress) {
-        this.mFirstName = mFirstName;
-        this.mLastName = mLastName;
+    public User(String mFirstName, String mContactNumber, String mEmailAddress) {
+        this.mUserName = mFirstName;
+      //  this.mLastName = mLastName;
         this.mContactNumber = mContactNumber;
         this.mEmailAddress = mEmailAddress;
-        this.mHomeAddress = mHomeAddress;
+      /*  this.mHomeAddress = mHomeAddress;
         this.mCar = null;
-        this.mWorkAddress = null;
+        this.mWorkAddress = null;*/
     }
 
-    public boolean hasACar(){
+/*    public boolean hasACar(){
         if(this.getmCar() == null)
             return FAILURE;
         else
             return SUCCESS;
     }
 
-    public String getFullName(){
+   public String getFullName(){
         return (this.mFirstName+" "+this.mLastName);
     }
 
@@ -58,7 +59,7 @@ public class User implements SharedConstants,Serializable
 
     public void setmLastName(String mLastName) {
         this.mLastName = mLastName;
-    }
+    }*/
 
     public String getmContactNumber() {
         return mContactNumber;
@@ -76,7 +77,7 @@ public class User implements SharedConstants,Serializable
         this.mEmailAddress = mEmailAddress;
     }
 
-    public String getmHomeAddress() {
+ /*   public String getmHomeAddress() {
         return mHomeAddress;
     }
 
@@ -102,6 +103,23 @@ public class User implements SharedConstants,Serializable
                 ", mHomeAddress='" + mHomeAddress + '\'' +
                 ", mWorkAddress='" + mWorkAddress + '\'' +
                 ", mCar=" + mCar +
+                '}';
+    }*/
+
+    public String getmUserName() {
+        return mUserName;
+    }
+
+    public void setmUserName(String mUserName) {
+        this.mUserName = mUserName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "mUserName='" + mUserName + '\'' +
+                ", mContactNumber='" + mContactNumber + '\'' +
+                ", mEmailAddress='" + mEmailAddress + '\'' +
                 '}';
     }
 }

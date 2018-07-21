@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pool-In</string>
+    <string name="app_name">Tripping</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="sign_in">"Sign In</string>
@@ -50,10 +50,8 @@
     <string name="toStreet">To Street</string>
     <string name="toNeighborhood">Neighborhood</string>
     <string name="toPinCode">Pincode</string>
-    <string name="add_trip">Add a Trip</string>
-    <string name="my_trips">My Trips</string>
-    <string name="my_profile">My Profile</string>
-    <string name="requests">Requests</string>
+    <string name="add_trip">Add Place</string>
+    <string name="my_trips">My Places</string>
     <string name="log_out">Log Out</string>
     <string name="image">Image</string>
     <string name="name_text">Name:</string>
@@ -61,6 +59,7 @@
     <string name="status_text">Status:</string>
     <string name="date_text">Date:</string>
     <string name="time_text">Time:</string>
+    <string name="userName">Username</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

@@ -140,19 +140,19 @@ public class
                 if(dataSnapshot.getChildrenCount()>0)
                 {
                     User currentUser = dataSnapshot.getValue(User.class);
-
-                    if(currentUser != null) {
-                        if(currentUser.hasACar())
-                        {
-                            Log.i("TPV-NOTE","User already has a car");
-                        }
-                        else
-                        {
-                            Log.i("TPV-NOTE","Please add car details first");
-                            Utilities utilities = new Utilities(getFragmentManager());
-                            utilities.checkProfile(hasCar);
-                        }
-                    }
+//
+//                    if(currentUser != null) {
+//                        if(currentUser.hasACar())
+//                        {
+//                            Log.i("TPV-NOTE","User already has a car");
+//                        }
+//                        else
+//                        {
+//                            Log.i("TPV-NOTE","Please add car details first");
+//                            Utilities utilities = new Utilities(getFragmentManager());
+//                            utilities.checkProfile(hasCar);
+//                        }
+//                    }
                 }
 
             }

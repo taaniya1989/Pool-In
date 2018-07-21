@@ -102,7 +102,7 @@ public class Trip implements Serializable {
         this.mTripDriver = mTripDriver;
         this.mStartTime = mStartTime;
         this.mStartDate = mStartDate;
-        this.mTripCar = mTripDriver.getmCar();
+       // this.mTripCar = mTripDriver.getmCar();
         this.mEndTimestamp = null;
         this.mTripStatus = "Created";
         this.mTripPassengers = null;

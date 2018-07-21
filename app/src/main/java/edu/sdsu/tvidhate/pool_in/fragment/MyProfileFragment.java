@@ -42,8 +42,9 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
     private Button back,update;
     private OnFragmentInteractionListener mListener;
     private String email,myPhoneNo;
-    private TextView mUserFirstName,mUserLastName,mUserEmail,mUserContact,mUserHomeAddress,mUserOfficeAddress;
-    private TextView mUserCarBrand,mUserCarModel,mUserCarColor,mUserCarLicense;
+    private TextView mUserName,mUserEmail,mUserContact;
+    //mUserLastName,,mUserHomeAddress,mUserOfficeAddress;
+    //private TextView mUserCarBrand,mUserCarModel,mUserCarColor,mUserCarLicense;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -84,10 +85,10 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        mUserFirstName = view.findViewById(R.id.updateFirstNameTextView);
-        mUserLastName = view.findViewById(R.id.updateLastNameTextView);
+        mUserName = view.findViewById(R.id.updateUserNameEditText);
         mUserEmail = view.findViewById(R.id.updateEmailAddressTextView);
         mUserContact = view.findViewById(R.id.updateContactTextView);
+     /*   mUserLastName = view.findViewById(R.id.updateLastNameTextView);
         mUserHomeAddress = view.findViewById(R.id.updateHomeAddressTextView);
         mUserOfficeAddress = view.findViewById(R.id.updateWorkAddressTextView);
 
@@ -95,7 +96,7 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
         mUserCarModel = view.findViewById(R.id.updateCarModelTextView);
         mUserCarColor = view.findViewById(R.id.updateCarColorTextView);
         mUserCarLicense = view.findViewById(R.id.updateCarNumberPlateTextView);
-
+*/
         update = view.findViewById(R.id.update_user_profile_button);
         back = view.findViewById(R.id.back_button);
 
@@ -115,10 +116,10 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
                 if(dataSnapshot.getChildrenCount()>0){
                     User currentUser = dataSnapshot.getValue(User.class);
                     if(currentUser != null) {
-                        mUserFirstName.setText(currentUser.getmFirstName());
-                        mUserLastName.setText(currentUser.getmLastName());
+                        mUserName.setText(currentUser.getmUserName());
                         mUserEmail.setText(currentUser.getmEmailAddress());
                         mUserContact.setText(currentUser.getmContactNumber());
+                       /* mUserLastName.setText(currentUser.getmLastName());
                         mUserHomeAddress.setText(currentUser.getmHomeAddress());
                         mUserOfficeAddress.setText(currentUser.getmWorkAddress());
 
@@ -128,7 +129,7 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
                             mUserCarModel.setText(thisUserCar.getmModel());
                             mUserCarColor.setText(thisUserCar.getmColor());
                             mUserCarLicense.setText(thisUserCar.getmNumberPlate());
-                        }
+                        }*/
                     }
                 }
 

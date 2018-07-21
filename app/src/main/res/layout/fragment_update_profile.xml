@@ -99,10 +99,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/firstNameTextView"
+                        android:id="@+id/userNameTextView"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
-                        android:hint="@string/first_name"
+                        android:hint="@string/userName"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textSize="@dimen/textviewsize"
@@ -112,11 +112,11 @@
                         android:layout_weight="1"/>
 
                     <EditText
-                        android:id="@+id/updateFirstNameEditText"
+                        android:id="@+id/updateUserNameEditText"
                         android:layout_width="@dimen/zero_dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:inputType="textPersonName"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:padding="4dp"
                         android:singleLine="true"
@@ -125,7 +125,7 @@
                         android:textSize="@dimen/textviewsize" />
                 </LinearLayout>
 
-                <LinearLayout
+                <!--LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
@@ -345,7 +345,7 @@
                         android:textAlignment="textStart"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/textviewsize" />
-                </LinearLayout>
+                </LinearLayout-->
             </LinearLayout>
 
             <LinearLayout

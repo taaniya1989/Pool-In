@@ -40,7 +40,7 @@ public class RequestsAdapter extends ArrayAdapter implements SharedConstants{
         requestorContact.setText(userProperties.get(position).getRequestorContact());*/
 
         User currentRequester = userProperties.get(position).getmJoinTripRequester();
-        requestorName.setText(currentRequester.getFullName());
+       // requestorName.setText(currentRequester.getFullName());
         requestorContact.setText(currentRequester.getmContactNumber());
 
         if(userProperties.get(position).isApprovalStatus()){

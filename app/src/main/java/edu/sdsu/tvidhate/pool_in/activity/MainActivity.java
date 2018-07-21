@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             @Override
             public void run() {
                 Fragment fragment = getHomeFragment();
-                Log.i("TPV-NOTE","curent fragement"+fragment.toString()+CURRENT_TAG);
+                Log.i("TPV-NOTE","current fragement"+fragment.toString()+CURRENT_TAG);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -129,11 +129,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 return addTripFragment;
             case 2:
                 return new MyTripsFragment();
-            case 3:
+    /*        case 3:
                 return new MyProfileFragment();
             case 4:
                 return new RequestsFragment();
-
+*/
             default:
                 return new HomeFragment();
         }
@@ -231,14 +231,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                     navItemIndex = 2;
                     CURRENT_TAG = TAG_MY_TRIPS;
                     break;
-                case R.id.nav_my_profile:
+        /*        case R.id.nav_my_profile:
                     navItemIndex = 3;
                     CURRENT_TAG = TAG_MY_PROFILE;
                     break;
                 case R.id.nav_requests:
                     navItemIndex = 4;
                     CURRENT_TAG = TAG_REQUESTS;
-                    break;
+                    break;*/
                 case R.id.nav_sign_out:
                     auth.signOut();
                     Intent login = new Intent(MainActivity.this, LoginActivity.class);
