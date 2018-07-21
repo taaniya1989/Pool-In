@@ -8,7 +8,7 @@
     android:padding="10dp"
     >
 
-        <LinearLayout
+        <!--LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -143,5 +143,33 @@
             android:id="@+id/trip_list_license"
             android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" /-->
+    <ImageView
+        android:id="@+id/itemPlaceImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/launcher_symbol"
+        />
+
+    <TextView
+        android:id="@+id/itemPlaceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/itemPlaceImage"
+        android:maxLines="3"
+        android:padding="8dp"
+        android:textColor="#222"
+        android:textStyle="bold"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemPlaceCity"
+        android:maxLines="3"
+        android:padding="8dp"
+        android:textColor="#666"
+        android:textSize="14sp" />
+
 </LinearLayout>

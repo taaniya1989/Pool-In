@@ -29,23 +29,31 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View view = inflater.inflate(R.layout.trip_list_item, null);
-        TextView destination = view.findViewById(R.id.trip_list_destination);
-        TextView source = view.findViewById(R.id.trip_list_source);
-        TextView date = view.findViewById(R.id.trip_list_date);
-        TextView time = view.findViewById(R.id.trip_list_time);
-        TextView seats = view.findViewById(R.id.trip_list_seats);
-        TextView name = view.findViewById(R.id.trip_list_name);
-        TextView contact = view.findViewById(R.id.trip_list_contact);
+//        TextView destination = view.findViewById(R.id.trip_list_destination);
+//        TextView source = view.findViewById(R.id.trip_list_source);
+//        TextView date = view.findViewById(R.id.trip_list_date);
+//        TextView time = view.findViewById(R.id.trip_list_time);
+//        TextView seats = view.findViewById(R.id.trip_list_seats);
+//        TextView name = view.findViewById(R.id.trip_list_name);
+//        TextView contact = view.findViewById(R.id.trip_list_contact);
+
+        TextView placeName,placeCity;
+        placeName = view.findViewById(R.id.itemPlaceName);
+        placeCity = view.findViewById(R.id.itemPlaceCity);
+
+        placeName.setText(userProperties.get(position).getmTripPlaceName());
+        placeCity.setText(userProperties.get(position).getmTripCity());
+
        // TextView sourceNeighborhood = view.findViewById(R.id.trip_list_fromneighborhood);
        // TextView destinationNeighborhood = view.findViewById(R.id.trip_list_toneighborhood);
-
-        source.setText(userProperties.get(position).getmSourceAddress());
-        destination.setText(userProperties.get(position).getmDestinationAddress());
-        date.setText(userProperties.get(position).getmStartDate());
-        time.setText(userProperties.get(position).getmStartTime());
-        seats.setText(String.valueOf(userProperties.get(position).getmSeatsAvailable()));
-        name.setText(userProperties.get(position).getmTripDriver().toString());
-        contact.setText(userProperties.get(position).getmTripDriver().getmContactNumber());
+//
+//        source.setText(userProperties.get(position).getmSourceAddress());
+//        destination.setText(userProperties.get(position).getmDestinationAddress());
+//        date.setText(userProperties.get(position).getmStartDate());
+//        time.setText(userProperties.get(position).getmStartTime());
+//        seats.setText(String.valueOf(userProperties.get(position).getmSeatsAvailable()));
+//        name.setText(userProperties.get(position).getmTripDriver().toString());
+//        contact.setText(userProperties.get(position).getmTripDriver().getmContactNumber());
        // sourceNeighborhood.setText(userProperties.get(position).getmSourceNeighbordhood());
        // destinationNeighborhood.setText(userProperties.get(position).getmDestinationNeighbordhood());
 

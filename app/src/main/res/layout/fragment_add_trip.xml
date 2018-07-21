@@ -13,17 +13,17 @@
         android:layout_marginTop="@dimen/ten_dp">
 
         <EditText
-            android:id="@+id/add_trip_from"
+            android:id="@+id/placeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:background="#f0f0f4"
             android:ems="10"
-            android:hint="@string/fromStreet"
+            android:hint="@string/placeTitle"
             android:inputType="textCapWords"
-            android:nextFocusForward="@id/add_trip_from_neighborhood"
-            android:nextFocusRight="@id/add_trip_from_neighborhood"
+            android:nextFocusForward="@id/placeCity"
+            android:nextFocusRight="@id/placeCity"
             android:padding="5dp"
             android:textColor="#000" />
         <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/add_trip_from_neighborhood"
+                android:id="@+id/placeCity"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
@@ -39,15 +39,15 @@
                 android:layout_weight="1"
                 android:background="#f0f0f4"
                 android:ems="10"
-                android:hint="@string/fromNeighborhood"
+                android:hint="@string/placeCity"
                 android:inputType="textCapWords"
-                android:nextFocusForward="@id/add_trip_from_pincode"
-                android:nextFocusRight="@id/add_trip_from_pincode"
+                android:nextFocusForward="@id/placePincode"
+                android:nextFocusRight="@id/placePincode"
                 android:padding="5dp"
                 android:textColor="#000" />
 
             <EditText
-                android:id="@+id/add_trip_from_pincode"
+                android:id="@+id/placePincode"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
@@ -57,14 +57,14 @@
                 android:ems="10"
                 android:hint="@string/fromPinCode"
                 android:inputType="number"
-                android:nextFocusForward="@id/add_trip_date_button"
-                android:nextFocusRight="@id/add_trip_date_button"
+                android:nextFocusForward="@id/add_trip_submit"
+                android:nextFocusRight="@id/add_trip_submit"
                 android:padding="5dp"
                 android:textColor="#000" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <!--LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -188,7 +188,7 @@
             android:nextFocusForward="@id/add_trip_submit"
             android:nextFocusRight="@id/add_trip_submit"
             android:padding="5dp"
-            android:textColor="#000" />
+            android:textColor="#000" /-->
 
         <LinearLayout
             android:layout_width="match_parent"

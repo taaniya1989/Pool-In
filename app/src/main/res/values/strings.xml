@@ -60,6 +60,8 @@
     <string name="date_text">Date:</string>
     <string name="time_text">Time:</string>
     <string name="userName">Username</string>
+    <string name="placeTitle">Place Name</string>
+    <string name="placeCity">City</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

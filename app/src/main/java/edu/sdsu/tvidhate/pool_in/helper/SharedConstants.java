@@ -46,9 +46,9 @@ public interface SharedConstants {
     String APPROVAL_STATUS_CHILD = "approvalStatus";
     String FIREBASE_PERSONAL_DATA = "personal_data";
     String JOINED = "Joined";
-    String ENTER_SOURCE = "Enter Source";
-    String ENTER_SOURCE_NEIGHBORHOOD = "Enter Source Neighborhood";
-    String ENTER_SOURCE_PIN = "Enter Source Pin";
+    String ENTER_PLACE = "Enter Place";
+    String ENTER_PLACE_CITY = "Enter City";
+    String ENTER_PLACE_PIN = "Enter Pin";
     String ENTER_DESTINATION = "Enter Destination";
     String ENTER_DESTINATION_NEIGHBORHOOD = "Enter Destination Neighborhood";
     String ENTER_DESTINATION_PIN = "Enter Destination Pin";

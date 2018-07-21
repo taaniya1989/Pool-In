@@ -5,10 +5,81 @@ import java.util.Map;
 import java.util.Date;
 
 public class Trip implements Serializable {
-    private String mTripId,mSourceAddress,mDestinationAddress;
-    private String mSourcePin,mSourceNeighbordhood;
-    private String mDestinationPin,mDestinationNeighbordhood;
-    private Long mCreationTimestamp,mEndTimestamp;
+
+    private String mTripId;
+    private String mTripPlaceName,mTripCity,mTripPincode;
+    private User mTripPoster;
+
+    public Trip(String mTripId, String mTripPlaceName, String mTripCity, String mTripPincode,Long mCreationTimestamp,User mTripPoster) {
+        this.mTripId = mTripId;
+        this.mTripPlaceName = mTripPlaceName;
+        this.mTripCity = mTripCity;
+        this.mTripPincode = mTripPincode;
+        this.mCreationTimestamp = mCreationTimestamp;
+        this.mTripPoster = mTripPoster;
+    }
+
+    public Trip()
+    {
+
+    }
+
+    public User getmTripPoster() {
+        return mTripPoster;
+    }
+
+    public void setmTripPoster(User mTripPoster) {
+        this.mTripPoster = mTripPoster;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "mTripId='" + mTripId + '\'' +
+                ", mTripPlaceName='" + mTripPlaceName + '\'' +
+                ", mTripCity='" + mTripCity + '\'' +
+                ", mTripPincode='" + mTripPincode + '\'' +
+                ", mTripPoster=" + mTripPoster +
+                ", mCreationTimestamp=" + mCreationTimestamp +
+                '}';
+    }
+
+    public String getmTripId() {
+        return mTripId;
+    }
+
+    public void setmTripId(String mTripId) {
+        this.mTripId = mTripId;
+    }
+
+    public String getmTripPlaceName() {
+        return mTripPlaceName;
+    }
+
+    public void setmTripPlaceName(String mTripPlaceName) {
+        this.mTripPlaceName = mTripPlaceName;
+    }
+
+    public String getmTripCity() {
+        return mTripCity;
+    }
+
+    public void setmTripCity(String mTripCity) {
+        this.mTripCity = mTripCity;
+    }
+
+    public String getmTripPincode() {
+        return mTripPincode;
+    }
+
+    public void setmTripPincode(String mTripPincode) {
+        this.mTripPincode = mTripPincode;
+    }
+
+
+
+    private Long mCreationTimestamp;
+            /*,mEndTimestamp;
     private Date mStartTimestamp;
     private int mSeatsAvailable;
     private User mTripDriver;
@@ -17,7 +88,7 @@ public class Trip implements Serializable {
     private String mTripStatus;
     private String mStartTime,mStartDate;
     private Car mTripCar;
-
+    private String mDestinationPin,mDestinationNeighbordhood;
     public Date getmStartTimestamp() {
         return mStartTimestamp;
     }
@@ -165,7 +236,7 @@ public class Trip implements Serializable {
     public void setmDestinationAddress(String mDestinationAddress) {
         this.mDestinationAddress = mDestinationAddress;
     }
-
+*/
     public Long getmCreationTimestamp() {
         return mCreationTimestamp;
     }
@@ -173,7 +244,7 @@ public class Trip implements Serializable {
     public void setmCreationTimestamp(Long mCreationTimestamp) {
         this.mCreationTimestamp = mCreationTimestamp;
     }
-
+/*
     public Long getmEndTimestamp() {
         return mEndTimestamp;
     }
@@ -212,5 +283,5 @@ public class Trip implements Serializable {
 
     public void setmTripStatus(String mTripStatus) {
         this.mTripStatus = mTripStatus;
-    }
+    }*/
 }

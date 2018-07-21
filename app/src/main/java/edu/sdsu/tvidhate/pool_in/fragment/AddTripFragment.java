@@ -50,12 +50,12 @@ public class
             private OnFragmentInteractionListener mListener;
 
             private String currentUserDisplayName;
-            private User mTripDriver;
+            private User mTripPoster;
             private DatabaseReference firebaseDatabaseInstanceReference;
             private FirebaseDatabase firebaseDatabaseInstance;
             private String hasCar;
             //Member Variables
-            private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable;
+            private EditText mPlaceName,mPlaceCity,mPlacePinCode;
             private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
             private TextView mStartDate,mStartTime;
             private String mDateString;
@@ -104,31 +104,33 @@ public class
                     currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
                     Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
                 }
-        hasCar = "Car";
-        Utilities utilities = new Utilities(getFragmentManager());
-        utilities.checkProfile(hasCar);
-        utilities.checkForExistingRide(getActivity());
+//        hasCar = "Car";
+//        Utilities utilities = new Utilities(getFragmentManager());
+//        utilities.checkProfile(hasCar);
+//        utilities.checkForExistingRide(getActivity());
 
         firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
 
-        mSourceAddress = view.findViewById(R.id.add_trip_from);
-        mDestinationAddress = view.findViewById(R.id.add_trip_to);
-        mStartDate = view.findViewById(R.id.add_trip_date_text);
-        mStartTime = view.findViewById(R.id.add_trip_time_text);
-        mSeatsAvailable = view.findViewById(R.id.add_trip_number_of_seats);
-        mSourceNeighbordhood = view.findViewById(R.id.add_trip_from_neighborhood);
-        mSourcePin = view.findViewById(R.id.add_trip_from_pincode);
-        mDestinationNeighbordhood = view.findViewById(R.id.add_trip_to_neighborhood);
-        mDestinationPin = view.findViewById(R.id.add_trip_to_pincode);
-
-        mDatePickerButton = view.findViewById(R.id.add_trip_date_button);
-        mTimePickerButton = view.findViewById(R.id.add_trip_time_button);
+        mPlaceName = view.findViewById(R.id.placeName);
+        mPlaceCity = view.findViewById(R.id.placeCity);
+        mPlacePinCode = view.findViewById(R.id.placePincode);
         mResetButton = view.findViewById(R.id.add_trip_reset_button);
         mSubmitButton = view.findViewById(R.id.add_trip_submit);
 
-        mTimePickerButton.setOnClickListener(this);
-        mDatePickerButton.setOnClickListener(this);
+//        mStartTime = view.findViewById(R.id.add_trip_time_text);
+//        mSeatsAvailable = view.findViewById(R.id.add_trip_number_of_seats);
+//        mSourceNeighbordhood = view.findViewById(R.id.add_trip_from_neighborhood);
+//        mSourcePin = view.findViewById(R.id.add_trip_from_pincode);
+//        mDestinationNeighbordhood = view.findViewById(R.id.add_trip_to_neighborhood);
+//        mDestinationPin = view.findViewById(R.id.add_trip_to_pincode);
+//
+//        mDatePickerButton = view.findViewById(R.id.add_trip_date_button);
+//        mTimePickerButton = view.findViewById(R.id.add_trip_time_button);
+//
+//
+//        mTimePickerButton.setOnClickListener(this);
+//        mDatePickerButton.setOnClickListener(this);
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
 
@@ -173,14 +175,14 @@ public class
         switch(v.getId())
         {
             case R.id.add_trip_reset_button:
-                mSourceAddress.setText(EMPTY_STRING);
-                mDestinationAddress.setText(EMPTY_STRING);
-                mStartDate.setText(EMPTY_STRING);
-                mStartTime.setText(EMPTY_STRING);
-                mSeatsAvailable.setText(EMPTY_STRING);
+                mPlaceName.setText(EMPTY_STRING);
+                mPlaceCity.setText(EMPTY_STRING);
+                mPlacePinCode.setText(EMPTY_STRING);
+//                mStartTime.setText(EMPTY_STRING);
+//                mSeatsAvailable.setText(EMPTY_STRING);
                 break;
 
-            case R.id.add_trip_time_button:
+          /*  case R.id.add_trip_time_button:
                 final Calendar c = Calendar.getInstance();
                 int mHour = c.get(Calendar.HOUR_OF_DAY);
                 int mMinute = c.get(Calendar.MINUTE);
@@ -213,19 +215,21 @@ public class
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
-
+*/
             case R.id.add_trip_submit:
                 if(validInput())
                 {
                     //Handle Timestamp
-                    int noOfSeats = Integer.parseInt(mSeatsAvailable.getText().toString());
-                    Log.i("TPV-NOTE",mTripDriver.toString());
+                  //  int noOfSeats = Integer.parseInt(mSeatsAvailable.getText().toString());
+                   // Log.i("TPV-NOTE",mTripDriver.toString());
                     //User tripDriver = firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
                     Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).push().getKey(),
-                            mSourceAddress.getText().toString().trim(),mDestinationAddress.getText().toString().trim(),
-                            mSourcePin.getText().toString().trim(),mSourceNeighbordhood.getText().toString().trim(),
-                            mDestinationPin.getText().toString().trim(), mDestinationNeighbordhood.getText().toString().trim(),
-                            System.currentTimeMillis(),mTripStartDate,noOfSeats,mTripDriver,mStartTime.getText().toString(),mStartDate.getText().toString());
+                            mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
+                            mPlacePinCode.getText().toString().trim(),System.currentTimeMillis(),mTripPoster);
+//                            mSourcePin.getText().toString().trim(),mSourceNeighbordhood.getText().toString().trim(),
+//                            mDestinationPin.getText().toString().trim(), mDestinationNeighbordhood.getText().toString().trim(),
+//                            System.currentTimeMillis(),mTripStartDate,noOfSeats,mTripDriver,mStartTime.getText().toString(),
+//                            mStartDate.getText().toString());
 
                     Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                     try{
@@ -258,7 +262,7 @@ public class
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        checkForExistingRide();
+       // checkForExistingRide();
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -267,7 +271,7 @@ public class
                 User currentUser = dataSnapshot.getValue(User.class);
                 if(currentUser != null)
                 {
-                    mTripDriver = currentUser;
+                    mTripPoster = currentUser;
                     Log.i("TPV-NOTE",currentUser.toString());
                 }
             }
@@ -284,82 +288,82 @@ public class
     private boolean validInput()
     {
         boolean dataValid = SUCCESS;
-        if (TextUtils.isEmpty(mSourceAddress.getText().toString()))
+        if (TextUtils.isEmpty(mPlaceName.getText().toString()))
         {
-            mSourceAddress.setError(ENTER_SOURCE);
+            mPlaceName.setError(ENTER_PLACE);
             dataValid = FAILURE;
         }
-        if(TextUtils.isEmpty(mSourceNeighbordhood.getText().toString()))
+        if(TextUtils.isEmpty(mPlaceCity.getText().toString()))
         {
-            mSourceNeighbordhood.setError(ENTER_SOURCE_NEIGHBORHOOD);
+            mPlaceCity.setError(ENTER_PLACE_CITY);
             dataValid = FAILURE;
         }
-        if(TextUtils.isEmpty(mSourcePin.getText().toString()))
+        if(TextUtils.isEmpty(mPlacePinCode.getText().toString()))
         {
-            mSourcePin.setError(ENTER_SOURCE_PIN);
+            mPlacePinCode.setError(ENTER_PLACE_PIN);
             dataValid = FAILURE;
         }
-        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
-        {
-            mDestinationAddress.setError(ENTER_DESTINATION);
-            dataValid = FAILURE;
-        }
-        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
-        {
-            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
-            dataValid = FAILURE;
-        }
-        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
-        {
-            mDestinationPin.setError(ENTER_DESTINATION_PIN);
-            dataValid = FAILURE;
-        }
-        if(TextUtils.isEmpty(mStartDate.getText().toString()))
-        {
-            mStartDate.setError(ENTER_DATE);
-            dataValid = FAILURE;
-        }else{
-            mStartDate.setError(null);
-        }
-        if(TextUtils.isEmpty(mStartTime.getText().toString()))
-        {
-            mStartTime.setError(ENTER_TIME);
-            dataValid = FAILURE;
-        }else{
-            mStartTime.setError(null);
-        }
-        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
-        {
-            mSeatsAvailable.setError(ENTER_SEATS);
-            dataValid = FAILURE;
-        }
-        else
-        {
-            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
-            if(seats > 5 || seats < 1) {
-                dataValid = FAILURE;
-            }
-        }
-
-
-        mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
-        DateFormat formatter ;
-        Date date;
-        formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-        try {
-            date = formatter.parse(mDateString);
-            mTripStartDate = date;
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            Log.d("TPV-NOTE", "formatted time: " + date);
-            Log.d("TPV-NOTE", "current time: " + Calendar.getInstance().getTime());
-            if(date.before(Calendar.getInstance().getTime())){
-                Toast.makeText(getContext(),DATE_VALIDATION_FAILURE_TOAST, Toast.LENGTH_SHORT).show();
-                dataValid = FAILURE;
-            }
-        }catch (Exception e){
-            Log.d("TPV-NOTE","Exception: "+e);
-        }
+//        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
+//        {
+//            mDestinationAddress.setError(ENTER_DESTINATION);
+//            dataValid = FAILURE;
+//        }
+//        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
+//        {
+//            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
+//            dataValid = FAILURE;
+//        }
+//        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
+//        {
+//            mDestinationPin.setError(ENTER_DESTINATION_PIN);
+//            dataValid = FAILURE;
+//        }
+//        if(TextUtils.isEmpty(mStartDate.getText().toString()))
+//        {
+//            mStartDate.setError(ENTER_DATE);
+//            dataValid = FAILURE;
+//        }else{
+//            mStartDate.setError(null);
+//        }
+//        if(TextUtils.isEmpty(mStartTime.getText().toString()))
+//        {
+//            mStartTime.setError(ENTER_TIME);
+//            dataValid = FAILURE;
+//        }else{
+//            mStartTime.setError(null);
+//        }
+//        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
+//        {
+//            mSeatsAvailable.setError(ENTER_SEATS);
+//            dataValid = FAILURE;
+//        }
+//        else
+//        {
+//            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
+//            if(seats > 5 || seats < 1) {
+//                dataValid = FAILURE;
+//            }
+//        }
+//
+//
+//        mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
+//        DateFormat formatter ;
+//        Date date;
+//        formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+//        try {
+//            date = formatter.parse(mDateString);
+//            mTripStartDate = date;
+//            Calendar cal = Calendar.getInstance();
+//            cal.setTime(date);
+//            Log.d("TPV-NOTE", "formatted time: " + date);
+//            Log.d("TPV-NOTE", "current time: " + Calendar.getInstance().getTime());
+//            if(date.before(Calendar.getInstance().getTime())){
+//                Toast.makeText(getContext(),DATE_VALIDATION_FAILURE_TOAST, Toast.LENGTH_SHORT).show();
+//                dataValid = FAILURE;
+//            }
+//        }catch (Exception e){
+//            Log.d("TPV-NOTE","Exception: "+e);
+//        }
         return dataValid;
     }
 

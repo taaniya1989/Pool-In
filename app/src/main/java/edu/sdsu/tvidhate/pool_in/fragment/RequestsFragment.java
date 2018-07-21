@@ -262,7 +262,7 @@ public class RequestsFragment extends Fragment implements SharedConstants{
                 if(dataSnapshot.getChildrenCount()!=0)
                 {
                     final Trip addTripDetailsPOJO = dataSnapshot.getValue(Trip.class);
-                    seatsAvailable = addTripDetailsPOJO.getmSeatsAvailable();
+                   // seatsAvailable = addTripDetailsPOJO.getmSeatsAvailable();
                     uid = addTripDetailsPOJO.getmTripId();
                     getRequestData(currentUserContactNumber);
                     if(getContext()!=null){

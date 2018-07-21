@@ -39,11 +39,13 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class TripDetailsActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener
 {
-    private TextView source,destination,date,time,seats,poster,posterContact,car,carColor,license;
+   // private TextView source,destination,date,time,seats,poster,posterContact,car,carColor,license;
+    private TextView placeName,placeCity,placePin;
     private Button join;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private String requestorName="";
     private String requestorContact="";
+    private String posterContact;
     private List<String> joineeList = new ArrayList<>();
     private String uid;
     private String phNo="";
@@ -68,32 +70,36 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         if(firebaseAuthInstance.getCurrentUser()!=null){
             phNo = firebaseAuthInstance.getCurrentUser().getDisplayName();
         }
+//
+//        source = findViewById(R.id.trip_source);
+//        destination = findViewById(R.id.trip_destination);
+//        date = findViewById(R.id.trip_date);
+//        time = findViewById(R.id.trip_time);
+//        seats = findViewById(R.id.trip_seats);
+//        poster = findViewById(R.id.trip_poster);
+//        posterContact = findViewById(R.id.trip_contact);
+//        car = findViewById(R.id.trip_car);
+//        carColor = findViewById(R.id.trip_car_color);
+//        license = findViewById(R.id.trip_car_license);
+        placeName = findViewById(R.id.tripDetailsPlaceName);
+        placeCity = findViewById(R.id.tripDetailsPlaceCity);
+        placePin = findViewById(R.id.tripDetailsPlacePin);
 
-        source = findViewById(R.id.trip_source);
-        destination = findViewById(R.id.trip_destination);
-        date = findViewById(R.id.trip_date);
-        time = findViewById(R.id.trip_time);
-        seats = findViewById(R.id.trip_seats);
-        poster = findViewById(R.id.trip_poster);
-        posterContact = findViewById(R.id.trip_contact);
-        car = findViewById(R.id.trip_car);
-        carColor = findViewById(R.id.trip_car_color);
-        license = findViewById(R.id.trip_car_license);
-        Button back = findViewById(R.id.trip_cancel_button);
-        join = findViewById(R.id.trip_join_button);
-        Button update = findViewById(R.id.trip_update_button);
-        Button delete = findViewById(R.id.trip_delete_button);
-        Button complete = findViewById(R.id.trip_complete_button);
+        Button back = findViewById(R.id.tripDetailsCancelButton);
+      //  join = findViewById(R.id.trip_join_button);
+        Button update = findViewById(R.id.tripDetailsUpdateButton);
+        Button delete = findViewById(R.id.tripDetailsDeleteButton);
+       // Button complete = findViewById(R.id.trip_complete_button);
 
         back.setOnClickListener(this);
-        complete.setOnClickListener(this);
+      //  complete.setOnClickListener(this);
         delete.setOnClickListener(this);
         update.setOnClickListener(this);
-        join.setOnClickListener(this);
+//        join.setOnClickListener(this);
 
         if(currentTrip != null){
-            approverUser = currentTrip.getmTripDriver();
-            posterContact.setText(approverUser.getmContactNumber());
+            approverUser = currentTrip.getmTripPoster();
+            posterContact = approverUser.getmContactNumber();
         }else
             Toast.makeText(this,"No Trip found for this User",Toast.LENGTH_LONG).show();
 
@@ -105,22 +111,25 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
 
                 if(selectedTrip!=null)
                 {
-                    source.setText(selectedTrip.getmSourceAddress());
-                    destination.setText(selectedTrip.getmDestinationAddress());
-                    date.setText(selectedTrip.getmStartDate());
-                    time.setText(selectedTrip.getmStartTime());
-                    seats.setText(String.valueOf(selectedTrip.getmSeatsAvailable()));
-                    //poster.setText(selectedTrip.getmTripDriver().getFullName());
+//                    source.setText(selectedTrip.getmSourceAddress());
+//                    destination.setText(selectedTrip.getmDestinationAddress());
+//                    date.setText(selectedTrip.getmStartDate());
+//                    time.setText(selectedTrip.getmStartTime());
+//                    seats.setText(String.valueOf(selectedTrip.getmSeatsAvailable()));
+//                    poster.setText(selectedTrip.getmTripDriver().getFullName());
+                    placeName.setText(selectedTrip.getmTripPlaceName());
+                    placePin.setText(selectedTrip.getmTripPincode());
+                    placeCity.setText(selectedTrip.getmTripCity());
                     uid = selectedTrip.getmTripId();
 
-                    Log.d("TPV-NOTE","contact from cloud: "+posterContact.getText().toString());
-                    Car thisTripCar = selectedTrip.getmTripCar();
-                    if(thisTripCar != null)
-                    {
-                        car.setText(thisTripCar.toString());
-                        carColor.setText(thisTripCar.getmColor());
-                        license.setText(thisTripCar.getmNumberPlate());
-                    }
+//                    Log.d("TPV-NOTE","contact from cloud: "+posterContact.getText().toString());
+//                    Car thisTripCar = selectedTrip.getmTripCar();
+//                    if(thisTripCar != null)
+//                    {
+//                        car.setText(thisTripCar.toString());
+//                        carColor.setText(thisTripCar.getmColor());
+//                        license.setText(thisTripCar.getmNumberPlate());
+//                    }
                 }
             }
 
@@ -130,43 +139,43 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
             }
         };
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_TRIP_DETAILS).child(posterContact.getText().toString());
+        DatabaseReference people = database.getReference(FIREBASE_TRIP_DETAILS).child(posterContact);
         people.addValueEventListener(valueEventListener);
 
-        requestedPassengersData(phNo);
+       // requestedPassengersData(phNo);
 
-        if(phNo.equals(posterContact.getText().toString())){
-            join.setEnabled(false);
+        if(phNo.equals(posterContact)){
+//            join.setEnabled(false);
             Log.d("TPV-NOTE","phno: "+phNo);
-            Log.d("TPV-NOTE","poster contact: "+posterContact.getText().toString());
+            Log.d("TPV-NOTE","poster contact: "+posterContact);
             Log.d("TPV-NOTE","Join Disabled");
-            joineeList.add(posterContact.getText().toString());
-
-            String dateString= null;
-            if (currentTrip != null)
-                dateString = currentTrip.getmStartDate().concat(" ").concat(currentTrip.getmStartTime());
-            DateFormat formatter ;
-            Date date ;
-            formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-            try {
-                date = formatter.parse(dateString);
-                Calendar cal= Calendar.getInstance();
-                cal.setTime(date);
-                Log.d("TPV-NOTE","formatted time: "+date);
-                Log.d("TPV-NOTE","current time: "+ Calendar.getInstance().getTime());
-                if(Calendar.getInstance().getTime().after(date)){
-                    complete.setVisibility(View.VISIBLE);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            joineeList.add(posterContact);
+//
+//            String dateString= null;
+//            if (currentTrip != null)
+//                dateString = currentTrip.getmStartDate().concat(" ").concat(currentTrip.getmStartTime());
+//            DateFormat formatter ;
+//            Date date ;
+//            formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+//            try {
+//                date = formatter.parse(dateString);
+//                Calendar cal= Calendar.getInstance();
+//                cal.setTime(date);
+//                Log.d("TPV-NOTE","formatted time: "+date);
+//                Log.d("TPV-NOTE","current time: "+ Calendar.getInstance().getTime());
+//                if(Calendar.getInstance().getTime().after(date)){
+//                    complete.setVisibility(View.VISIBLE);
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
         }else{
-            complete.setVisibility(View.GONE);
+        //    complete.setVisibility(View.GONE);
             update.setVisibility(View.INVISIBLE);
             delete.setVisibility(View.INVISIBLE);
             String dateString= null;
-            if (currentTrip != null)
-                dateString = currentTrip.getmStartDate().concat(" ").concat(currentTrip.getmStartTime());
+//            if (currentTrip != null)
+//                dateString = currentTrip.getmStartDate().concat(" ").concat(currentTrip.getmStartTime());
             DateFormat formatter ;
             Date date ;
             formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
@@ -190,7 +199,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                         User currentUser = dataSnapshot.getValue(User.class);
                         joiningRequester = currentUser;
                         if (currentUser != null) {
-                          //  requestorName = currentUser.getFullName();
+                        //    requestorName = currentUser.getFullName();
                             requestorContact = currentUser.getmContactNumber();
                         }
                     } else {
@@ -210,75 +219,75 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
 
     }
 
-   private void requestedPassengersData(final String phNo) {
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildren() + " trips available in tripdetails activity");
-                LinearLayout linearLayout = findViewById(R.id.text_programatically);
-                joineeList.add(posterContact.getText().toString());
-                    for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
-                        Request requestDetailsPOJO = msgSnapshot.getValue(Request.class);
-                        if (requestDetailsPOJO != null) {
-                            if (requestDetailsPOJO.isApprovalStatus()) {
-                                requestorContact = requestDetailsPOJO.getRequestorContact();
-                                Log.d("TPV-NOTE", "Approved for: " + requestorContact);
-                                TextView passengers = new TextView(TripDetailsActivity.this);
-                                passengers.setText(requestDetailsPOJO.getRequestorName().concat(" " + JOINED));
-                                joineeList.add(requestDetailsPOJO.getRequestorContact());
-                                passengers.setGravity(Gravity.CENTER);
-                                passengers.setTypeface(Typeface.DEFAULT_BOLD);
-                                linearLayout.addView(passengers);
-                            }
-                        }
-                        if (requestDetailsPOJO != null) {
-                            if (phNo.equalsIgnoreCase(requestDetailsPOJO.getRequestorContact())) {
-                                join.setEnabled(false);
-                            }
-                        }
-                    }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_REQUESTS).child(posterContact.getText().toString());
-        people.addValueEventListener(valueEventListener);
-    }
+//   private void requestedPassengersData(final String phNo) {
+//        ValueEventListener valueEventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildren() + " trips available in tripdetails activity");
+//                LinearLayout linearLayout = findViewById(R.id.text_programatically);
+//                joineeList.add(posterContact);
+//                    for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
+//                        Request requestDetailsPOJO = msgSnapshot.getValue(Request.class);
+//                        if (requestDetailsPOJO != null) {
+//                            if (requestDetailsPOJO.isApprovalStatus()) {
+//                                requestorContact = requestDetailsPOJO.getRequestorContact();
+//                                Log.d("TPV-NOTE", "Approved for: " + requestorContact);
+//                                TextView passengers = new TextView(TripDetailsActivity.this);
+//                                passengers.setText(requestDetailsPOJO.getRequestorName().concat(" " + JOINED));
+//                                joineeList.add(requestDetailsPOJO.getRequestorContact());
+//                                passengers.setGravity(Gravity.CENTER);
+//                                passengers.setTypeface(Typeface.DEFAULT_BOLD);
+//                                linearLayout.addView(passengers);
+//                            }
+//                        }
+//                        if (requestDetailsPOJO != null) {
+//                            if (phNo.equalsIgnoreCase(requestDetailsPOJO.getRequestorContact())) {
+//                                join.setEnabled(false);
+//                            }
+//                        }
+//                    }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference people = database.getReference(FIREBASE_REQUESTS).child(posterContact);
+//        people.addValueEventListener(valueEventListener);
+//    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.trip_cancel_button:
+            case R.id.tripDetailsCancelButton:
                 finish();
                 break;
 
-            case R.id.trip_join_button:
-                Log.d("TPV-NOTE","Different contact");
-                Request requestDetails = new Request();
-                requestDetails.setmJoinTripRequester(joiningRequester);
-                requestDetails.setmTripApprover(approverUser);
-                requestDetails.setRequestorName(requestorName);
-                requestDetails.setRequestorContact(phNo);
-                requestDetails.setPosterName(poster.getText().toString());
-                requestDetails.setPosterContact(posterContact.getText().toString());
-                try{
-                    firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact.getText().toString()).child(phNo).setValue(requestDetails);
-                    Log.d("TPV-NOTE","request data submitted");
-                    finish();
-                }catch (Exception e){
-                    Log.d("TPV-NOTE","Exception: "+e);
-                }
-                break;
+//            case R.id.trip_join_button:
+//                Log.d("TPV-NOTE","Different contact");
+//                Request requestDetails = new Request();
+//                requestDetails.setmJoinTripRequester(joiningRequester);
+//                requestDetails.setmTripApprover(approverUser);
+//                requestDetails.setRequestorName(requestorName);
+//                requestDetails.setRequestorContact(phNo);
+//             //   requestDetails.setPosterName(mTripPoster.getText().toString());
+//                requestDetails.setPosterContact(posterContact);
+//                try{
+//                    firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact).child(phNo).setValue(requestDetails);
+//                    Log.d("TPV-NOTE","request data submitted");
+//                    finish();
+//                }catch (Exception e){
+//                    Log.d("TPV-NOTE","Exception: "+e);
+//                }
+//                break;
 
-            case R.id.trip_update_button:
+            case R.id.tripDetailsUpdateButton:
                 Intent intent1 = new Intent(TripDetailsActivity.this,UpdateRideActivity.class);
                 startActivity(intent1);
                 break;
 
-            case R.id.trip_delete_button:
+            case R.id.tripDetailsDeleteButton:
                 Log.d("TPV-NOTE","delete onclick");
                 AlertDialog.Builder alert = new AlertDialog.Builder(TripDetailsActivity.this);
                 alert.setTitle(DELETE);
@@ -317,8 +326,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact.getText().toString()).removeValue();
-                        firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(posterContact.getText().toString()).removeValue();
+                        firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact).removeValue();
+                        firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(posterContact).removeValue();
                         firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(uid).removeValue();
                         dialogInterface.dismiss();
                         finish();
@@ -336,34 +345,34 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 alert.show();
                 break;
 
-            case R.id.trip_complete_button:
-                Log.d("TPV-NOTE","delete onclick");
-                AlertDialog.Builder completeAlert = new AlertDialog.Builder(TripDetailsActivity.this);
-                completeAlert.setTitle(COMPLETE);
-                completeAlert.setMessage(COMPLETE_RIDE_ALERT);
-                completeAlert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, int n) {
-                        firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(uid).child(APPROVAL_STATUS_CHILD).setValue(true);
-                        firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact.getText().toString()).removeValue();
-                        firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(posterContact.getText().toString()).removeValue();
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        finish();
-                    }
-                });
-                completeAlert.setNegativeButton(CANCEL, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                completeAlert.show();
-                break;
+//            case R.id.trip_complete_button:
+//                Log.d("TPV-NOTE","delete onclick");
+//                AlertDialog.Builder completeAlert = new AlertDialog.Builder(TripDetailsActivity.this);
+//                completeAlert.setTitle(COMPLETE);
+//                completeAlert.setMessage(COMPLETE_RIDE_ALERT);
+//                completeAlert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(final DialogInterface dialogInterface, int n) {
+//                        firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(uid).child(APPROVAL_STATUS_CHILD).setValue(true);
+//                        firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact).removeValue();
+//                        firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(posterContact).removeValue();
+//                        try {
+//                            TimeUnit.SECONDS.sleep(1);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        finish();
+//                    }
+//                });
+//                completeAlert.setNegativeButton(CANCEL, new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                completeAlert.show();
+//                break;
         }
     }
 }
