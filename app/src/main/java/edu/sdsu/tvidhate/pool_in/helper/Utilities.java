@@ -82,25 +82,4 @@ public class Utilities implements SharedConstants
         }
     }
 
-    public void checkForExistingRide(final Activity activity) {
-        ValueEventListener valueEventListener1 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
-                if(dataSnapshot.getChildrenCount()>0 && activity!=null){
-                  //  Intent intent = activity.getIntent();
-                    activity.finish();
-                  //  activity.startActivity(intent);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        DatabaseReference people1 = database1.getReference(FIREBASE_TRIP_DETAILS).child(phNo);
-        people1.addValueEventListener(valueEventListener1);
-    }
-
 }

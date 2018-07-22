@@ -26,13 +26,11 @@ import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.HomeFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyProfileFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyTripsFragment;
-import edu.sdsu.tvidhate.pool_in.fragment.RequestsFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
         AddTripFragment.OnFragmentInteractionListener,MyProfileFragment.OnFragmentInteractionListener,MyTripsFragment.OnFragmentInteractionListener,
-        RequestsFragment.OnFragmentInteractionListener,
         UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants,NavigationView.OnNavigationItemSelectedListener,View.OnClickListener
 {
     private FirebaseAuth auth;

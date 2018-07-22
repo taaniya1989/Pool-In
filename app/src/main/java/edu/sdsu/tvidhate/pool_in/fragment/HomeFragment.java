@@ -129,10 +129,6 @@ public class HomeFragment extends Fragment implements SharedConstants
         });
 
         auth = FirebaseAuth.getInstance();
-
-        //String hasUserDetails = "User";
-        //Utilities utilities = new Utilities(getFragmentManager());
-        //utilities.checkProfile(hasUserDetails);
         progressDialog = new ProgressDialog(getContext());
         getRideDetailsOntoTheList(filterString);
         return view;
@@ -263,22 +259,14 @@ public class HomeFragment extends Fragment implements SharedConstants
                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " list items in home fragment");
                 for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
-
                     String placeName, placeCity, placePin;
-                    String destinationAddress, destinationPin, destinationNeighborhood;
-
                     String searchText = mSearchText.getText().toString().trim().toLowerCase();
 
                     placeName = currentTrip.getmTripPlaceName().toLowerCase();
                     placeCity = currentTrip.getmTripCity().toLowerCase();
                     placePin = currentTrip.getmTripPincode().toLowerCase();
 
-//                    destinationAddress = currentTrip.getmDestinationAddress().toLowerCase();
-//                    destinationNeighborhood = currentTrip.getmDestinationNeighbordhood().toLowerCase();
-//                    destinationPin = currentTrip.getmDestinationPin().toLowerCase();
-
-                    if(/*(destinationAddress.contains(searchText) || destinationNeighborhood.contains(searchText) || destinationPin.contains(searchText))
-                            || */(placeName.contains(searchText) || placeCity.contains(searchText) || placePin.contains(searchText)))
+                    if((placeName.contains(searchText) || placeCity.contains(searchText) || placePin.contains(searchText)))
                         tripDataList.add(currentTrip);
                 }
 
@@ -293,50 +281,6 @@ public class HomeFragment extends Fragment implements SharedConstants
                     });
                     Collections.reverse(tripDataList);
                 }
-//                else
-//                {
-//                    Log.i("TPV-NOTE",filterString);
-//                    switch (filterString) {
-//                        case FILTER_START_TIME_ASC:
-//                            Log.i("TPV-NOTE","Sorting in Start Time Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
-//                                }
-//                            });
-//                            break;
-//                        case FILTER_START_TIME_DESC:
-//                            Log.i("TPV-NOTE","Sorting in Start Time Descending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
-//                                }
-//                            });
-//                            Collections.reverse(tripDataList);
-//                            break;
-//                        case FILTER_NO_OF_SEATS_ASC:
-//                            Log.i("TPV-NOTE","Sorting in Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-//                                }
-//                            });
-//                            break;
-//                        case FILTER_NO_OF_SEATS_DESC:
-//                            Log.i("TPV-NOTE","Sorting in Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-//                                }
-//                            });
-//                            Collections.reverse(tripDataList);
-//                            break;
-//                    }
-//                }
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
                     tripDetailsListView.setAdapter(listadapter);
@@ -367,7 +311,7 @@ public class HomeFragment extends Fragment implements SharedConstants
             }
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_TRIP_DETAILS);
+        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES);
         people.addValueEventListener(valueEventListener);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(LOADING);

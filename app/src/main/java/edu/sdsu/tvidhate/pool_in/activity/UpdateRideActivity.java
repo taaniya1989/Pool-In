@@ -32,16 +32,13 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class UpdateRideActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener{
 
-    private EditText mSourceAddress,mDestinationAddress,mSeatsAvailable,mStartDate,mStartTime;
-    private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
-
     private EditText mPlaceName,mPlaceCity,mPlacePinCode;
-
     private DatabaseReference mDatabase;
     private String contact,color,license,uid;
     private User currentTripPoster;
     private Car thisTripCar;
     private Date mTripStartDate;
+    private Trip currentTrip = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,36 +48,23 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         FirebaseAuth auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        Button mDatePickerButton,mTimePickerButton,mBackButton,mUpdateButton;
+        Button mBackButton,mUpdateButton;
 
         mPlaceName = findViewById(R.id.placeName);
         mPlaceCity = findViewById(R.id.placeCity);
         mPlacePinCode = findViewById(R.id.placePincode);
-//        mSourceAddress = findViewById(R.id.add_trip_from);
-//        mDestinationAddress = findViewById(R.id.add_trip_to);
-//        mStartDate = findViewById(R.id.add_trip_date_text);
-//        mStartTime = findViewById(R.id.add_trip_time_text);
-//        mSeatsAvailable = findViewById(R.id.add_trip_number_of_seats);
-//        mSourceNeighbordhood = findViewById(R.id.add_trip_from_neighborhood);
-//        mSourcePin = findViewById(R.id.add_trip_from_pincode);
-//        mDestinationNeighbordhood = findViewById(R.id.add_trip_to_neighborhood);
-//        mDestinationPin = findViewById(R.id.add_trip_to_pincode);
-//
-//        mDatePickerButton = findViewById(R.id.add_trip_date_button);
-//        mTimePickerButton = findViewById(R.id.add_trip_time_button);
-
-
         mBackButton = findViewById(R.id.add_trip_reset_button);
         mUpdateButton = findViewById(R.id.add_trip_submit);
 
         mBackButton.setText(R.string.back);
         mUpdateButton.setText(R.string.update);
-//
-//        mTimePickerButton.setOnClickListener(this);
-//        mDatePickerButton.setOnClickListener(this);
         mBackButton.setOnClickListener(this);
         mUpdateButton.setOnClickListener(this);
 
+        Bundle intent = getIntent().getExtras();
+        if(intent!=null){
+            currentTrip = (Trip) intent.getSerializable(TRIP_DETAILS_SERIALIZABLE);
+        }
         if(auth.getCurrentUser()!=null){
             contact = auth.getCurrentUser().getDisplayName();
         }
@@ -90,37 +74,11 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                 Trip currentTrip = dataSnapshot.getValue(Trip.class);
-                if(currentTrip != null){
-//                    currentTripPoster = currentTrip.getmTripDriver();
-//                    thisTripCar = currentTrip.getmTripCar();
-//                    if(thisTripCar != null)
-//                    {
-//                        color = thisTripCar.getmColor();
-//                        license = thisTripCar.getmNumberPlate();
-//                    }
-//                    mSourceAddress.setText(currentTrip.getmSourceAddress());
-//                    mDestinationAddress.setText(currentTrip.getmDestinationAddress());
-//                    mStartDate.setText(currentTrip.getmStartDate());
-//                    mStartTime.setText(currentTrip.getmStartTime());
-//                    mSeatsAvailable.setText(String.valueOf(currentTrip.getmSeatsAvailable()));
-//                    mSourceNeighbordhood.setText(String.valueOf(currentTrip.getmSourceNeighbordhood()));
-//                    mDestinationNeighbordhood.setText(String.valueOf(currentTrip.getmDestinationNeighbordhood()));
-//                    mSourcePin.setText(String.valueOf(currentTrip.getmSourcePin()));
-//                    mDestinationPin.setText(String.valueOf(currentTrip.getmDestinationPin()));
-
+                if(currentTrip != null)
+                {
                     mPlaceName.setText(currentTrip.getmTripPlaceName());
                     mPlaceCity.setText(currentTrip.getmTripCity());
                     mPlacePinCode.setText(currentTrip.getmTripPincode());
-
-//                    String mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
-//                    DateFormat formatter ;
-//                    Date date;
-//                    formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-//                    try {
-//                        mTripStartDate = formatter.parse(mDateString);
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
                     uid=currentTrip.getmTripId();
                 }
             }
@@ -131,7 +89,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference("trip_details").child(contact);
+        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(currentTrip.getmTripId());
         people.addValueEventListener(valueEventListener);
     }
 
@@ -152,65 +110,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             mPlacePinCode.setError(ENTER_PLACE_PIN);
             dataValid = FAILURE;
         }
-//        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
-//        {
-//            mDestinationAddress.setError(ENTER_DESTINATION);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
-//        {
-//            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
-//        {
-//            mDestinationPin.setError(ENTER_DESTINATION_PIN);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mStartDate.getText().toString()))
-//        {
-//            mStartDate.setError(ENTER_DATE);
-//            dataValid = FAILURE;
-//        }else{
-//            mStartDate.setError(null);
-//        }
-//        if(TextUtils.isEmpty(mStartTime.getText().toString()))
-//        {
-//            mStartTime.setError(ENTER_TIME);
-//            dataValid = FAILURE;
-//        }else{
-//            mStartTime.setError(null);
-//        }
-//        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
-//        {
-//            mSeatsAvailable.setError(ENTER_SEATS);
-//            dataValid = FAILURE;
-//        }
-//        else
-//        {
-//            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
-//            if(seats > 5 || seats < 1) {
-//                dataValid = FAILURE;
-//            }
-//        }
-//
-//        String dateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
-//        DateFormat formatter ;
-//        Date date ;
-//        formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-//        try {
-//            date = formatter.parse(dateString);
-//            mTripStartDate = date;
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(date);
-//            Log.d("TPV-NOTE", "formatted time: " + date);
-//            Log.d("TPV-NOTE", "current time: " + Calendar.getInstance().getTime());
-//            if(date.before(Calendar.getInstance().getTime())){
-//                dataValid = false;
-//            }
-//        }catch (Exception e){
-//            Log.d("TPV-NOTE","Exception: "+e);
-//        }
         return dataValid;
     }
 
@@ -225,39 +124,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     public void onClick(View v) {
         switch (v.getId())
         {
-//            case R.id.add_trip_date_button:
-//                final Calendar calendar = Calendar.getInstance();
-//                int mYear = calendar.get(Calendar.YEAR);
-//                int mMonth = calendar.get(Calendar.MONTH);
-//                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateRideActivity.this,
-//                        new DatePickerDialog.OnDateSetListener() {
-//                            @Override
-//                            public void onDateSet(DatePicker view, int year,
-//                                                  int monthOfYear, int dayOfMonth) {
-//                                String formatDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
-//                                mStartDate.setText(formatDate);
-//                            }
-//                        }, mYear, mMonth, mDay);
-//                datePickerDialog.show();
-//                break;
-//
-//            case R.id.add_trip_time_button:
-//                final Calendar c = Calendar.getInstance();
-//                int mHour = c.get(Calendar.HOUR_OF_DAY);
-//                int mMinute = c.get(Calendar.MINUTE);
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateRideActivity.this,
-//                        new TimePickerDialog.OnTimeSetListener() {
-//                            @Override
-//                            public void onTimeSet(TimePicker view, int hourOfDay,
-//                                                  int minute) {
-//                                String formatTime = hourOfDay + ":" + minute;
-//                                mStartTime.setText(formatTime);
-//                            }
-//                        }, mHour, mMinute, false);
-//                timePickerDialog.show();
-//                break;
-
             case R.id.add_trip_reset_button:
                 finish();
                 break;
@@ -265,33 +131,14 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             case R.id.add_trip_submit:
                 if(validInput()){
                     Trip currentTrip = new Trip();
-  //                  currentTripPoster.setmContactNumber(contact);
-//                    currentTrip.setmTripDriver(currentTripPoster);
-//                    if(thisTripCar != null) {
-//                        thisTripCar.setmColor(color);
-//                        thisTripCar.setmNumberPlate(license);
-//                        currentTrip.setmTripCar(thisTripCar);
-//                    }
-//                    currentTrip.setmSourceAddress(mSourceAddress.getText().toString());
-//                    currentTrip.setmDestinationAddress(mDestinationAddress.getText().toString());
-//                    currentTrip.setmStartDate(mStartDate.getText().toString());
-//                    currentTrip.setmStartTime(mStartTime.getText().toString());
                     currentTrip.setmCreationTimestamp(System.currentTimeMillis());
                     currentTrip.setmTripPlaceName(mPlaceName.getText().toString());
                     currentTrip.setmTripCity(mPlaceCity.getText().toString());
                     currentTrip.setmTripPincode(mPlacePinCode.getText().toString());
-//                    currentTrip.setmTripStatus(TRIP_UPDATED);
-//                    currentTrip.setmTripVisible(SUCCESS);
-//                    currentTrip.setmSourceNeighbordhood(mSourceNeighbordhood.getText().toString());
-//                    currentTrip.setmSourcePin(mSourcePin.getText().toString());
-//                    currentTrip.setmDestinationNeighbordhood(mDestinationNeighbordhood.getText().toString());
-//                    currentTrip.setmDestinationPin(mDestinationPin.getText().toString());
-//                    currentTrip.setmStartTimestamp(mTripStartDate);
                     currentTrip.setmTripId(uid);
-                   // currentTrip.setmSeatsAvailable(Integer.parseInt(mSeatsAvailable.getText().toString()));
 
                     try{
-                        mDatabase.child(FIREBASE_TRIP_DETAILS).child(contact).setValue(currentTrip);
+                        mDatabase.child(FIREBASE_MY_RIDES).child(uid).setValue(currentTrip);
                         Log.d("TPV-NOTE","Data updated successfully");
                         finish();
                     }catch(Exception e){

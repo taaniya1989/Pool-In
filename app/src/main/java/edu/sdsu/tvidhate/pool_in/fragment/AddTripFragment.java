@@ -42,8 +42,7 @@ import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 import edu.sdsu.tvidhate.pool_in.helper.Utilities;
 
-public class
-        AddTripFragment extends Fragment implements SharedConstants,View.OnClickListener {
+public class AddTripFragment extends Fragment implements SharedConstants,View.OnClickListener {
             // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
             private static final String ARG_PARAM1 = "param1";
             private static final String ARG_PARAM2 = "param2";
@@ -93,21 +92,18 @@ public class
             }
 
             @Override
-            public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                    Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
 
-                View view =  inflater.inflate(R.layout.fragment_add_trip,null);
-                FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
-                Button mDatePickerButton,mTimePickerButton,mResetButton,mSubmitButton;
+        View view =  inflater.inflate(R.layout.fragment_add_trip,null);
+        FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
+        Button mResetButton,mSubmitButton;
 
-                if(firebaseAuthInstance.getCurrentUser()!=null){
-                    currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
-                    Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
-                }
-//        hasCar = "Car";
-//        Utilities utilities = new Utilities(getFragmentManager());
-//        utilities.checkProfile(hasCar);
-//        utilities.checkForExistingRide(getActivity());
+        if(firebaseAuthInstance.getCurrentUser()!=null)
+        {
+            currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
+            Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
+        }
 
         firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
@@ -118,54 +114,8 @@ public class
         mResetButton = view.findViewById(R.id.add_trip_reset_button);
         mSubmitButton = view.findViewById(R.id.add_trip_submit);
 
-//        mStartTime = view.findViewById(R.id.add_trip_time_text);
-//        mSeatsAvailable = view.findViewById(R.id.add_trip_number_of_seats);
-//        mSourceNeighbordhood = view.findViewById(R.id.add_trip_from_neighborhood);
-//        mSourcePin = view.findViewById(R.id.add_trip_from_pincode);
-//        mDestinationNeighbordhood = view.findViewById(R.id.add_trip_to_neighborhood);
-//        mDestinationPin = view.findViewById(R.id.add_trip_to_pincode);
-//
-//        mDatePickerButton = view.findViewById(R.id.add_trip_date_button);
-//        mTimePickerButton = view.findViewById(R.id.add_trip_time_button);
-//
-//
-//        mTimePickerButton.setOnClickListener(this);
-//        mDatePickerButton.setOnClickListener(this);
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
-
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
-                if(dataSnapshot.getChildrenCount()>0)
-                {
-                    User currentUser = dataSnapshot.getValue(User.class);
-//
-//                    if(currentUser != null) {
-//                        if(currentUser.hasACar())
-//                        {
-//                            Log.i("TPV-NOTE","User already has a car");
-//                        }
-//                        else
-//                        {
-//                            Log.i("TPV-NOTE","Please add car details first");
-//                            Utilities utilities = new Utilities(getFragmentManager());
-//                            utilities.checkProfile(hasCar);
-//                        }
-//                    }
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        DatabaseReference people = firebaseDatabaseInstance.getReference(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
-        people.addValueEventListener(valueEventListener);
 
         return view;
     }
@@ -178,68 +128,23 @@ public class
                 mPlaceName.setText(EMPTY_STRING);
                 mPlaceCity.setText(EMPTY_STRING);
                 mPlacePinCode.setText(EMPTY_STRING);
-//                mStartTime.setText(EMPTY_STRING);
-//                mSeatsAvailable.setText(EMPTY_STRING);
                 break;
 
-          /*  case R.id.add_trip_time_button:
-                final Calendar c = Calendar.getInstance();
-                int mHour = c.get(Calendar.HOUR_OF_DAY);
-                int mMinute = c.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-                                String timeFormat = hourOfDay + ":" + minute;
-                                mStartTime.setText(timeFormat);
-                            }
-                        }, mHour, mMinute, false);
-                timePickerDialog.show();
-                break;
-
-            case R.id.add_trip_date_button:
-                final Calendar calendar = Calendar.getInstance();
-                int mYear = calendar.get(Calendar.YEAR);
-                int mMonth = calendar.get(Calendar.MONTH);
-                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getContext()),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                String dateFormat = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
-                                mStartDate.setText(dateFormat);
-                                Log.i("NOTE-TPV","Date"+dateFormat+"Date set "+mStartDate.getText().toString());
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-                break;
-*/
             case R.id.add_trip_submit:
                 if(validInput())
                 {
-                    //Handle Timestamp
-                  //  int noOfSeats = Integer.parseInt(mSeatsAvailable.getText().toString());
-                   // Log.i("TPV-NOTE",mTripDriver.toString());
-                    //User tripDriver = firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
-                    Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).push().getKey(),
+                    Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                             mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
                             mPlacePinCode.getText().toString().trim(),System.currentTimeMillis(),mTripPoster);
-//                            mSourcePin.getText().toString().trim(),mSourceNeighbordhood.getText().toString().trim(),
-//                            mDestinationPin.getText().toString().trim(), mDestinationNeighbordhood.getText().toString().trim(),
-//                            System.currentTimeMillis(),mTripStartDate,noOfSeats,mTripDriver,mStartTime.getText().toString(),
-//                            mStartDate.getText().toString());
 
                     Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                     try{
-                        firebaseDatabaseInstanceReference.child(FIREBASE_TRIP_DETAILS).child(currentUserDisplayName).setValue(newTrip);
                         firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
                         firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
                         Log.d("TPV-NOTE","Data submitted successfully"+getActivity().getLocalClassName());
-                       // Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(getContext(), MainActivity.class);
                         getActivity().finish();
-                        //startActivity(intent);
+                        startActivity(intent);
                     }catch(Exception e){
                         Log.d("TPV-NOTE","Exception: "+e);
                     }
@@ -262,8 +167,6 @@ public class
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       // checkForExistingRide();
-
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -279,7 +182,6 @@ public class
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         };
         DatabaseReference people = firebaseDatabaseInstance.getReference(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
         people.addValueEventListener(valueEventListener);
@@ -303,88 +205,7 @@ public class
             mPlacePinCode.setError(ENTER_PLACE_PIN);
             dataValid = FAILURE;
         }
-//        if(TextUtils.isEmpty(mDestinationAddress.getText().toString()))
-//        {
-//            mDestinationAddress.setError(ENTER_DESTINATION);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mDestinationNeighbordhood.getText().toString()))
-//        {
-//            mDestinationNeighbordhood.setError(ENTER_DESTINATION_NEIGHBORHOOD);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mDestinationPin.getText().toString()))
-//        {
-//            mDestinationPin.setError(ENTER_DESTINATION_PIN);
-//            dataValid = FAILURE;
-//        }
-//        if(TextUtils.isEmpty(mStartDate.getText().toString()))
-//        {
-//            mStartDate.setError(ENTER_DATE);
-//            dataValid = FAILURE;
-//        }else{
-//            mStartDate.setError(null);
-//        }
-//        if(TextUtils.isEmpty(mStartTime.getText().toString()))
-//        {
-//            mStartTime.setError(ENTER_TIME);
-//            dataValid = FAILURE;
-//        }else{
-//            mStartTime.setError(null);
-//        }
-//        if(TextUtils.isEmpty(mSeatsAvailable.getText().toString()))
-//        {
-//            mSeatsAvailable.setError(ENTER_SEATS);
-//            dataValid = FAILURE;
-//        }
-//        else
-//        {
-//            int seats = Integer.parseInt(mSeatsAvailable.getText().toString());
-//            if(seats > 5 || seats < 1) {
-//                dataValid = FAILURE;
-//            }
-//        }
-//
-//
-//        mDateString = mStartDate.getText().toString().concat(" ").concat(mStartTime.getText().toString());
-//        DateFormat formatter ;
-//        Date date;
-//        formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-//        try {
-//            date = formatter.parse(mDateString);
-//            mTripStartDate = date;
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(date);
-//            Log.d("TPV-NOTE", "formatted time: " + date);
-//            Log.d("TPV-NOTE", "current time: " + Calendar.getInstance().getTime());
-//            if(date.before(Calendar.getInstance().getTime())){
-//                Toast.makeText(getContext(),DATE_VALIDATION_FAILURE_TOAST, Toast.LENGTH_SHORT).show();
-//                dataValid = FAILURE;
-//            }
-//        }catch (Exception e){
-//            Log.d("TPV-NOTE","Exception: "+e);
-//        }
         return dataValid;
-    }
-
-    private void checkForExistingRide() {
-        ValueEventListener valueEventListener1 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
-                if(dataSnapshot.getChildrenCount()>0 && getActivity()!=null){
-                    Intent intent = getActivity().getIntent();
-                    getActivity().finish();
-                    startActivity(intent);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        DatabaseReference people1 = firebaseDatabaseInstance.getReference(FIREBASE_TRIP_DETAILS).child(currentUserDisplayName);
-        people1.addValueEventListener(valueEventListener1);
     }
 
     @Override
