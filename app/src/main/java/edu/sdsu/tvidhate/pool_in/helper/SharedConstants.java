@@ -12,6 +12,7 @@ public interface SharedConstants {
     String ENTER_REQUIRED_FIELDS = "Enter Required Fields";
     int IMAGE_SELECTED_RESULT = 2;
     int IMAGE_CAPTURED_RESULT = 3;
+    String FIREBASE_PHOTO_LIST = "PhotoFileNames";
 
     String TRIP_STARTED = "Started";
     String TRIP_ENDED = "Ended";

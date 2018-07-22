@@ -25,19 +25,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import edu.sdsu.tvidhate.pool_in.R;
@@ -65,6 +74,8 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private String mTripImagePath;
     private Uri mUri;
     private int height,width;
+    private StorageReference mStorage;
+    private DatabaseReference firebaseDatabase;
 
     public AddTripFragment() {
                 // Required empty public constructor
@@ -118,6 +129,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
 
         firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
+        mStorage = FirebaseStorage.getInstance().getReference();
 
         mPlaceName = view.findViewById(R.id.placeName);
         mPlaceCity = view.findViewById(R.id.placeCity);
@@ -167,6 +179,27 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 break;
 
             case R.id.add_trip_submit:
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                mTripImagePath = mPlaceName.getText().toString().replaceAll(" ", "_").toLowerCase()
+                        +"_"+String.valueOf(timestamp.getTime())+"_"+user.getUid().toString().toLowerCase()+".jpg";
+
+                Log.i("PhotoPath",mTripImagePath);
+                StorageReference filePath = mStorage.child(FIREBASE_PHOTO_LIST).child(mTripImagePath);
+
+                Map<String ,Object > data = new HashMap<String, Object>();
+                data.put(mTripImagePath,mTripImagePath);
+                firebaseDatabaseInstanceReference.child(FIREBASE_PHOTO_LIST).updateChildren(data);
+
+                filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity().getApplicationContext(),"Uploaded Image",Toast.LENGTH_LONG).show();
+                    }
+                });
+
                 if(validInput())
                 {
                     Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
@@ -187,7 +220,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 }else{
                     Toast.makeText(getContext(),VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
                 }
-
                 break;
 
             case R.id.add_trip_image_button:
