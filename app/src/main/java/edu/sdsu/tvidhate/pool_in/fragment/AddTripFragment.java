@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,22 +48,23 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 import edu.sdsu.tvidhate.pool_in.helper.Utilities;
 
 public class AddTripFragment extends Fragment implements SharedConstants,View.OnClickListener {
-            // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-            private static final String ARG_PARAM1 = "param1";
-            private static final String ARG_PARAM2 = "param2";
-            private OnFragmentInteractionListener mListener;
+            // the fragment initialization parameters, e.g. ARG_ITEM_NUMBE
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private OnFragmentInteractionListener mListener;
 
-            private String currentUserDisplayName;
-            private User mTripPoster;
-            private DatabaseReference firebaseDatabaseInstanceReference;
-            private FirebaseDatabase firebaseDatabaseInstance;
-            private String hasCar;
-            //Member Variables
-            private EditText mPlaceName,mPlaceCity,mPlacePinCode;
-            private EditText mSourceNeighbordhood,mSourcePin,mDestinationPin,mDestinationNeighbordhood;
-            private TextView mStartDate,mStartTime;
-            private String mDateString;
-            private Date mTripStartDate;
+    private String currentUserDisplayName;
+    private User mTripPoster;
+    private DatabaseReference firebaseDatabaseInstanceReference;
+    private FirebaseDatabase firebaseDatabaseInstance;
+
+    //Member Variables
+    private EditText mPlaceName,mPlaceCity,mPlacePinCode;
+    private Button mPlaceImageSelectButton;
+    private ImageView mPlaceImagePreview;
+    private String mTripImagePath;
+    private Uri mUri;
+    private int height,width;
 
     public AddTripFragment() {
                 // Required empty public constructor
@@ -99,6 +105,11 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         Button mResetButton,mSubmitButton;
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+
         if(firebaseAuthInstance.getCurrentUser()!=null)
         {
             currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
@@ -113,11 +124,36 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         mPlacePinCode = view.findViewById(R.id.placePincode);
         mResetButton = view.findViewById(R.id.add_trip_reset_button);
         mSubmitButton = view.findViewById(R.id.add_trip_submit);
+        mPlaceImageSelectButton = view.findViewById(R.id.add_trip_image_button);
+        mPlaceImagePreview = view.findViewById(R.id.placeImage);
 
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
+        mPlaceImageSelectButton.setOnClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAGE_SELECTED_RESULT && resultCode == MainActivity.RESULT_OK
+                && data != null && data.getData() != null)
+        {
+            mUri = data.getData();
+//            selectedImage.setImageURI(mUri);
+            Picasso.with(getContext()).load(mUri).resize(width/2,height/4).into(mPlaceImagePreview);
+            Log.i("VANILLA_INFO",mUri.toString());
+        }
+        if(requestCode == IMAGE_CAPTURED_RESULT && resultCode == MainActivity.RESULT_OK
+                && data != null ) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            mUri = data.getData();
+            //selectedImage.setImageURI(mUri);
+            mPlaceImagePreview.setImageBitmap(photo);
+
+            Log.i("VANILLA_INFO",photo.toString());
+        }
     }
 
     @Override
@@ -133,9 +169,9 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
             case R.id.add_trip_submit:
                 if(validInput())
                 {
-                    Trip newTrip = new Trip(firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                    Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                             mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
-                            mPlacePinCode.getText().toString().trim(),System.currentTimeMillis(),mTripPoster);
+                            mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath);
 
                     Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                     try{
@@ -152,6 +188,12 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                     Toast.makeText(getContext(),VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
                 }
 
+                break;
+
+            case R.id.add_trip_image_button:
+                Intent selectImageFromGallery = new Intent(Intent.ACTION_GET_CONTENT);
+                selectImageFromGallery.setType("image/*");
+                startActivityForResult(selectImageFromGallery, IMAGE_SELECTED_RESULT);
                 break;
         }
     }

@@ -10,14 +10,29 @@ public class Trip implements Serializable {
     private String mTripId;
     private String mTripPlaceName,mTripCity,mTripPincode;
     private User mTripPoster;
+    private String mTripImagePath;
 
-    public Trip(String mTripId, String mTripPlaceName, String mTripCity, String mTripPincode,Long mCreationTimestamp,User mTripPoster) {
+    public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName, String mTripCity, String mTripPincode, User mTripPoster, String mTripImagePath) {
+        this.mCreationTimestamp = mCreationTimestamp;
         this.mTripId = mTripId;
         this.mTripPlaceName = mTripPlaceName;
         this.mTripCity = mTripCity;
         this.mTripPincode = mTripPincode;
-        this.mCreationTimestamp = mCreationTimestamp;
         this.mTripPoster = mTripPoster;
+        this.mTripImagePath = mTripImagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "mCreationTimestamp=" + mCreationTimestamp +
+                ", mTripId='" + mTripId + '\'' +
+                ", mTripPlaceName='" + mTripPlaceName + '\'' +
+                ", mTripCity='" + mTripCity + '\'' +
+                ", mTripPincode='" + mTripPincode + '\'' +
+                ", mTripPoster=" + mTripPoster +
+                ", mTripImagePath='" + mTripImagePath + '\'' +
+                '}';
     }
 
     public Trip()
@@ -25,16 +40,12 @@ public class Trip implements Serializable {
 
     }
 
-    @Override
-    public String toString() {
-        return "Trip{" +
-                "mTripId='" + mTripId + '\'' +
-                ", mTripPlaceName='" + mTripPlaceName + '\'' +
-                ", mTripCity='" + mTripCity + '\'' +
-                ", mTripPincode='" + mTripPincode + '\'' +
-                ", mTripPoster=" + mTripPoster +
-                ", mCreationTimestamp=" + mCreationTimestamp +
-                '}';
+    public String getmTripImagePath() {
+        return mTripImagePath;
+    }
+
+    public void setmTripImagePath(String mTripImagePath) {
+        this.mTripImagePath = mTripImagePath;
     }
 
     public User getmTripPoster() {

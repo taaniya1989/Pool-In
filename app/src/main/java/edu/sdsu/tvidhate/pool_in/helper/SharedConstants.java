@@ -10,6 +10,8 @@ public interface SharedConstants {
     String INVALID_EMAIL = "Invalid Email ID";
     String REGISTRATION_FAILED = "Registration failed";
     String ENTER_REQUIRED_FIELDS = "Enter Required Fields";
+    int IMAGE_SELECTED_RESULT = 2;
+    int IMAGE_CAPTURED_RESULT = 3;
 
     String TRIP_STARTED = "Started";
     String TRIP_ENDED = "Ended";
