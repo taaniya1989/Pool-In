@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
@@ -119,17 +118,6 @@ public class MyProfileFragment extends Fragment implements SharedConstants,View.
                         mUserName.setText(currentUser.getmUserName());
                         mUserEmail.setText(currentUser.getmEmailAddress());
                         mUserContact.setText(currentUser.getmContactNumber());
-                       /* mUserLastName.setText(currentUser.getmLastName());
-                        mUserHomeAddress.setText(currentUser.getmHomeAddress());
-                        mUserOfficeAddress.setText(currentUser.getmWorkAddress());
-
-                        if (currentUser.hasACar()) {
-                            Car thisUserCar = currentUser.getmCar();
-                            mUserCarBrand.setText(thisUserCar.getmBrand());
-                            mUserCarModel.setText(thisUserCar.getmModel());
-                            mUserCarColor.setText(thisUserCar.getmColor());
-                            mUserCarLicense.setText(thisUserCar.getmNumberPlate());
-                        }*/
                     }
                 }
 

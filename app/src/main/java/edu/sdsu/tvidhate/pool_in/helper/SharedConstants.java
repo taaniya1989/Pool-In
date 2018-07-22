@@ -58,7 +58,6 @@ public interface SharedConstants {
     String SEATS_ZERO = "Seats can't be Zero";
     String LOADING = "Loading...";
     String RIDE_SCHEDULED ="Ride is Scheduled";
-    String PASSENGER_REQUEST = "Request";
     String ACCEPT_REQUEST = "Add the Passenger";
     String ADD = "Add";
     String SEATS_AVAILABLE = "Seats Available: ";
@@ -68,9 +67,6 @@ public interface SharedConstants {
     String SEATS_AVAILABLE_CHILD_ELEMENT = "mSeatsAvailable";
     String JOINEE_CHILD_ELEMENT = "mTripPassengers";
     String ENTER_NAME = "Enter Name";
-    String ENTER_CAR = "Enter Car";
-    String ENTER_CAR_COLOR = "Enter Car Color";
-    String ENTER_CAR_LICENSE = "Enter Car Registration";
     String RIDE_STATUS_COMPLETED = "Completed";
     String REQUEST_STATUS_APPROVED = "Approved";
     String REQUEST_STATUS_WAITING = "Awaiting Approval";

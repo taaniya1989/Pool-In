@@ -25,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -36,7 +35,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     private DatabaseReference mDatabase;
     private String contact,color,license,uid;
     private User currentTripPoster;
-    private Car thisTripCar;
     private Date mTripStartDate;
     private Trip currentTrip = null;
 

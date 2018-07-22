@@ -52,22 +52,6 @@ public class Utilities implements SharedConstants
                     fragmentTransaction.replace(R.id.screen_area,updateProfileFragment);
                     fragmentTransaction.commitAllowingStateLoss();
                 }
-                else
-                {
-                    User currentUser = dataSnapshot.getValue(User.class);
-//                    if (currentUser.getmCar() == null && updateData == "Car")
-//                    {
-//                        Log.i("TPV-NOTE","no car info"+updateData);
-//                      //  updateData = "Car";
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("updateData",updateData);
-//                        Fragment updateProfileFragment = new UpdateProfileFragment();
-//                        updateProfileFragment.setArguments(bundle);
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace(R.id.screen_area,updateProfileFragment);
-//                        fragmentTransaction.commitAllowingStateLoss();
-//                    }
-                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

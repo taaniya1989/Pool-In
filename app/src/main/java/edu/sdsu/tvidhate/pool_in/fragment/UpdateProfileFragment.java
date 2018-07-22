@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.Car;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
@@ -116,16 +115,6 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
 
                     if(currentUser != null) {
                         mUserName.setText(currentUser.getmUserName());
-//                       // mUserLastname.setText(currentUser.getmLastName());
-//                       // mUserHomeAddress.setText(currentUser.getmHomeAddress());
-//                        if(currentUser.hasACar())
-//                        {
-//                            Car currentUsersCar = currentUser.getmCar();
-//                            mCarBrand.setText(currentUsersCar.getmBrand());
-//                            mCarModel.setText(currentUsersCar.getmModel());
-//                            mCarColor.setText(currentUsersCar.getmColor());
-//                            mCarRegistrationNumber.setText(currentUsersCar.getmNumberPlate());
-//                        }
                     }
                 }
 
@@ -150,27 +139,6 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                     //Handle Name & Address
                     User currentUser = new User(mUserName.getText().toString().trim(),mUserContact.getText().toString().trim(),
                             mUserEmailId.getText().toString().trim());
-                   /* Car currentUserCar = currentUser.getmCar();
-                    if(currentUserCar == null) {
-                        if(checkCarDetails()){
-                            currentUser.setmCar(new Car(mUserContact.getText().toString() + "-" + mCarRegistrationNumber.getText().toString()
-                                        , mCarBrand.getText().toString(), mCarModel.getText().toString(), mCarColor.getText().toString(), mCarRegistrationNumber.getText().toString()));
-                        }
-                        else {
-                            Toast.makeText(getContext(),"Please add all car details!",Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        currentUserCar.setmBrand(mCarBrand.getText().toString());
-                        currentUserCar.setmModel(mCarModel.getText().toString());
-                        currentUserCar.setmColor(mCarColor.getText().toString());
-                        currentUserCar.setmNumberPlate(mCarRegistrationNumber.getText().toString());
-                        currentUserCar.setmCarId(currentUser.getmContactNumber()+"-"+mCarRegistrationNumber.getText().toString());
-                    }*/
-
-                    //boolean updated = databaseHelper.updateProfileData(signUpDetailsPOJO);
                     try{
                         firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(mUserContact.getText().toString()).removeValue();
                         firebaseDatabaseInstanceReference.child(FIREBASE_PERSONAL_DATA).child(mUserContact.getText().toString()).setValue(currentUser);
@@ -187,19 +155,10 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
                 break;
 
             case R.id.update_user_profile_back_button:
-                /*if(updateData == "Car")
-                {
-                    Intent intent = getActivity().getIntent();
-                    getActivity().finish();
-                    startActivity(intent);
-                }
-                else
-                {*/
                     Fragment myProfileFragment = new MyProfileFragment();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area,myProfileFragment);
                     fragmentTransaction.commitAllowingStateLoss();
-                //}
                 break;
         }
     }
@@ -215,36 +174,8 @@ public class UpdateProfileFragment extends Fragment implements SharedConstants,V
             mUserName.setError(ENTER_NAME);
             dataValid = FAILURE;
         }
-        /*boolean carValid = SUCCESS;
-        if(updateData == "Car")
-            carValid = checkCarDetails();
-        if (TextUtils.isEmpty(mUserLastname.getText().toString())) {
-            mUserLastname.setError(ENTER_NAME);
-            dataValid = FAILURE;
-        }*/
         return dataValid; //&& carValid;
     }
-
-  /*  private boolean checkCarDetails(){
-        boolean dataValid = SUCCESS;
-        if (TextUtils.isEmpty(mCarBrand.getText().toString())) {
-            mCarBrand.setError(ENTER_CAR);
-            dataValid = FAILURE;
-        }
-        if (TextUtils.isEmpty(mCarModel.getText().toString())) {
-            mCarModel.setError(ENTER_CAR);
-            dataValid = FAILURE;
-        }
-        if (TextUtils.isEmpty(mCarColor.getText().toString())) {
-            mCarColor.setError(ENTER_CAR_COLOR);
-            dataValid = FAILURE;
-        }
-        if (TextUtils.isEmpty(mCarRegistrationNumber.getText().toString())) {
-            mCarRegistrationNumber.setError(ENTER_CAR_LICENSE);
-            dataValid = FAILURE;
-        }
-        return dataValid;
-    }*/
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

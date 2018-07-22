@@ -31,8 +31,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.entity.Car;
-import edu.sdsu.tvidhate.pool_in.entity.Request;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
