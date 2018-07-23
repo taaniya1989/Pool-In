@@ -152,11 +152,6 @@ public class HomeFragment extends Fragment implements SharedConstants
                 for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
                     tripDataList.add(currentTrip);
-                }
-                Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in list");
-                if(filterString == "")
-                {
-                    Log.i("TPV-NOTE","filterString empty");
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override
                         public int compare(Trip o1, Trip o2) {
@@ -165,7 +160,8 @@ public class HomeFragment extends Fragment implements SharedConstants
                     });
                     Collections.reverse(tripDataList);
                 }
-                Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in reverse list");
+                Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in list");
+                
 //                else {
 //                    Log.i("TPV-NOTE", HomeFragment.this.filterString);
 //                    switch (filterString) {
@@ -269,11 +265,6 @@ public class HomeFragment extends Fragment implements SharedConstants
 
                     if((placeName.contains(searchText) || placeCity.contains(searchText) || placePin.contains(searchText)))
                         tripDataList.add(currentTrip);
-                }
-
-                if(filterString == "")
-                {
-                    Log.i("TPV-NOTE","filterString empty");
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override
                         public int compare(Trip o1, Trip o2) {
@@ -282,6 +273,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                     });
                     Collections.reverse(tripDataList);
                 }
+
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
                     tripDetailsListView.setAdapter(listadapter);

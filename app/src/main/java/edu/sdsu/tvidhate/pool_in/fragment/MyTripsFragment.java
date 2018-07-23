@@ -34,6 +34,7 @@ import edu.sdsu.tvidhate.pool_in.activity.RideHistoryDetailsActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.helper.MyRidesListAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
+import edu.sdsu.tvidhate.pool_in.helper.TripDetailsAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.Utilities;
 
 /**
@@ -52,7 +53,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
     private List<String> uids = new ArrayList<>();
     private List<Trip> myRideDetailsList = new ArrayList<>();
     private ListView myRidesListView;
-    private MyRidesListAdapter listadapter;
+    private TripDetailsAdapter listadapter;
     private String myPhoneNo="";
     private OnFragmentInteractionListener mListener;
 
@@ -153,7 +154,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
                                     });
                                     Collections.reverse(myRideDetailsList);
                                     if(getActivity() != null){
-                                        listadapter = new MyRidesListAdapter(getActivity(), 0, myRideDetailsList);
+                                        listadapter = new TripDetailsAdapter(getActivity(), 0, myRideDetailsList);
                                         myRidesListView.setAdapter(listadapter);
                                     }
                                     if (listadapter != null) {
