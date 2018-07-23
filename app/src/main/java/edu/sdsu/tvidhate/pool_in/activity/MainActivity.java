@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private static int navItemIndex = 0;
     private static String CURRENT_TAG = TAG_HOME;
     private Handler mHandler;
-    private int height,width;
+    public static int height,width;
     private Uri mUri;
 
 
@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
 
         String contact="";
         auth = FirebaseAuth.getInstance();

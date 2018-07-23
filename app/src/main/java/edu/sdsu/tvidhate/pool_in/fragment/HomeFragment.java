@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
                     tripDataList.add(currentTrip);
                 }
-
+                Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in list");
                 if(filterString == "")
                 {
                     Log.i("TPV-NOTE","filterString empty");
@@ -165,6 +165,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                     });
                     Collections.reverse(tripDataList);
                 }
+                Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in reverse list");
 //                else {
 //                    Log.i("TPV-NOTE", HomeFragment.this.filterString);
 //                    switch (filterString) {

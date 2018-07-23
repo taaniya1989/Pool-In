@@ -1,23 +1,37 @@
 package edu.sdsu.tvidhate.pool_in.helper;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import edu.sdsu.tvidhate.pool_in.R;
+import edu.sdsu.tvidhate.pool_in.activity.MainActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
+import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
 
 public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
 {
     private Activity context;
     private List<Trip> userProperties;
+    private StorageReference firebaseStorageRef;
+    private Uri imageUri;
+
     public TripDetailsAdapter(Activity context, int resource, List<Trip> list) {
         super(context, resource, list);
         this.context = context;
@@ -29,33 +43,28 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View view = inflater.inflate(R.layout.trip_list_item, null);
-//        TextView destination = view.findViewById(R.id.trip_list_destination);
-//        TextView source = view.findViewById(R.id.trip_list_source);
-//        TextView date = view.findViewById(R.id.trip_list_date);
-//        TextView time = view.findViewById(R.id.trip_list_time);
-//        TextView seats = view.findViewById(R.id.trip_list_seats);
-//        TextView name = view.findViewById(R.id.trip_list_name);
-//        TextView contact = view.findViewById(R.id.trip_list_contact);
 
         TextView placeName,placeCity;
+        final ImageView placeImage;
         placeName = view.findViewById(R.id.itemPlaceName);
         placeCity = view.findViewById(R.id.itemPlaceCity);
+        placeImage = view.findViewById(R.id.itemPlaceImage);
+
 
         placeName.setText(userProperties.get(position).getmTripPlaceName());
         placeCity.setText(userProperties.get(position).getmTripCity());
 
-       // TextView sourceNeighborhood = view.findViewById(R.id.trip_list_fromneighborhood);
-       // TextView destinationNeighborhood = view.findViewById(R.id.trip_list_toneighborhood);
-//
-//        source.setText(userProperties.get(position).getmSourceAddress());
-//        destination.setText(userProperties.get(position).getmDestinationAddress());
-//        date.setText(userProperties.get(position).getmStartDate());
-//        time.setText(userProperties.get(position).getmStartTime());
-//        seats.setText(String.valueOf(userProperties.get(position).getmSeatsAvailable()));
-//        name.setText(userProperties.get(position).getmTripDriver().toString());
-//        contact.setText(userProperties.get(position).getmTripDriver().getmContactNumber());
-       // sourceNeighborhood.setText(userProperties.get(position).getmSourceNeighbordhood());
-       // destinationNeighborhood.setText(userProperties.get(position).getmDestinationNeighbordhood());
+        firebaseStorageRef = FirebaseStorage.getInstance().getReference();
+        Log.i("TANVI",firebaseStorageRef.child(FIREBASE_PHOTO_LIST).child(userProperties.get(position).getmTripImagePath()).toString());
+
+
+        firebaseStorageRef.child(FIREBASE_PHOTO_LIST).child(userProperties.get(position).getmTripImagePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.i("!!!!!","");
+                Picasso.with(getContext()).load(uri).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
+            }
+        });
 
         return view;
     }

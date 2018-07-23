@@ -73,7 +73,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private ImageView mPlaceImagePreview;
     private String mTripImagePath;
     private Uri mUri;
-    private int height,width;
     private StorageReference mStorage;
     private DatabaseReference firebaseDatabase;
 
@@ -116,11 +115,6 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         Button mResetButton,mSubmitButton;
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
-        width = displayMetrics.widthPixels;
-
         if(firebaseAuthInstance.getCurrentUser()!=null)
         {
             currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
@@ -154,7 +148,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         {
             mUri = data.getData();
 //            selectedImage.setImageURI(mUri);
-            Picasso.with(getContext()).load(mUri).resize(width/2,height/4).into(mPlaceImagePreview);
+            Picasso.with(getContext()).load(mUri).resize(MainActivity.width/2,MainActivity.height/4).into(mPlaceImagePreview);
             Log.i("VANILLA_INFO",mUri.toString());
         }
         if(requestCode == IMAGE_CAPTURED_RESULT && resultCode == MainActivity.RESULT_OK
@@ -196,7 +190,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Uploaded Image",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"Uploaded Image",Toast.LENGTH_LONG).show();
                     }
                 });
 
