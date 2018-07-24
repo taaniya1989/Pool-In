@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,6 @@ import edu.sdsu.tvidhate.pool_in.activity.TripDetailsActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 import edu.sdsu.tvidhate.pool_in.helper.TripDetailsAdapter;
-import edu.sdsu.tvidhate.pool_in.helper.Utilities;
 
 
 public class HomeFragment extends Fragment implements SharedConstants
@@ -162,50 +162,6 @@ public class HomeFragment extends Fragment implements SharedConstants
                 }
                 Log.d("TPV-NOTE", "There are " + tripDataList.size() + " items in list");
                 
-//                else {
-//                    Log.i("TPV-NOTE", HomeFragment.this.filterString);
-//                    switch (filterString) {
-//                        case FILTER_START_TIME_ASC:
-//                            Log.i("TPV-NOTE","Sorting in Start Time Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
-//                                }
-//                            });
-//                            break;
-//                        case FILTER_START_TIME_DESC:
-//                            Log.i("TPV-NOTE","Sorting in Start Time Descending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmStartTimestamp().compareTo(o2.getmStartTimestamp());
-//                                }
-//                            });
-//                            Collections.reverse(tripDataList);
-//                            Log.i("TPV-NOTE","Descending List "+tripDataList.get(0).toString());
-//                            break;
-//                        case FILTER_NO_OF_SEATS_ASC:
-//                            Log.i("TPV-NOTE","Sorting in Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-//                                }
-//                            });
-//                            break;
-//                        case FILTER_NO_OF_SEATS_DESC:
-//                            Log.i("TPV-NOTE","Sorting in Ascending");
-//                            Collections.sort(tripDataList, new Comparator<Trip>() {
-//                                @Override
-//                                public int compare(Trip o1, Trip o2) {
-//                                    return o1.getmSeatsAvailable() > o2.getmSeatsAvailable() ? +1 : o1.getmSeatsAvailable() < o2.getmSeatsAvailable() ? -1 : 0;
-//                                }
-//                            });
-//                            Collections.reverse(tripDataList);
-//                            break;
-//                    }
-//                }
 
                 if(getActivity() != null){
                     listadapter = new TripDetailsAdapter(getActivity(), 0, tripDataList);
