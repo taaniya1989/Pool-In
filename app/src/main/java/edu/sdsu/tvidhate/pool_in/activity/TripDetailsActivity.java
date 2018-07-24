@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +50,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
     private List<String> joineeList = new ArrayList<>();
     private String uid;
     private String phNo="";
+    private ImageView placeImage;
     Trip currentTrip = null;
 
     private User joiningRequester,approverUser;
@@ -71,7 +75,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
 
         placeName = findViewById(R.id.tripDetailsPlaceName);
         placeCity = findViewById(R.id.tripDetailsPlaceCity);
-        placePin = findViewById(R.id.tripDetailsPlacePin);
+        //placePin = findViewById(R.id.tripDetailsPlacePin);
+        placeImage = findViewById(R.id.tripDetailsPlaceImage);
 
         Button back = findViewById(R.id.tripDetailsCancelButton);
         Button update = findViewById(R.id.tripDetailsUpdateButton);
@@ -97,8 +102,9 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 if(selectedTrip!=null)
                 {
                     placeName.setText(selectedTrip.getmTripPlaceName());
-                    placePin.setText(selectedTrip.getmTripPincode());
+                //    placePin.setText(selectedTrip.getmTripPincode());
                     placeCity.setText(selectedTrip.getmTripCity());
+                    Picasso.with(getApplicationContext()).load(selectedTrip.getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
                     uid = selectedTrip.getmTripId();
                 }
             }
