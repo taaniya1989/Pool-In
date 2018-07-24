@@ -74,7 +74,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private String mTripImagePath;
     private Uri mUri;
     private StorageReference mStorage;
-    private DatabaseReference firebaseDatabase;
+    private Uri imageUrl;
 
     public AddTripFragment() {
                 // Required empty public constructor
@@ -164,6 +164,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
 
     @Override
     public void onClick(View v) {
+
         switch(v.getId())
         {
             case R.id.add_trip_reset_button:
@@ -190,30 +191,33 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageUrl = taskSnapshot.getDownloadUrl();
+                        Log.d("rew","Image download URL :"+imageUrl);
                         Toast.makeText(getContext(),"Uploaded Image",Toast.LENGTH_LONG).show();
+                        if(validInput())
+                        {
+                            Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                                    mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
+                                    mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath,imageUrl.toString());
+
+                            Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
+                            try{
+                                firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
+                                firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
+                                Log.d("TPV-NOTE","Data submitted successfully"+getActivity().getLocalClassName());
+                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                getActivity().finish();
+                                startActivity(intent);
+                            }catch(Exception e){
+                                Log.d("TPV-NOTE","Exception: "+e);
+                            }
+                        }else{
+                            Toast.makeText(getContext(),VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
-                if(validInput())
-                {
-                    Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
-                            mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
-                            mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath);
 
-                    Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
-                    try{
-                        firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
-                        firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-                        Log.d("TPV-NOTE","Data submitted successfully"+getActivity().getLocalClassName());
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        getActivity().finish();
-                        startActivity(intent);
-                    }catch(Exception e){
-                        Log.d("TPV-NOTE","Exception: "+e);
-                    }
-                }else{
-                    Toast.makeText(getContext(),VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
-                }
                 break;
 
             case R.id.add_trip_image_button:
