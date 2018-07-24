@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_action_search));
         drawer = findViewById(R.id.drawer_layout);
         fab = findViewById(R.id.fab);
         navigationView = findViewById(R.id.nav_view);

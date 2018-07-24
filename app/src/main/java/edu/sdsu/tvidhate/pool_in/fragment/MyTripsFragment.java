@@ -98,14 +98,14 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
         myRidesListView = view.findViewById(R.id.trip_list_home);
-        EditText searchText = view.findViewById(R.id.searchTextBox);
+       /* EditText searchText = view.findViewById(R.id.searchTextBox);
         ImageButton searchButton = view.findViewById(R.id.searchButton);
         Spinner filterSpinner = view.findViewById(R.id.filterTripSpinner);
 
         searchText.setVisibility(View.GONE);
         searchButton.setVisibility(View.GONE);
         filterSpinner.setVisibility(View.GONE);
-
+*/
         if(auth.getCurrentUser()!=null){
             myPhoneNo = auth.getCurrentUser().getDisplayName();
         }

@@ -93,14 +93,14 @@ public class HomeFragment extends Fragment implements SharedConstants
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tripDetailsListView = view.findViewById(R.id.trip_list_home);
-        ImageButton mSearchButton = view.findViewById(R.id.searchButton);
-        mSearchText = view.findViewById(R.id.searchTextBox);
-        Spinner mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
+      //  ImageButton mSearchButton = view.findViewById(R.id.searchButton);
+       // mSearchText = view.findViewById(R.id.searchTextBox);
+       // Spinner mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
 
         ArrayAdapter dataAdapter = new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.filter_items));
-        mFilterTripSpinner.setAdapter(dataAdapter);
+       // mFilterTripSpinner.setAdapter(dataAdapter);
 
-        mFilterTripSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* mFilterTripSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filterString = parent.getItemAtPosition(position).toString();
@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                     getSpecificRideDetailsOntoTheList(filterString);
             }
         });
-
+*/
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getContext());
         getRideDetailsOntoTheList(filterString);

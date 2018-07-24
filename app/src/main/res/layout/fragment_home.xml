@@ -5,7 +5,7 @@
     android:background="@null"
     tools:context=".fragment.HomeFragment">
 
-    <LinearLayout
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchBar"
@@ -32,17 +32,16 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:id="@+id/filterTripSpinner"/>
-    </LinearLayout>
+    </LinearLayout-->
 
     <ListView
         android:id="@+id/trip_list_home"
+        android:layout_marginTop="@dimen/ten_dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/five_dp"
-        android:padding="@dimen/five_dp"
         android:divider="@color/grey"
         android:dividerHeight="5.0sp"
         android:focusable="false"
-        android:layout_below="@id/searchBar">
+       >
     </ListView>
 </RelativeLayout>

@@ -41,7 +41,7 @@
     <string name="home">Home</string>
     <string name="signUpTitle">Register User</string>
     <string name="user">User Details</string>
-    <string name="action_info">App Info</string>
+    <string name="action_info">Search</string>
     <string name="app_info">This app is designed for users travelling to/from same organisation to be able to car pool.</string>
     <string name="searchByLocation">Search Location</string>
     <string name="fromStreet">From Street</string>
