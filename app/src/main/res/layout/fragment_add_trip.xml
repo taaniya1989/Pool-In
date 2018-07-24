@@ -57,12 +57,27 @@
                 android:ems="10"
                 android:hint="@string/fromPinCode"
                 android:inputType="number"
-                android:nextFocusForward="@id/add_trip_image_button"
-                android:nextFocusRight="@id/add_trip_image_button"
+                android:nextFocusForward="@id/placeDescription"
+                android:nextFocusRight="@id/placeDescription"
                 android:padding="5dp"
                 android:textColor="#000" />
 
         </LinearLayout>
+        <EditText
+            android:id="@+id/placeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#f0f0f4"
+            android:ems="10"
+            android:hint="@string/placeDescription"
+            android:inputType="textCapWords"
+            android:nextFocusForward="@id/add_trip_image_button"
+            android:nextFocusRight="@id/add_trip_image_button"
+            android:padding="5dp"
+            android:textColor="#000"
+            android:maxLines="10"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

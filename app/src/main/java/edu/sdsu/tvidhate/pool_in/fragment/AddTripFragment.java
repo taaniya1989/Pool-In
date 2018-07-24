@@ -68,7 +68,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     private FirebaseDatabase firebaseDatabaseInstance;
 
     //Member Variables
-    private EditText mPlaceName,mPlaceCity,mPlacePinCode;
+    private EditText mPlaceName,mPlaceCity,mPlacePinCode,mPlaceDescription;
     private Button mPlaceImageSelectButton;
     private ImageView mPlaceImagePreview;
     private String mTripImagePath;
@@ -132,6 +132,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
         mSubmitButton = view.findViewById(R.id.add_trip_submit);
         mPlaceImageSelectButton = view.findViewById(R.id.add_trip_image_button);
         mPlaceImagePreview = view.findViewById(R.id.placeImage);
+        mPlaceDescription = view.findViewById(R.id.placeDescription);
 
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
@@ -171,6 +172,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                 mPlaceName.setText(EMPTY_STRING);
                 mPlaceCity.setText(EMPTY_STRING);
                 mPlacePinCode.setText(EMPTY_STRING);
+                mPlaceDescription.setText(EMPTY_STRING);
                 break;
 
             case R.id.add_trip_submit:
@@ -198,7 +200,8 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         {
                             Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                                     mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
-                                    mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath,imageUrl.toString());
+                                    mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath,imageUrl.toString(),
+                                    mPlaceDescription.getText().toString().trim());
 
                             Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                             try{
