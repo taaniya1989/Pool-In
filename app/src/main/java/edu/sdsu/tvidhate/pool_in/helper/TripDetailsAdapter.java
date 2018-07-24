@@ -54,18 +54,10 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
         placeName.setText(userProperties.get(position).getmTripPlaceName());
         placeCity.setText(userProperties.get(position).getmTripCity());
 
-        firebaseStorageRef = FirebaseStorage.getInstance().getReference();
-        Log.i("TANVI",firebaseStorageRef.child(FIREBASE_PHOTO_LIST).child(userProperties.get(position).getmTripImagePath()).toString());
+        if(userProperties.get(position).getImageDownloadUrl()!=null){
+            Picasso.with(getContext()).load(userProperties.get(position).getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
 
-
-        firebaseStorageRef.child(FIREBASE_PHOTO_LIST).child(userProperties.get(position).getmTripImagePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.i("!!!!!","");
-                Picasso.with(getContext()).load(uri).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
-            }
-        });
-
+        }
         return view;
     }
 }
