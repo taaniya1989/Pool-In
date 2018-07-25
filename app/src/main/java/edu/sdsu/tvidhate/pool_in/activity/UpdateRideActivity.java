@@ -41,7 +41,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_place);
+        setContentView(R.layout.fragment_add_trip);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -49,6 +49,8 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         Button mBackButton,mUpdateButton;
 
         mPlaceName = findViewById(R.id.placeName);
+        mPlaceCity = findViewById(R.id.placeCity);
+        mPlacePinCode = findViewById(R.id.placePincode);
         mBackButton = findViewById(R.id.add_trip_reset_button);
         mUpdateButton = findViewById(R.id.add_trip_submit);
 
@@ -74,6 +76,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                 {
                     mPlaceName.setText(currentTrip.getmTripPlaceName());
                     mPlaceCity.setText(currentTrip.getmTripCity());
+                    mPlacePinCode.setText(currentTrip.getmTripPincode());
                     uid=currentTrip.getmTripId();
                 }
             }
@@ -129,6 +132,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     currentTrip.setmCreationTimestamp(System.currentTimeMillis());
                     currentTrip.setmTripPlaceName(mPlaceName.getText().toString());
                     currentTrip.setmTripCity(mPlaceCity.getText().toString());
+                    currentTrip.setmTripPincode(mPlacePinCode.getText().toString());
                     currentTrip.setmTripId(uid);
 
                     try{

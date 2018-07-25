@@ -60,7 +60,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
 
                     placeName.setText(myRideDetailsPOJO.getmTripPlaceName());
                     placeCity.setText(myRideDetailsPOJO.getmTripCity());
-
+                    placePin.setText(myRideDetailsPOJO.getmTripPincode());
 //                    source.setText(myRideDetailsPOJO.getmSourceAddress());
 //                    destination.setText(myRideDetailsPOJO.getmDestinationAddress());
 //                    date.setText(myRideDetailsPOJO.getmStartDate());

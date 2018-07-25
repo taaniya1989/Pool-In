@@ -5,52 +5,46 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollView"
     android:scrollbars="horizontal">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/ten_dp">
 
-        <EditText
-            android:id="@+id/placeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#f0f0f4"
-            android:ems="10"
-            android:hint="@string/placeTitle"
-            android:inputType="textCapWords"
-            android:padding="5dp"
-            android:textColor="#000" />
-
-        <AutoCompleteTextView
-            android:id="@+id/placeSearch"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#f0f0f4"
-            android:ems="10"
-            android:hint="Search"
-            android:inputType="textCapWords"
-            android:padding="5dp"
-            android:textColor="#000"
-            android:imeOptions="actionSearch"/>
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/ic_gps"
-            android:src="@drawable/ic_action_arrow"/>
-
             <EditText
+                android:id="@+id/placeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="@string/placeTitle"
+                android:inputType="textCapWords"
+                android:padding="5dp"
+                android:textColor="#000" />
+
+            <AutoCompleteTextView
+                android:id="@+id/placeSearch"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#f0f0f4"
+                android:ems="10"
+                android:hint="Search"
+                android:inputType="textCapWords"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:imeOptions="actionSearch"/>
+
+            <!--EditText
                 android:id="@+id/placeCity"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="fill_parent"
@@ -80,7 +74,7 @@
                 android:nextFocusForward="@id/placeDescription"
                 android:nextFocusRight="@id/placeDescription"
                 android:padding="5dp"
-                android:textColor="#000" />
+                android:textColor="#000" /-->
 
         </LinearLayout>
         <EditText
@@ -158,4 +152,5 @@
                 android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
+    </LinearLayout>
 </ScrollView>

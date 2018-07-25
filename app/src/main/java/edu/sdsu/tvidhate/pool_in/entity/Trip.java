@@ -10,7 +10,7 @@ public class Trip implements Serializable {
 
     private Long mCreationTimestamp;
     private String mTripId;
-    private String mTripPlaceName,mTripCity;
+    private String mTripPlaceName,mTripCity,mTripPincode;
     private User mTripPoster;
     private String mTripImagePath;
     private String imageDownloadUrl;
@@ -22,12 +22,12 @@ public class Trip implements Serializable {
     public Trip() {
     }
 
-    public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName, String mTripCity, User mTripPoster, String mTripImagePath, String imageDownloadUrl) {
-
+    public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName, String mTripPincode, User mTripPoster, String mTripImagePath, String imageDownloadUrl, String mTripDescription) {
         this.mCreationTimestamp = mCreationTimestamp;
         this.mTripId = mTripId;
         this.mTripPlaceName = mTripPlaceName;
-        this.mTripCity = mTripCity;
+        //this.mTripCity = mTripCity;
+        this.mTripPincode = mTripPincode;
         this.mTripPoster = mTripPoster;
         this.mTripImagePath = mTripImagePath;
         this.imageDownloadUrl = imageDownloadUrl;
@@ -77,6 +77,14 @@ public class Trip implements Serializable {
 
     public void setmTripCity(String mTripCity) {
         this.mTripCity = mTripCity;
+    }
+
+    public String getmTripPincode() {
+        return mTripPincode;
+    }
+
+    public void setmTripPincode(String mTripPincode) {
+        this.mTripPincode = mTripPincode;
     }
 
     public User getmTripPoster() {

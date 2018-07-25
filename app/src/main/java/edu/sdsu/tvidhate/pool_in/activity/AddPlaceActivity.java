@@ -109,7 +109,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place);
-        mGps =  findViewById(R.id.ic_gps);
+        //mGps =  findViewById(R.id.ic_gps);
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         if(firebaseAuthInstance.getCurrentUser()!=null)
         {
@@ -217,7 +217,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                         {
                             Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                                     mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                    mTripPoster,mTripImagePath,imageUrl.toString());
+                                    mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceName.getText().toString().trim());
 
                             Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                             try{
