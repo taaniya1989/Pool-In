@@ -41,7 +41,7 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class TripDetailsActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener
 {
    // private TextView source,destination,date,time,seats,poster,posterContact,car,carColor,license;
-    private TextView placeName,placeCity,placePin;
+    private TextView placeName,placeDescription,placeCity;
     private Button join;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private String requestorName="";
@@ -74,8 +74,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         }
 
         placeName = findViewById(R.id.tripDetailsPlaceName);
+        placeDescription = findViewById(R.id.tripDetailsPlaceDescription);
         placeCity = findViewById(R.id.tripDetailsPlaceCity);
-        //placePin = findViewById(R.id.tripDetailsPlacePin);
         placeImage = findViewById(R.id.tripDetailsPlaceImage);
 
         Button back = findViewById(R.id.tripDetailsCancelButton);
@@ -102,8 +102,11 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 if(selectedTrip!=null)
                 {
                     placeName.setText(selectedTrip.getmTripPlaceName());
-                //    placePin.setText(selectedTrip.getmTripPincode());
                     placeCity.setText(selectedTrip.getmTripCity());
+                    if(selectedTrip.getmTripDescription()!=null)
+                        placeDescription.setText(selectedTrip.getmTripDescription());
+                    else
+                        placeDescription.setText(".\n.\n.\n.\n.\n.");
                     Picasso.with(getApplicationContext()).load(selectedTrip.getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
                     uid = selectedTrip.getmTripId();
                 }

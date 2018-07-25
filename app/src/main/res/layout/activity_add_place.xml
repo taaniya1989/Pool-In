@@ -40,6 +40,19 @@
             android:textColor="#000"
             android:imeOptions="actionSearch"/>
 
+        <EditText
+            android:id="@+id/placeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#f0f0f4"
+            android:ems="10"
+            android:hint="@string/placeDescription"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="#000" />
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -78,135 +91,6 @@
                 android:text="@string/select_image"
                 android:textColor="@color/white" />
         </LinearLayout>
-
-
-
-        <!--LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_trip_date_text"
-                android:layout_weight="0.9"
-                android:textStyle="bold"
-                android:enabled="false"
-                android:inputType="date"
-                android:layout_margin="10dp"/>
-
-            <Button
-                android:id="@+id/add_trip_date_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:backgroundTint="@color/colorPrimary"
-                android:nextFocusForward="@id/add_trip_time_button"
-                android:nextFocusRight="@id/add_trip_time_button"
-                android:text="@string/select_date"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_trip_time_text"
-                android:textStyle="bold"
-                android:inputType="datetime"
-                android:layout_weight="0.9"
-                android:enabled="false"
-                android:layout_margin="10dp"/>
-
-            <Button
-                android:id="@+id/add_trip_time_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:backgroundTint="@color/colorPrimary"
-                android:nextFocusForward="@id/add_trip_to"
-                android:nextFocusRight="@id/add_trip_to"
-                android:text="@string/select_time"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-
-        <EditText
-            android:id="@+id/add_trip_to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#f0f0f4"
-            android:ems="10"
-            android:hint="@string/toStreet"
-            android:inputType="textCapWords"
-            android:nextFocusForward="@id/add_trip_to_neighborhood"
-            android:nextFocusRight="@id/add_trip_to_neighborhood"
-            android:padding="5dp"
-            android:textColor="#000" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/add_trip_to_neighborhood"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="#f0f0f4"
-                android:ems="10"
-                android:hint="@string/toNeighborhood"
-                android:inputType="textCapWords"
-                android:nextFocusForward="@id/add_trip_to_pincode"
-                android:nextFocusRight="@id/add_trip_to_pincode"
-                android:padding="5dp"
-                android:textColor="#000" />
-
-            <EditText
-                android:id="@+id/add_trip_to_pincode"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="#f0f0f4"
-                android:ems="10"
-                android:hint="@string/toPinCode"
-                android:inputType="number"
-                android:nextFocusForward="@id/add_trip_number_of_seats"
-                android:nextFocusRight="@id/add_trip_number_of_seats"
-                android:padding="5dp"
-                android:textColor="#000" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/add_trip_number_of_seats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#f0f0f4"
-            android:ems="10"
-            android:hint="@string/seats_available"
-            android:inputType="number"
-            android:nextFocusForward="@id/add_trip_submit"
-            android:nextFocusRight="@id/add_trip_submit"
-            android:padding="5dp"
-            android:textColor="#000" /-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

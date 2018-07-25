@@ -83,7 +83,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     //Member Variables
-    private EditText mPlaceName;
+    private EditText mPlaceName,mPlaceDescription;
     private Button mPlaceImageSelectButton;
     private ImageView mPlaceImagePreview;
     private String mTripImagePath;
@@ -149,6 +149,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
         mSubmitButton = findViewById(R.id.add_trip_submit);
         mPlaceImageSelectButton = findViewById(R.id.add_trip_image_button);
         mPlaceImagePreview = findViewById(R.id.placeImage);
+        mPlaceDescription = findViewById(R.id.placeDescription);
 
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
@@ -217,9 +218,9 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                         {
                             Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                                     mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                    mTripPoster,mTripImagePath,imageUrl.toString());
+                                    mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim());
 
-                            Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
+                            Log.d("TPV-NOTE","uid: "+newTrip.toString());
                             try{
                                 firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
                                 firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
