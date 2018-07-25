@@ -22,47 +22,34 @@
             android:ems="10"
             android:hint="@string/placeTitle"
             android:inputType="textCapWords"
-            android:nextFocusForward="@id/placeCity"
-            android:nextFocusRight="@id/placeCity"
             android:padding="5dp"
             android:textColor="#000" />
-        <LinearLayout
+
+        <AutoCompleteTextView
+            android:id="@+id/placeSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#f0f0f4"
+            android:ems="10"
+            android:hint="Search"
+            android:inputType="textCapWords"
+            android:padding="5dp"
+            android:textColor="#000"
+            android:imeOptions="actionSearch"/>
 
-            <EditText
-                android:id="@+id/placeCity"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="#f0f0f4"
-                android:ems="10"
-                android:hint="@string/placeCity"
-                android:inputType="textCapWords"
-                android:nextFocusForward="@id/placePincode"
-                android:nextFocusRight="@id/placePincode"
-                android:padding="5dp"
-                android:textColor="#000" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/ic_gps"
+            android:src="@drawable/ic_action_arrow"/>
 
-            <EditText
-                android:id="@+id/placePincode"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="#f0f0f4"
-                android:ems="10"
-                android:hint="@string/fromPinCode"
-                android:inputType="number"
-                android:nextFocusForward="@id/add_trip_image_button"
-                android:nextFocusRight="@id/add_trip_image_button"
-                android:padding="5dp"
-                android:textColor="#000" />
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

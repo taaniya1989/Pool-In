@@ -23,7 +23,7 @@ import java.util.List;
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.activity.MainActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
-import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
+
 
 public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
 {

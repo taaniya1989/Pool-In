@@ -217,9 +217,8 @@ public class HomeFragment extends Fragment implements SharedConstants
 
                     placeName = currentTrip.getmTripPlaceName().toLowerCase();
                     placeCity = currentTrip.getmTripCity().toLowerCase();
-                    placePin = currentTrip.getmTripPincode().toLowerCase();
 
-                    if((placeName.contains(searchText) || placeCity.contains(searchText) || placePin.contains(searchText)))
+                    if((placeName.contains(searchText) || placeCity.contains(searchText)))
                         tripDataList.add(currentTrip);
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override

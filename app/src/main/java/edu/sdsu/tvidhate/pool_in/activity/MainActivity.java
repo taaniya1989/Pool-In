@@ -1,12 +1,10 @@
 package edu.sdsu.tvidhate.pool_in.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,12 +21,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.fragment.AddTripFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.HomeFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyProfileFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyTripsFragment;
@@ -36,7 +33,7 @@ import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
-        AddTripFragment.OnFragmentInteractionListener,MyProfileFragment.OnFragmentInteractionListener,MyTripsFragment.OnFragmentInteractionListener,
+        MyProfileFragment.OnFragmentInteractionListener,MyTripsFragment.OnFragmentInteractionListener,
         UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants,NavigationView.OnNavigationItemSelectedListener,View.OnClickListener
 {
     private FirebaseAuth auth;
@@ -136,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             case 0:
                 return new HomeFragment();
             case 1:
-                AddTripFragment addTripFragment = new AddTripFragment();
-                Log.i("TPV-NOTE","Creating Trip");
-                return addTripFragment;
+                Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
+                startActivity(intent);
             case 2:
                 return new MyTripsFragment();
     /*        case 3:
