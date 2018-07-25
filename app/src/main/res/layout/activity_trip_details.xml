@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/tripDetailsPlaceDirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_direction"
+        android:backgroundTint="@color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        />
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scrollView"
     android:scrollbars="horizontal">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -12,7 +24,6 @@
         android:gravity="center"
         android:orientation="vertical"
         tools:context=".activity.TripDetailsActivity">
-
         <ImageView
             android:id="@+id/tripDetailsPlaceImage"
             android:layout_width="match_parent"
@@ -24,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_weight="4"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tripDetailsPlaceName"
@@ -33,7 +45,7 @@
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textSize="20sp"
-                android:layout_weight="2"/>
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/tripDetailsPlaceCity"
                 android:layout_width="match_parent"
@@ -41,7 +53,13 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textAllCaps="false"
-                android:layout_weight="2"/>
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tripDetailsPlaceDescription"
+                android:gravity="fill_horizontal"
+                android:layout_weight="5"/>
         </LinearLayout>
 
         <LinearLayout
@@ -49,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="horizontal"
+            android:layout_weight="1"
             >
 
             <Button
@@ -84,3 +103,4 @@
 
     </LinearLayout>
 </ScrollView>
+</RelativeLayout>

@@ -63,6 +63,7 @@
     <string name="placeTitle">Place Name</string>
     <string name="placeCity">City</string>
     <string name="select_image">Select Image</string>
+    <string name="placeDescription">Description</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

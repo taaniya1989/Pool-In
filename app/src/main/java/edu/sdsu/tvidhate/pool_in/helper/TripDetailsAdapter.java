@@ -55,7 +55,8 @@ public class TripDetailsAdapter extends ArrayAdapter implements SharedConstants
         placeCity.setText(userProperties.get(position).getmTripCity());
 
         if(userProperties.get(position).getImageDownloadUrl()!=null){
-            Picasso.with(getContext()).load(userProperties.get(position).getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
+            Picasso.with(getContext()).load(userProperties.get(position).getImageDownloadUrl())
+                    .resize(MainActivity.width,MainActivity.height/2).into(placeImage);
 
         }
         return view;

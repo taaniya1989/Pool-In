@@ -1,9 +1,11 @@
 package edu.sdsu.tvidhate.pool_in.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,8 +43,8 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class TripDetailsActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener
 {
    // private TextView source,destination,date,time,seats,poster,posterContact,car,carColor,license;
-    private TextView placeName,placeCity,placePin;
-    private Button join;
+    private TextView placeName,placeCity,placeDescription;
+    private FloatingActionButton placeDirectionsButton;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private String requestorName="";
     private String requestorContact="";
@@ -77,6 +79,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         placeCity = findViewById(R.id.tripDetailsPlaceCity);
         //placePin = findViewById(R.id.tripDetailsPlacePin);
         placeImage = findViewById(R.id.tripDetailsPlaceImage);
+        placeDescription = findViewById(R.id.tripDetailsPlaceDescription);
+        placeDirectionsButton = findViewById(R.id.tripDetailsPlaceDirections);
 
         Button back = findViewById(R.id.tripDetailsCancelButton);
         Button update = findViewById(R.id.tripDetailsUpdateButton);
@@ -85,6 +89,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         back.setOnClickListener(this);
         delete.setOnClickListener(this);
         update.setOnClickListener(this);
+        placeDirectionsButton.setOnClickListener(this);
 
         Log.i("!!!!!",currentTrip.toString());
         if(currentTrip != null){
@@ -104,7 +109,11 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                     placeName.setText(selectedTrip.getmTripPlaceName());
                 //    placePin.setText(selectedTrip.getmTripPincode());
                     placeCity.setText(selectedTrip.getmTripCity());
-                    Picasso.with(getApplicationContext()).load(selectedTrip.getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(placeImage);
+                    if (selectedTrip.getmTripDescription() == null)
+                        placeDescription.setText(".\n.\n.\n.\n.\n.\n.\n.....");
+                    else
+                        placeDescription.setText(selectedTrip.getmTripDescription());
+                    Picasso.with(getApplicationContext()).load(selectedTrip.getImageDownloadUrl()).into(placeImage);
                     uid = selectedTrip.getmTripId();
                 }
             }
@@ -154,6 +163,10 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tripDetailsPlaceDirections:
+                Toast.makeText(getApplicationContext(),"Get Directiosn Code here",Toast.LENGTH_LONG).show();
+                break;
+
             case R.id.tripDetailsCancelButton:
                 finish();
                 break;

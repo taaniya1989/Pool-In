@@ -14,11 +14,16 @@ public class Trip implements Serializable {
     private User mTripPoster;
     private String mTripImagePath;
     private String imageDownloadUrl;
+    private String mTripDescription = "." +
+            "\n."+
+            "\n."+
+            "\n.";
 
     public Trip() {
     }
 
     public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName, String mTripCity, User mTripPoster, String mTripImagePath, String imageDownloadUrl) {
+
         this.mCreationTimestamp = mCreationTimestamp;
         this.mTripId = mTripId;
         this.mTripPlaceName = mTripPlaceName;
@@ -26,6 +31,20 @@ public class Trip implements Serializable {
         this.mTripPoster = mTripPoster;
         this.mTripImagePath = mTripImagePath;
         this.imageDownloadUrl = imageDownloadUrl;
+        if(mTripDescription.isEmpty() || mTripDescription == null)
+            this.mTripDescription = "." +
+                    "\n."+
+                    "\n."+
+                    "\n.";
+        this.mTripDescription = mTripDescription;
+    }
+
+    public String getmTripDescription() {
+        return mTripDescription;
+    }
+
+    public void setmTripDescription(String mTripDescription) {
+        this.mTripDescription = mTripDescription;
     }
 
     public Long getmCreationTimestamp() {
