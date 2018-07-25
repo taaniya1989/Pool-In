@@ -111,7 +111,7 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
-        View view =  inflater.inflate(R.layout.fragment_add_trip,null);
+        View view =  inflater.inflate(R.layout.activity_add_place,null);
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         Button mResetButton,mSubmitButton;
 
@@ -198,15 +198,14 @@ public class AddTripFragment extends Fragment implements SharedConstants,View.On
                         Toast.makeText(getContext(),"Uploaded Image",Toast.LENGTH_LONG).show();
                         if(validInput())
                         {
-                            Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
-                                    mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),
-                                    mPlacePinCode.getText().toString().trim(),mTripPoster,mTripImagePath,imageUrl.toString(),
-                                    mPlaceDescription.getText().toString().trim());
+//                            Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+//                                    mPlaceName.getText().toString().trim(),mPlaceCity.getText().toString().trim(),mTripPoster,mTripImagePath,imageUrl.toString(),
+//                                    mPlaceDescription.getText().toString().trim());
 
-                            Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
+                //            Log.d("TPV-NOTE","uid: "+newTrip.getmTripId());
                             try{
-                                firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
-                                firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
+                  //              firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
+                    //            firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
                                 Log.d("TPV-NOTE","Data submitted successfully"+getActivity().getLocalClassName());
                                 Intent intent = new Intent(getContext(), MainActivity.class);
                                 getActivity().finish();
