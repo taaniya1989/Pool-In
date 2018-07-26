@@ -65,6 +65,9 @@
     <string name="select_image">Select Image</string>
     <string name="placeDescription">Place Description</string>
 
+    <string name="radio_visible">true</string>
+    <string name="radio_invisible">false</string>
+
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
         <item>Add Trip</item>
@@ -78,5 +81,16 @@
         <item>Start_Time_desc</item>
         <item>No_of_Seats_asc</item>
         <item>No_of_Seats_desc</item>
+    </string-array>
+
+    <string-array name="catergory_array">
+        <item>Adventure</item>
+        <item>Leisure</item>
+        <item>Scenic</item>
+        <item>Entertainment</item>
+        <item>Hotels</item>
+        <item>Resturants</item>
+        <item>Road Trip</item>
+        <item>Photography</item>
     </string-array>
 </resources>

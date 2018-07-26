@@ -18,10 +18,14 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +78,7 @@ import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.IMAGE_SELECTED_RE
 import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.SUCCESS;
 import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.VALIDATION_FAILURE;
 
-public class AddPlaceActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+public class AddPlaceActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener {
     private String currentUserDisplayName;
     private User mTripPoster;
     private DatabaseReference firebaseDatabaseInstanceReference;
@@ -86,7 +90,9 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private EditText mPlaceName,mPlaceDescription;
     private Button mPlaceImageSelectButton;
     private ImageView mPlaceImagePreview;
-    private String mTripImagePath;
+    private Spinner mPlaceCategory;
+    private Switch mPlaceVisibility;
+    private String mTripImagePath,mTripCategory="";
     private Uri mUri;
     private StorageReference mStorage;
     private Uri imageUrl;
@@ -104,6 +110,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient;
+    private String mTripVisibility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,12 +157,14 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
         mPlaceImageSelectButton = findViewById(R.id.add_trip_image_button);
         mPlaceImagePreview = findViewById(R.id.placeImage);
         mPlaceDescription = findViewById(R.id.placeDescription);
+        mPlaceCategory = findViewById(R.id.placeCatergory);
+        mPlaceVisibility = findViewById(R.id.placeVisibility);
 
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
         mPlaceImageSelectButton.setOnClickListener(this);
         mSearchText = findViewById(R.id.placeSearch);
-
+        mPlaceCategory.setOnItemSelectedListener(this);
 
         getLocationPermission();
         init();
@@ -214,11 +223,17 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                             imageUrl = taskSnapshot.getDownloadUrl();
                             Log.d("rew","Image download URL :"+imageUrl);
                             Toast.makeText(AddPlaceActivity.this,"Uploaded Image",Toast.LENGTH_LONG).show();
+                            if (mPlaceVisibility.isChecked())
+                                mTripVisibility = mPlaceVisibility.getTextOn().toString();
+                            else
+                                mTripVisibility = mPlaceVisibility.getTextOff().toString();
+
                             if(validInput())
                             {
-                                Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                                Trip newTrip =  new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                                         mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim());
+                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory.trim()
+                                        ,mTripVisibility);
 
                                 Log.d("TPV-NOTE","uid: "+newTrip.toString());
                                 try{
@@ -424,5 +439,18 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("rew","failed"+connectionResult);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(parent.getContext(),
+                "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
+                Toast.LENGTH_SHORT).show();
+        mTripCategory = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
