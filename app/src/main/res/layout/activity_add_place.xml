@@ -39,8 +39,8 @@
                 android:text=""
                 android:layout_gravity="left"
                 android:checked="true"
-                android:textOff="OFF"
-                android:textOn="ON"/>
+                android:textOff="Hide"
+                android:textOn="Share"/>
 
         </LinearLayout>
 

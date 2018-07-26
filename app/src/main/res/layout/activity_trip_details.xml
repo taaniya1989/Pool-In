@@ -24,17 +24,47 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tripDetailsPlaceName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:layout_weight="1"/>
+                <Switch
+                    android:id="@+id/tripDetailsPlaceVisibility"
+                    android:imeActionLabel="Share"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:switchMinWidth="56dp"
+                    android:text=""
+                    android:layout_gravity="left"
+                    android:checked="true"
+                    android:textOff="Hide"
+                    android:textOn="Share"/>
+            </LinearLayout>
             <TextView
-                android:id="@+id/tripDetailsPlaceName"
+                android:id="@+id/tripDetailsPlaceCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:layout_weight="2"/>
+                android:textAllCaps="false"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/tripDetailsPlaceCity"
                 android:layout_width="match_parent"

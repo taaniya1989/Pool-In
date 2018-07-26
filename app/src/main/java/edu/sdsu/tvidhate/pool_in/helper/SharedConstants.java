@@ -14,13 +14,9 @@ public interface SharedConstants {
     int IMAGE_CAPTURED_RESULT = 3;
     String FIREBASE_PHOTO_LIST = "PhotoFileNames";
 
-    String TRIP_STARTED = "Started";
-    String TRIP_ENDED = "Ended";
-    String TRIP_ON = "On Going";
-    String TRIP_CANCELLED = "Cancelled";
-    String TRIP_COMPLETED = "Completed";
-    String TRIP_CREATED = "Created";
-    String TRIP_UPDATED = "Updated";
+    String DEFAULT_CATEGORY = "No Category";
+    String TRIP_VISIBLE = "Share";
+    String TRIP_INVISIBLE = "Hide";
 
     boolean SUCCESS = true;
     boolean FAILURE = false;

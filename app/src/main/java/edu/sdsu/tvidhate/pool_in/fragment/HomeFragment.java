@@ -152,8 +152,8 @@ public class HomeFragment extends Fragment implements SharedConstants
                 for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
                     if(currentTrip.getmTripVisibility()==null)
-                        currentTrip.setmTripVisibility("ON");
-                    if(currentTrip.getmTripVisibility().equalsIgnoreCase("ON"))
+                        currentTrip.setmTripVisibility(TRIP_VISIBLE);
+                    if(currentTrip.getmTripVisibility().equalsIgnoreCase(TRIP_VISIBLE))
                         tripDataList.add(currentTrip);
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override

@@ -31,6 +31,7 @@ import java.util.Map;
 
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.activity.RideHistoryDetailsActivity;
+import edu.sdsu.tvidhate.pool_in.activity.TripDetailsActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.helper.MyRidesListAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
@@ -98,14 +99,6 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         Utilities utilities = new Utilities(getFragmentManager());
         utilities.checkProfile(hasUserDetails);
         myRidesListView = view.findViewById(R.id.trip_list_home);
-       /* EditText searchText = view.findViewById(R.id.searchTextBox);
-        ImageButton searchButton = view.findViewById(R.id.searchButton);
-        Spinner filterSpinner = view.findViewById(R.id.filterTripSpinner);
-
-        searchText.setVisibility(View.GONE);
-        searchButton.setVisibility(View.GONE);
-        filterSpinner.setVisibility(View.GONE);
-*/
         if(auth.getCurrentUser()!=null){
             myPhoneNo = auth.getCurrentUser().getDisplayName();
         }
@@ -115,9 +108,11 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
         myRidesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Trip rideUid = (Trip) adapterView.getItemAtPosition(i);
-                Intent intent = new Intent(getActivity(),RideHistoryDetailsActivity.class);
-                intent.putExtra(UID,rideUid.getmTripId());
+                //Trip rideUid = (Trip) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getActivity(),TripDetailsActivity.class);
+                //intent.putExtra(UID,rideUid.getmTripId());
+                Trip selectedTrip = (Trip) adapterView.getItemAtPosition(i);
+                intent.putExtra(TRIP_DETAILS_SERIALIZABLE,selectedTrip);
                 startActivity(intent);
 
             }
@@ -142,10 +137,11 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
                         ValueEventListener valueEventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
                                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " people");
                                 if (dataSnapshot.getChildrenCount() > 0) {
-                                    Trip myRideDetailsPOJO = dataSnapshot.getValue(Trip.class);
-                                    myRideDetailsList.add(myRideDetailsPOJO);
+                                    Trip currentTrip = dataSnapshot.getValue(Trip.class);
+                                    myRideDetailsList.add(currentTrip);
                                     Collections.sort(myRideDetailsList, new Comparator<Trip>() {
                                         @Override
                                         public int compare(Trip o1, Trip o2) {

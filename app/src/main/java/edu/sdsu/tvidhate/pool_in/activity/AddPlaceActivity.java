@@ -92,7 +92,8 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private ImageView mPlaceImagePreview;
     private Spinner mPlaceCategory;
     private Switch mPlaceVisibility;
-    private String mTripImagePath,mTripCategory="";
+    private String mTripImagePath;
+    private String mTripCategory = "";
     private Uri mUri;
     private StorageReference mStorage;
     private Uri imageUrl;
@@ -111,6 +112,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient;
     private String mTripVisibility;
+    private int mTripCategoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +194,8 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+
     @Override
     public void onClick(View v) {
 
@@ -232,8 +236,8 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                             {
                                 Trip newTrip =  new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
                                         mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory.trim()
-                                        ,mTripVisibility);
+                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
+                                        mTripCategoryId,mTripVisibility);
 
                                 Log.d("TPV-NOTE","uid: "+newTrip.toString());
                                 try{
@@ -290,7 +294,8 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        Toast.makeText(AddPlaceActivity.this,"In the on back pressed activity",Toast.LENGTH_LONG).show();
+        //this.finish();
     }
     private void init(){
         Log.d("", "init: initializing");
@@ -443,10 +448,8 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(parent.getContext(),
-                "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                Toast.LENGTH_SHORT).show();
         mTripCategory = parent.getItemAtPosition(position).toString();
+        mTripCategoryId = position;
     }
 
     @Override

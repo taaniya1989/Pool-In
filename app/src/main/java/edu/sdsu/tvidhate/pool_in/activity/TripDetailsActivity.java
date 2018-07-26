@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -42,9 +45,11 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 public class TripDetailsActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener
 {
    // private TextView source,destination,date,time,seats,poster,posterContact,car,carColor,license;
-    private TextView placeName,placeDescription,placeCity;
+    private TextView placeName,placeDescription,placeCity,placeCategory;
+    private Switch placeVisibility;
     private Button join;
     private DatabaseReference firebaseDatabaseInstanceReference;
+    private StorageReference firebaseStorageInstanceReference;
     private String requestorName="";
     private String requestorContact="";
     private String posterContact;
@@ -55,6 +60,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
     Trip currentTrip = null;
 
     private User joiningRequester,approverUser;
+    private String placeImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,6 +71,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
+        firebaseStorageInstanceReference = FirebaseStorage.getInstance().getReference();
         
         Bundle intent = getIntent().getExtras();
         if(intent!=null){
@@ -78,6 +85,8 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         placeDescription = findViewById(R.id.tripDetailsPlaceDescription);
         placeCity = findViewById(R.id.tripDetailsPlaceCity);
         placeImage = findViewById(R.id.tripDetailsPlaceImage);
+        placeCategory = findViewById(R.id.tripDetailsPlaceCategory);
+        placeVisibility = findViewById(R.id.tripDetailsPlaceVisibility);
 
         Button back = findViewById(R.id.tripDetailsCancelButton);
         Button update = findViewById(R.id.tripDetailsUpdateButton);
@@ -104,6 +113,12 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 {
                     placeName.setText(selectedTrip.getmTripPlaceName());
                     placeCity.setText(selectedTrip.getmTripCity());
+                    placeVisibility.setText(selectedTrip.getmTripVisibility());
+                    if(selectedTrip.getmTripCategory()==null || selectedTrip.getmTripCategory().isEmpty())
+                        placeCategory.setText(DEFAULT_CATEGORY);
+                    else
+                        placeCategory.setText(selectedTrip.getmTripCategory());
+                    placeImagePath = selectedTrip.getmTripImagePath();
                     if(selectedTrip.getmTripDescription()!=null)
                         placeDescription.setText(selectedTrip.getmTripDescription());
                     else
@@ -121,7 +136,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(currentTrip.getmTripId());
         people.addValueEventListener(valueEventListener);
-
+        placeVisibility.setVisibility(View.INVISIBLE);
         if(phNo.equals(posterContact)){
             Log.d("TPV-NOTE","phno: "+phNo);
             Log.d("TPV-NOTE","poster contact: "+posterContact);
@@ -176,39 +191,10 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                 alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialogInterface, int n) {
-                        for(int i=0;i<joineeList.size();i++) {
-                            ValueEventListener valueEventListener1 = new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " trips available");
-                                    for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                                        Log.d("TPV-NOTE", "key: " + snapshot.getKey());
-                                        Log.d("TPV-NOTE", "value: " + snapshot.getValue());
-                                        DatabaseReference ref = snapshot.getRef();
-                                        if(Objects.requireNonNull(snapshot.getValue()).equals(uid)){
-                                            Log.d("TPV-NOTE","reference: "+ref);
-                                            Log.d("TPV-NOTE","reference key: "+ref.getKey());
-                                            ref.removeValue();
-                                        }
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.d("TPV-NOTE","database error: "+databaseError);
-                                }
-                            };
-                            FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-                            DatabaseReference people1 = database1.getReference(FIREBASE_CURRENT_RIDES).child(joineeList.get(i));
-                            people1.addValueEventListener(valueEventListener1);
-                        }
-                        try {
-                            Log.d("TPV-NOTE","delay");
-                            TimeUnit.SECONDS.sleep(2);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+
                         firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact).removeValue();
                         firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(uid).removeValue();
+                        firebaseStorageInstanceReference.child(FIREBASE_PHOTO_LIST).child(placeImagePath).delete();
                         dialogInterface.dismiss();
                         finish();
                     }

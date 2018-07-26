@@ -1,6 +1,10 @@
 package edu.sdsu.tvidhate.pool_in.entity;
 
+import android.net.Uri;
+
 import java.io.Serializable;
+import java.util.Map;
+import java.util.Date;
 
 public class Trip implements Serializable {
 
@@ -13,13 +17,14 @@ public class Trip implements Serializable {
     private String mTripDescription;
     private String mTripCategory;
     private String mTripVisibility;
+    private int mTripCatergoryId;
 
     public Trip() {
     }
 
     public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName,
                 String mTripCity, User mTripPoster, String mTripImagePath,
-                String imageDownloadUrl,String mTripDescription,String mTripCategory, String mTripVisibility) {
+                String imageDownloadUrl,String mTripDescription,String mTripCategory,int mTripCatergoryId, String mTripVisibility) {
         this.mCreationTimestamp = mCreationTimestamp;
         this.mTripId = mTripId;
         this.mTripPlaceName = mTripPlaceName;
@@ -33,6 +38,15 @@ public class Trip implements Serializable {
             this.mTripDescription = mTripDescription;
         this.mTripCategory = mTripCategory;
         this.mTripVisibility = mTripVisibility;
+        this.mTripCatergoryId = mTripCatergoryId;
+    }
+
+    public int getmTripCatergoryId() {
+        return mTripCatergoryId;
+    }
+
+    public void setmTripCatergoryId(int mTripCatergoryId) {
+        this.mTripCatergoryId = mTripCatergoryId;
     }
 
     public String getmTripCategory() {
@@ -113,5 +127,22 @@ public class Trip implements Serializable {
 
     public void setImageDownloadUrl(String imageDownloadUrl) {
         this.imageDownloadUrl = imageDownloadUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "mCreationTimestamp=" + mCreationTimestamp +
+                ", mTripId='" + mTripId + '\'' +
+                ", mTripPlaceName='" + mTripPlaceName + '\'' +
+                ", mTripCity='" + mTripCity + '\'' +
+                ", mTripPoster=" + mTripPoster +
+                ", mTripImagePath='" + mTripImagePath + '\'' +
+                ", imageDownloadUrl='" + imageDownloadUrl + '\'' +
+                ", mTripDescription='" + mTripDescription + '\'' +
+                ", mTripCategory='" + mTripCategory + '\'' +
+                ", mTripVisibility='" + mTripVisibility + '\'' +
+                ", mTripCatergoryId=" + mTripCatergoryId +
+                '}';
     }
 }
