@@ -3,6 +3,7 @@ package edu.sdsu.tvidhate.pool_in.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -81,11 +82,11 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
         Button back = findViewById(R.id.tripDetailsCancelButton);
         Button update = findViewById(R.id.tripDetailsUpdateButton);
         Button delete = findViewById(R.id.tripDetailsDeleteButton);
-
+        Button navigate = findViewById(R.id.tripDetailsNavigateButton);
         back.setOnClickListener(this);
         delete.setOnClickListener(this);
         update.setOnClickListener(this);
-
+        navigate.setOnClickListener(this);
         Log.i("!!!!!",currentTrip.toString());
         if(currentTrip != null){
             approverUser = currentTrip.getmTripPoster();
@@ -223,6 +224,10 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
 
                 alert.show();
                 break;
+            case R.id.tripDetailsNavigateButton:
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr="+placeCity.getText()));
+                startActivity(intent);
         }
     }
 }

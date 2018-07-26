@@ -1,10 +1,6 @@
 package edu.sdsu.tvidhate.pool_in.entity;
 
-import android.net.Uri;
-
 import java.io.Serializable;
-import java.util.Map;
-import java.util.Date;
 
 public class Trip implements Serializable {
 

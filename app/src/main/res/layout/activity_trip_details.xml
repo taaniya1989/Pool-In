@@ -91,6 +91,14 @@
                 android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
-
+        <Button
+            android:id="@+id/tripDetailsNavigateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Navigate"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 </ScrollView>

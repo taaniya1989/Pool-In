@@ -207,34 +207,40 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                 Map<String ,Object > data = new HashMap<String, Object>();
                 data.put(mTripImagePath,mTripImagePath);
                 firebaseDatabaseInstanceReference.child(FIREBASE_PHOTO_LIST).updateChildren(data);
+                if(mUri!=null){
+                    filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageUrl = taskSnapshot.getDownloadUrl();
+                            Log.d("rew","Image download URL :"+imageUrl);
+                            Toast.makeText(AddPlaceActivity.this,"Uploaded Image",Toast.LENGTH_LONG).show();
+                            if(validInput())
+                            {
+                                Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                                        mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
+                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim());
 
-                filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageUrl = taskSnapshot.getDownloadUrl();
-                        Log.d("rew","Image download URL :"+imageUrl);
-                        Toast.makeText(AddPlaceActivity.this,"Uploaded Image",Toast.LENGTH_LONG).show();
-                        if(validInput())
-                        {
-                            Trip newTrip = new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
-                                    mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                    mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim());
-
-                            Log.d("TPV-NOTE","uid: "+newTrip.toString());
-                            try{
-                                firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
-                                firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-                                Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                            }catch(Exception e){
-                                Log.d("TPV-NOTE","Exception: "+e);
+                                Log.d("TPV-NOTE","uid: "+newTrip.toString());
+                                try{
+                                    firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
+                                    firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
+                                    Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
+                                    finish();
+                                    startActivity(intent);
+                                }catch(Exception e){
+                                    Log.d("TPV-NOTE","Exception: "+e);
+                                }
+                            }else{
+                                Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                        }else{
-                            Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    });
+                }else{
+                    Toast.makeText(AddPlaceActivity.this,"Upload an Image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
 
                 break;
@@ -269,7 +275,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        this.finish();
     }
     private void init(){
         Log.d("", "init: initializing");

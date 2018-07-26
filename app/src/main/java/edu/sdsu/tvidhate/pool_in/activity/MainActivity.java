@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             case 1:
                 Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
                 startActivity(intent);
+
             case 2:
                 return new MyTripsFragment();
     /*        case 3:
@@ -232,8 +233,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                     CURRENT_TAG = TAG_HOME;
                     break;
                 case R.id.nav_add_trip:
-                    navItemIndex = 1;
-                    CURRENT_TAG = TAG_ADD_TRIP;
+                    navItemIndex = 0;
+                    Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.nav_my_trips:
                     navItemIndex = 2;
@@ -255,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                     break;
                 default:
                     navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME;
             }
             //Checking if the item is in checked state or not, if not make it in checked state
             if (menuItem.isChecked()) {
@@ -273,8 +276,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         {
             case R.id.fab:
                 navItemIndex = 1;
-                CURRENT_TAG = TAG_ADD_TRIP;
-                loadHomeFragment();
+                Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
+                startActivity(intent);
                 break;
 
         }
