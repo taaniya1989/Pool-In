@@ -151,7 +151,10 @@ public class HomeFragment extends Fragment implements SharedConstants
                 Log.d("TPV-NOTE", "There are " + dataSnapshot.getChildrenCount() + " list items in home fragment");
                 for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
-                    tripDataList.add(currentTrip);
+                    if(currentTrip.getmTripVisibility()==null)
+                        currentTrip.setmTripVisibility("ON");
+                    if(currentTrip.getmTripVisibility().equalsIgnoreCase("ON"))
+                        tripDataList.add(currentTrip);
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override
                         public int compare(Trip o1, Trip o2) {

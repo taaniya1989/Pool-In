@@ -15,12 +15,15 @@ public class Trip implements Serializable {
     private String mTripImagePath;
     private String imageDownloadUrl;
     private String mTripDescription;
+    private String mTripCategory;
+    private String mTripVisibility;
 
     public Trip() {
     }
 
     public Trip(Long mCreationTimestamp, String mTripId, String mTripPlaceName,
-                String mTripCity, User mTripPoster, String mTripImagePath, String imageDownloadUrl,String mTripDescription) {
+                String mTripCity, User mTripPoster, String mTripImagePath,
+                String imageDownloadUrl,String mTripDescription,String mTripCategory, String mTripVisibility) {
         this.mCreationTimestamp = mCreationTimestamp;
         this.mTripId = mTripId;
         this.mTripPlaceName = mTripPlaceName;
@@ -32,6 +35,24 @@ public class Trip implements Serializable {
             this.mTripDescription = ".\n.\n.\n.\n.\n.";
         else
             this.mTripDescription = mTripDescription;
+        this.mTripCategory = mTripCategory;
+        this.mTripVisibility = mTripVisibility;
+    }
+
+    public String getmTripCategory() {
+        return mTripCategory;
+    }
+
+    public void setmTripCategory(String mTripCategory) {
+        this.mTripCategory = mTripCategory;
+    }
+
+    public String getmTripVisibility() {
+        return mTripVisibility;
+    }
+
+    public void setmTripVisibility(String mTripVisibility) {
+        this.mTripVisibility = mTripVisibility;
     }
 
     public String getmTripDescription() {
