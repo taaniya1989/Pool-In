@@ -1,6 +1,8 @@
 package edu.sdsu.tvidhate.pool_in.helper;
 
 
+import android.Manifest;
+
 public interface SharedConstants {
     String EMPTY_STRING = "";
     String INVALID_EMAIL_PW_TOAST = "Invalid email or password";
@@ -12,16 +14,21 @@ public interface SharedConstants {
     String ENTER_REQUIRED_FIELDS = "Enter Required Fields";
     int IMAGE_SELECTED_RESULT = 2;
     int IMAGE_CAPTURED_RESULT = 3;
+    int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    int DEFAULT_TRIP_CATEGORY = 1;
     String FIREBASE_PHOTO_LIST = "PhotoFileNames";
 
     String DEFAULT_CATEGORY = "No Category";
     String TRIP_VISIBLE = "Share";
     String TRIP_INVISIBLE = "Hide";
+    String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
 
     boolean SUCCESS = true;
     boolean FAILURE = false;
 
     String VALIDATION_FAILURE = "Validation Failure";
+    String ADD_IMAGE_ERROR = "Please select image for post";
     String TAG_HOME = "home";
     String TAG_ADD_TRIP = "add_trip";
     String TAG_MY_TRIPS = "my_trips";
@@ -32,8 +39,9 @@ public interface SharedConstants {
     String COMPLETED = "Completed";
     String WAITING = "Waiting";
     String FIREBASE_MY_RIDES = "my_rides";
-    String FIREBASE_TRIP_DETAILS = "trip_details";
-    String FIREBASE_CURRENT_RIDES = "current_rides";
+
+    String FIREBASE_PLACE_DETAILS = "place_details";
+    String FIREBASE_CURRENT_PLACES = "current_places";
     String FIREBASE_REQUESTS = "requests";
     String TRIP_DETAILS_SERIALIZABLE = "tripDetailsFromPoster";
     String DELETE = "Delete";

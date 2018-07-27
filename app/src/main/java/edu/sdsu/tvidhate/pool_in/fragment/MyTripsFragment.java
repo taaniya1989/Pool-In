@@ -180,7 +180,7 @@ public class MyTripsFragment extends Fragment implements SharedConstants {
             }
         };
         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-        DatabaseReference people1 = database1.getReference(FIREBASE_CURRENT_RIDES).child(phNo);
+        DatabaseReference people1 = database1.getReference(FIREBASE_CURRENT_PLACES).child(phNo);
         people1.addValueEventListener(valueEventListener1);
         return uids;
     }

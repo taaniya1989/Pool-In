@@ -8,18 +8,17 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,81 +53,62 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.PlaceAutocompleteAdapter;
+import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.EMPTY_STRING;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.ENTER_PLACE;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.ENTER_PLACE_CITY;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.ENTER_PLACE_PIN;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.FAILURE;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.FIREBASE_CURRENT_RIDES;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.FIREBASE_MY_RIDES;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.FIREBASE_PERSONAL_DATA;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.FIREBASE_PHOTO_LIST;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.IMAGE_CAPTURED_RESULT;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.IMAGE_SELECTED_RESULT;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.SUCCESS;
-import static edu.sdsu.tvidhate.pool_in.helper.SharedConstants.VALIDATION_FAILURE;
+public class AddPlaceActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener {
 
-public class AddPlaceActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener {
     private String currentUserDisplayName;
-    private User mTripPoster;
     private DatabaseReference firebaseDatabaseInstanceReference;
-    private FirebaseDatabase firebaseDatabaseInstance;
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+
     //Member Variables
     private EditText mPlaceName,mPlaceDescription;
-    private Button mPlaceImageSelectButton;
     private ImageView mPlaceImagePreview;
-    private Spinner mPlaceCategory;
+    Spinner mPlaceCategory;
     private Switch mPlaceVisibility;
     private String mTripImagePath;
     private String mTripCategory = "";
-    private Uri mUri;
-    private StorageReference mStorage;
-    private Uri imageUrl;
+    private User mTripPoster;
+    private int mTripCategoryId;
+    private Uri mUri,imageUrl;
+    private StorageReference firebaseStorageInstanceReference;
+
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
             new LatLng(-40, -168), new LatLng(71, 136));
 
-
     //widgets
-    private AutoCompleteTextView mSearchText;
-    private ImageView mGps;
+    private AutoCompleteTextView mPlaceLocation;
+    //private ImageView mGps;
 
     //vars
     private Boolean mLocationPermissionsGranted = false;
-    private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
-    private GoogleApiClient mGoogleApiClient;
-    private String mTripVisibility;
-    private int mTripCategoryId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_place);
-        mGps =  findViewById(R.id.ic_gps);
+
+       // mGps =  findViewById(R.id.ic_gps);
+
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
+        FirebaseDatabase firebaseDatabaseInstance = FirebaseDatabase.getInstance();
+        firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
+        firebaseStorageInstanceReference = FirebaseStorage.getInstance().getReference();
+
         if(firebaseAuthInstance.getCurrentUser()!=null)
         {
             currentUserDisplayName = firebaseAuthInstance.getCurrentUser().getDisplayName();
             Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
         }
-
-        firebaseDatabaseInstance = FirebaseDatabase.getInstance();
-        firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
-        mStorage = FirebaseStorage.getInstance().getReference();
-        Toast.makeText(AddPlaceActivity.this,"In the new activity",Toast.LENGTH_LONG).show();
+        
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,25 +128,27 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference people = firebaseDatabaseInstance.getReference(FIREBASE_PERSONAL_DATA).child(currentUserDisplayName);
         people.addValueEventListener(valueEventListener);
 
-        Button mResetButton,mSubmitButton;
+        //Map layout components
+        Button mResetButton,mSubmitButton,mPlaceImageSelectButton;
 
 
-
-        mPlaceName = findViewById(R.id.placeName);
-        mResetButton = findViewById(R.id.add_trip_reset_button);
-        mSubmitButton = findViewById(R.id.add_trip_submit);
-        mPlaceImageSelectButton = findViewById(R.id.add_trip_image_button);
-        mPlaceImagePreview = findViewById(R.id.placeImage);
-        mPlaceDescription = findViewById(R.id.placeDescription);
         mPlaceCategory = findViewById(R.id.placeCatergory);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
+        mPlaceName = findViewById(R.id.placeName);
+        mPlaceLocation = findViewById(R.id.placeSearch);
+        mPlaceDescription = findViewById(R.id.placeDescription);
+        mPlaceImagePreview = findViewById(R.id.placeImage);
+        mPlaceImageSelectButton = findViewById(R.id.add_trip_image_button);
+        mResetButton = findViewById(R.id.add_trip_reset_button);
+        mSubmitButton = findViewById(R.id.add_trip_submit);
 
+        //Set on click listeners for all buttons used
         mResetButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
         mPlaceImageSelectButton.setOnClickListener(this);
-        mSearchText = findViewById(R.id.placeSearch);
         mPlaceCategory.setOnItemSelectedListener(this);
 
+        //Enable Location
         getLocationPermission();
         init();
     }
@@ -179,18 +160,13 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                 && data != null && data.getData() != null)
         {
             mUri = data.getData();
-//            selectedImage.setImageURI(mUri);
             Picasso.with(this).load(mUri).resize(MainActivity.width/2,MainActivity.height/4).into(mPlaceImagePreview);
-            Log.i("VANILLA_INFO",mUri.toString());
         }
         if(requestCode == IMAGE_CAPTURED_RESULT && resultCode == MainActivity.RESULT_OK
                 && data != null ) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             mUri = data.getData();
-            //selectedImage.setImageURI(mUri);
             mPlaceImagePreview.setImageBitmap(photo);
-
-            Log.i("VANILLA_INFO",photo.toString());
         }
     }
 
@@ -202,66 +178,70 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
         switch(v.getId())
         {
             case R.id.add_trip_reset_button:
+                //Reset all input fields
+                mPlaceCategory.setSelection(DEFAULT_TRIP_CATEGORY);
+                mPlaceVisibility.setText(TRIP_VISIBLE);
                 mPlaceName.setText(EMPTY_STRING);
-                mSearchText.setText(EMPTY_STRING);
+                mPlaceLocation.setText(EMPTY_STRING);
+                mPlaceDescription.setText(EMPTY_STRING);
+                mPlaceImagePreview.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
                 break;
 
             case R.id.add_trip_submit:
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                //Add trip to Database
+                String mTripVisibility;
+                if (mPlaceVisibility.isChecked())
+                    mTripVisibility = mPlaceVisibility.getTextOn().toString();
+                else
+                    mTripVisibility = mPlaceVisibility.getTextOff().toString();
 
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                mTripImagePath = mPlaceName.getText().toString().replaceAll(" ", "_").toLowerCase()
-                        +"_"+String.valueOf(timestamp.getTime())+"_"+user.getUid().toString().toLowerCase()+".jpg";
+                if (user != null) {
+                    mTripImagePath = mPlaceName.getText().toString().replaceAll(" ", "_").toLowerCase()
+                            +"_"+String.valueOf(timestamp.getTime())+"_"+ user.getUid().toLowerCase()+".jpg";
+                }
+                StorageReference filePath = firebaseStorageInstanceReference.child(FIREBASE_PHOTO_LIST).child(mTripImagePath);
 
-                Log.i("PhotoPath",mTripImagePath);
-                StorageReference filePath = mStorage.child(FIREBASE_PHOTO_LIST).child(mTripImagePath);
-
-                Map<String ,Object > data = new HashMap<String, Object>();
-                data.put(mTripImagePath,mTripImagePath);
-                firebaseDatabaseInstanceReference.child(FIREBASE_PHOTO_LIST).updateChildren(data);
+                //If Image is selected then upload to storage
                 if(mUri!=null){
                     filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Toast.makeText(AddPlaceActivity.this,"Uploaded Post",Toast.LENGTH_LONG).show();
                             imageUrl = taskSnapshot.getDownloadUrl();
-                            Log.d("rew","Image download URL :"+imageUrl);
-                            Toast.makeText(AddPlaceActivity.this,"Uploaded Image",Toast.LENGTH_LONG).show();
-                            if (mPlaceVisibility.isChecked())
-                                mTripVisibility = mPlaceVisibility.getTextOn().toString();
-                            else
-                                mTripVisibility = mPlaceVisibility.getTextOff().toString();
-
-                            if(validInput())
-                            {
-                                Trip newTrip =  new Trip(System.currentTimeMillis(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
-                                        mPlaceName.getText().toString().trim(),mSearchText.getText().toString().trim(),
-                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
-                                        mTripCategoryId,mTripVisibility);
-
-                                Log.d("TPV-NOTE","uid: "+newTrip.toString());
-                                try{
-                                    firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(newTrip.getmTripId()).setValue(newTrip);
-                                    firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-                                    Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
-                                    finish();
-                                    startActivity(intent);
-                                }catch(Exception e){
-                                    Log.d("TPV-NOTE","Exception: "+e);
-                                }
-                            }else{
-                                Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
-                                return;
-                            }
                         }
                     });
                 }else{
-                    Toast.makeText(AddPlaceActivity.this,"Upload an Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPlaceActivity.this,"Add Image", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //If input is valid post to database and storage
+                if(validInput())
+                {
+                    Trip newTrip =  new Trip(timestamp.getTime(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                            mPlaceName.getText().toString().trim(),mPlaceLocation.getText().toString().trim(),
+                            mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
+                            mTripCategoryId, mTripVisibility);
 
+                    try{
+                        firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(newTrip.getmTripId()).setValue(newTrip);
+                        firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_PLACES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
 
+                        Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
+                        finish();
+                        startActivity(intent);
+
+                    }catch(Exception e){
+                        Log.d("TPV-NOTE","Exception: "+e);
+                    }
+                }else{
+                    Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
 
             case R.id.add_trip_image_button:
@@ -271,21 +251,35 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
     private boolean validInput()
     {
         boolean dataValid = SUCCESS;
+
+        //Report if Place Name is empty
         if (TextUtils.isEmpty(mPlaceName.getText().toString()))
         {
             mPlaceName.setError(ENTER_PLACE);
             dataValid = FAILURE;
         }
-        if(TextUtils.isEmpty(mSearchText.getText().toString()))
+
+        //Report if Place Location is empty
+        if(TextUtils.isEmpty(mPlaceLocation.getText().toString()))
         {
-            mSearchText.setError(ENTER_PLACE_CITY);
+            mPlaceLocation.setError(ENTER_PLACE_CITY);
             dataValid = FAILURE;
         }
+
+        //Report if Place Image is not selected
+        if (TextUtils.isEmpty(mTripImagePath))
+        {
+            Toast.makeText(AddPlaceActivity.this,ADD_IMAGE_ERROR,Toast.LENGTH_LONG).show();
+            dataValid = FAILURE;
+        }
+
         return dataValid;
     }
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -300,19 +294,19 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private void init(){
         Log.d("", "init: initializing");
 
-        mGoogleApiClient = new GoogleApiClient
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
 
-        mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
+        PlaceAutocompleteAdapter mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
                 LAT_LNG_BOUNDS, null);
 
-        mSearchText.setAdapter(mPlaceAutocompleteAdapter);
+        mPlaceLocation.setAdapter(mPlaceAutocompleteAdapter);
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mPlaceLocation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH
@@ -328,13 +322,13 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        mGps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("rew", "onClick: clicked gps icon");
-                getDeviceLocation();
-            }
-        });
+//        mGps.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("rew", "onClick: clicked gps icon");
+//                getDeviceLocation();
+//            }
+//        });
 
 
     }
@@ -342,7 +336,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private void geoLocate(){
         Log.d("rew", "geoLocate: geolocating");
 
-        String searchString = mSearchText.getText().toString();
+        String searchString = mPlaceLocation.getText().toString();
 
         Geocoder geocoder = new Geocoder(AddPlaceActivity.this);
         List<Address> list = new ArrayList<>();
@@ -365,7 +359,7 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
     private void getDeviceLocation(){
         Log.d("rew", "getDeviceLocation: getting the devices current location");
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
             if(mLocationPermissionsGranted){
@@ -377,9 +371,6 @@ public class AddPlaceActivity extends AppCompatActivity implements View.OnClickL
                         if(task.isSuccessful()){
                             Log.d("rew", "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-
-
-
                         }else{
                             Log.d("rew", "onComplete: current location is null");
                             Toast.makeText(AddPlaceActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();

@@ -22,7 +22,7 @@
                 android:id="@+id/placeCatergory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:padding="@dimen/ten_dp"
                 android:layout_margin="@dimen/five_dp"
                 android:ems="10"
                 android:layout_gravity="center"
@@ -54,7 +54,7 @@
             android:ems="10"
             android:hint="@string/placeTitle"
             android:inputType="textCapWords"
-            android:padding="5dp"
+            android:padding="@dimen/ten_dp"
             android:textColor="#000" />
 
         <AutoCompleteTextView
@@ -68,7 +68,7 @@
             android:ems="10"
             android:hint="Search"
             android:inputType="textCapWords"
-            android:padding="5dp"
+            android:padding="@dimen/ten_dp"
             android:textColor="#000"
             android:imeOptions="actionSearch"/>
 
@@ -82,18 +82,8 @@
             android:ems="10"
             android:hint="@string/placeDescription"
             android:inputType="text"
-            android:padding="5dp"
+            android:padding="@dimen/ten_dp"
             android:textColor="#000" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/ic_gps"
-            android:src="@drawable/ic_action_arrow"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,25 +94,47 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/placeImage"
                 android:src="@drawable/ic_action_home"
                 android:layout_margin="10dp"
-                android:layout_weight="0.9"
+                android:layout_weight="6"
                 />
 
-            <Button
-                android:id="@+id/add_trip_image_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:backgroundTint="@color/colorPrimary"
-                android:nextFocusForward="@id/add_trip_submit"
-                android:nextFocusRight="@id/add_trip_submit"
-                android:text="@string/select_image"
-                android:textColor="@color/white" />
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:gravity="end"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/add_trip_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:nextFocusForward="@id/add_trip_submit"
+                    android:nextFocusRight="@id/add_trip_submit"
+                    android:text="Camera"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/add_trip_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:nextFocusForward="@id/add_trip_submit"
+                    android:nextFocusRight="@id/add_trip_submit"
+                    android:text="Gallery"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
