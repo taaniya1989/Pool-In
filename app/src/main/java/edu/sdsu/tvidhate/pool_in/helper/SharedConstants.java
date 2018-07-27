@@ -33,7 +33,8 @@ public interface SharedConstants {
     String TAG_ADD_TRIP = "add_trip";
     String TAG_MY_TRIPS = "my_trips";
     String TAG_MY_PROFILE = "my_profile";
-    String TAG_REQUESTS = "requests";
+    String TAG_REQUESTS = "About";
+    String KEYWORD = "KEYWORD";
     String TAG_LOG_OUT= "logout";
     String UID = "uid";
     String COMPLETED = "Completed";

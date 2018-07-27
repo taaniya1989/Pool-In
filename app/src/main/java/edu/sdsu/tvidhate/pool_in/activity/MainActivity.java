@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import edu.sdsu.tvidhate.pool_in.R;
+import edu.sdsu.tvidhate.pool_in.entity.Trip;
 import edu.sdsu.tvidhate.pool_in.fragment.HomeFragment;
+import edu.sdsu.tvidhate.pool_in.fragment.InfoFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyProfileFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.MyTripsFragment;
 import edu.sdsu.tvidhate.pool_in.fragment.UpdateProfileFragment;
@@ -34,9 +36,10 @@ import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
         MyProfileFragment.OnFragmentInteractionListener,MyTripsFragment.OnFragmentInteractionListener,
-        UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants,NavigationView.OnNavigationItemSelectedListener,View.OnClickListener
+        UpdateProfileFragment.OnFragmentInteractionListener,SharedConstants,InfoFragment.OnFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener,View.OnClickListener
 {
-    private FirebaseAuth auth;
+    private FirebaseAuth firebaseAuth;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FloatingActionButton fab;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Handler mHandler;
     public static int height,width;
     private Uri mUri;
+    private String searchKeyword="";
 
 
     @Override
@@ -59,9 +63,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         width = displayMetrics.widthPixels;
 
         String contact="";
-        auth = FirebaseAuth.getInstance();
-        if(auth.getCurrentUser()!=null){
-            contact = auth.getCurrentUser().getDisplayName();
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()!=null){
+            contact = firebaseAuth.getCurrentUser().getDisplayName();
+        }
+
+        Bundle intent = getIntent().getExtras();
+        Log.i("WHAT","Intent " +intent);
+        if(intent!=null){
+            Log.i("WHAT",(String )intent.get(KEYWORD));
+            searchKeyword = (String) intent.get(KEYWORD);
         }
 
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -131,19 +142,26 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                return new HomeFragment();
-            case 1:
-                Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
-                startActivity(intent);
+                HomeFragment myhome = new HomeFragment();
+                Bundle b = new Bundle();
+                b.putString(KEYWORD,searchKeyword);
+                myhome.setArguments(b);
+                return myhome;
+           // case 1:
+             //   Intent intent = new Intent(MainActivity.this,AddPlaceActivity.class);
+               // startActivity(intent);
             case 2:
                 return new MyTripsFragment();
     /*        case 3:
-                return new MyProfileFragment();
+                return new MyProfileFragment();*/
             case 4:
-                return new RequestsFragment();
-*/
+                return new InfoFragment();
             default:
-                return new HomeFragment();
+                HomeFragment myhome1 = new HomeFragment();
+                Bundle b1 = new Bundle();
+                b1.putString(KEYWORD,searchKeyword);
+                myhome1.setArguments(b1);
+                return myhome1;
         }
     }
 
@@ -170,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             return;
         }
         super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -188,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_app_info) {
-            Intent appInfo = new Intent(MainActivity.this, AppInfoActivity.class);
+            Intent appInfo = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(appInfo);
             finish();
             return true;
@@ -199,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = auth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         updateUI(user);
     }
 
@@ -232,8 +251,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                     CURRENT_TAG = TAG_HOME;
                     break;
                 case R.id.nav_add_trip:
-                    navItemIndex = 1;
-                    CURRENT_TAG = TAG_ADD_TRIP;
+                    navItemIndex = 0;
+                    Intent addPlace = new Intent(MainActivity.this, AddPlaceActivity.class);
+                    startActivity(addPlace);
+                    //finish();
                     break;
                 case R.id.nav_my_trips:
                     navItemIndex = 2;
@@ -242,13 +263,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         /*        case R.id.nav_my_profile:
                     navItemIndex = 3;
                     CURRENT_TAG = TAG_MY_PROFILE;
-                    break;
+                    break;*/
                 case R.id.nav_requests:
                     navItemIndex = 4;
                     CURRENT_TAG = TAG_REQUESTS;
-                    break;*/
+                    break;
                 case R.id.nav_sign_out:
-                    auth.signOut();
+                    firebaseAuth.signOut();
                     Intent login = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(login);
                     finish();
@@ -272,9 +293,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         switch(v.getId())
         {
             case R.id.fab:
-                navItemIndex = 1;
-                CURRENT_TAG = TAG_ADD_TRIP;
-                loadHomeFragment();
+                navItemIndex = 0;
+                Intent addPlace = new Intent(MainActivity.this, AddPlaceActivity.class);
+                startActivity(addPlace);
+                //finish();
                 break;
 
         }

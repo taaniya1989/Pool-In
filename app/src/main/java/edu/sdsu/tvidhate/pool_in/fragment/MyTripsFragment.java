@@ -30,10 +30,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.sdsu.tvidhate.pool_in.R;
-import edu.sdsu.tvidhate.pool_in.activity.RideHistoryDetailsActivity;
 import edu.sdsu.tvidhate.pool_in.activity.TripDetailsActivity;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
-import edu.sdsu.tvidhate.pool_in.helper.MyRidesListAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 import edu.sdsu.tvidhate.pool_in.helper.TripDetailsAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.Utilities;

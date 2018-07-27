@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,15 +29,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,33 +48,27 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import edu.sdsu.tvidhate.pool_in.R;
 import edu.sdsu.tvidhate.pool_in.entity.Trip;
-import edu.sdsu.tvidhate.pool_in.entity.User;
 import edu.sdsu.tvidhate.pool_in.helper.PlaceAutocompleteAdapter;
 import edu.sdsu.tvidhate.pool_in.helper.SharedConstants;
 
 public class UpdateRideActivity extends AppCompatActivity implements SharedConstants,View.OnClickListener, AdapterView.OnItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
-    private EditText mPlaceName,mPlaceCity,mPlaceDescription;
+    private EditText mPlaceName,mPlaceDescription;
     private ImageView mPlaceImage;
     private Spinner mPlaceCategory;
     private Switch mPlaceVisibility;
-    private DatabaseReference mDatabase;
-    private String contact,uid;
     private Trip currentTrip = null;
-    private String mTripCategory,mTripVisibility;
+    private String mTripCategory;
     private String mTripImagePath;
     private StorageReference mStorage;
     private DatabaseReference firebaseDatabaseInstanceReference;
     private Uri mUri = null;
     private Uri imageUrl;
-    private String currentUserDisplayName;
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -89,17 +77,9 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             new LatLng(-40, -168), new LatLng(71, 136));
 
     //widgets
-    private AutoCompleteTextView mSearchText;
-    private ImageView mGps;
+    private AutoCompleteTextView mPlaceLocation;
 
-    //vars
-    private Boolean mLocationPermissionsGranted = false;
-    private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
-    private GoogleApiClient mGoogleApiClient;
     private int mTripCategoryId;
-    private Button mSelectImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,40 +90,39 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         firebaseDatabaseInstanceReference = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
 
+        if(auth.getCurrentUser()!=null)
+        {
+            String currentUserDisplayName = auth.getCurrentUser().getDisplayName();
+            Log.d("TPV-NOTE","currentUserDisplayName from fire: "+ currentUserDisplayName);
+        }
+
+        Bundle intent = getIntent().getExtras();
+        if(intent!=null){
+            currentTrip = (Trip) intent.getSerializable(TRIP_DETAILS_SERIALIZABLE);
+        }
+
         Button mBackButton,mUpdateButton;
 
-        mPlaceName = findViewById(R.id.placeName);
-        mPlaceCity = findViewById(R.id.placeSearch);
-        mPlaceDescription = findViewById(R.id.placeDescription);
         mPlaceCategory = findViewById(R.id.placeCatergory);
-        mPlaceImage = findViewById(R.id.placeImage);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
-        mSearchText = findViewById(R.id.placeSearch);
+        mPlaceName = findViewById(R.id.placeName);
+        mPlaceLocation = findViewById(R.id.placeSearch);
+        mPlaceDescription = findViewById(R.id.placeDescription);
+        mPlaceImage = findViewById(R.id.placeImage);
 
         mBackButton = findViewById(R.id.add_trip_reset_button);
         mUpdateButton = findViewById(R.id.add_trip_submit);
-        mSelectImageButton = findViewById(R.id.add_trip_image_button);
+        Button mSelectImageButton = findViewById(R.id.add_trip_image_button);
 
         mBackButton.setText(R.string.back);
         mUpdateButton.setText(R.string.update);
         mBackButton.setOnClickListener(this);
         mUpdateButton.setOnClickListener(this);
         mSelectImageButton.setOnClickListener(this);
-        
-
         mPlaceCategory.setOnItemSelectedListener(this);
+
         getLocationPermission();
         init();
-
-        Bundle intent = getIntent().getExtras();
-        if(intent!=null){
-            currentTrip = (Trip) intent.getSerializable(TRIP_DETAILS_SERIALIZABLE);
-        }
-        if(auth.getCurrentUser()!=null)
-        {
-            currentUserDisplayName = auth.getCurrentUser().getDisplayName();
-            Log.d("TPV-NOTE","currentUserDisplayName from fire: "+currentUserDisplayName);
-        }
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -153,13 +132,14 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                 if(currentTrip != null)
                 {
                     mPlaceCategory.setSelection(currentTrip.getmTripCatergoryId());
-                    mPlaceVisibility.setText(currentTrip.getmTripVisibility());
+                    if (currentTrip.getmTripVisibility().equalsIgnoreCase(TRIP_VISIBLE))
+                        mPlaceVisibility.setChecked(true);
+                    else
+                        mPlaceVisibility.setChecked(false);
                     mPlaceName.setText(currentTrip.getmTripPlaceName());
-                    mPlaceCity.setText(currentTrip.getmTripCity());
+                    mPlaceLocation.setText(currentTrip.getmTripCity());
                     mPlaceDescription.setText(currentTrip.getmTripDescription());
-                    //mPlaceCategory
                     Picasso.with(getApplicationContext()).load(currentTrip.getImageDownloadUrl()).resize(MainActivity.width,MainActivity.height/2).into(mPlaceImage);
-                    uid=currentTrip.getmTripId();
                 }
             }
             @Override
@@ -173,18 +153,31 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         people.addValueEventListener(valueEventListener);
     }
 
-    private boolean validInput() {
-        boolean dataValid = true;
+    private boolean validInput()
+    {
+        boolean dataValid = SUCCESS;
+
+        //Report if Place Name is empty
         if (TextUtils.isEmpty(mPlaceName.getText().toString()))
         {
             mPlaceName.setError(ENTER_PLACE);
             dataValid = FAILURE;
         }
-        if(TextUtils.isEmpty(mPlaceCity.getText().toString()))
+
+        //Report if Place Location is empty
+        if(TextUtils.isEmpty(mPlaceLocation.getText().toString()))
         {
-            mPlaceCity.setError(ENTER_PLACE_CITY);
+            mPlaceLocation.setError(ENTER_PLACE_CITY);
             dataValid = FAILURE;
         }
+
+        //Report if Place Image is not selected
+        if (TextUtils.isEmpty(mTripImagePath))
+        {
+            Toast.makeText(UpdateRideActivity.this,ADD_IMAGE_ERROR,Toast.LENGTH_LONG).show();
+            dataValid = FAILURE;
+        }
+
         return dataValid;
     }
 
@@ -203,18 +196,13 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                 && data != null && data.getData() != null)
         {
             mUri = data.getData();
-//            selectedImage.setImageURI(mUri);
             Picasso.with(this).load(mUri).resize(MainActivity.width/2,MainActivity.height/4).into(mPlaceImage);
-            Log.i("VANILLA_INFO",mUri.toString());
         }
         if(requestCode == IMAGE_CAPTURED_RESULT && resultCode == MainActivity.RESULT_OK
                 && data != null ) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             mUri = data.getData();
-            //selectedImage.setImageURI(mUri);
             mPlaceImage.setImageBitmap(photo);
-
-            Log.i("VANILLA_INFO",photo.toString());
         }
     }
 
@@ -228,75 +216,80 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
             case R.id.add_trip_submit:
 
+                String mTripVisibility;
                 if (mPlaceVisibility.isChecked())
                     mTripVisibility = mPlaceVisibility.getTextOn().toString();
                 else
                     mTripVisibility = mPlaceVisibility.getTextOff().toString();
 
-                if(validInput()) {
+                currentTrip.setmTripVisibility(mTripVisibility);
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                //Update Time stamp
+                currentTrip.setmCreationTimestamp(timestamp.getTime());
+                //Update Visibility only if changed
+                if (!mTripVisibility.equalsIgnoreCase(currentTrip.getmTripVisibility()) || currentTrip.getmTripVisibility()==null)
+                    currentTrip.setmTripVisibility(mTripVisibility);
 
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    //Update Time stamp
-                    currentTrip.setmCreationTimestamp(timestamp.getTime());
+                //Update Category only if changed
+                if (!mTripCategory.equalsIgnoreCase(currentTrip.getmTripCategory()) || currentTrip.getmTripCategory()==null)
+                {
+                    currentTrip.setmTripCategory(mTripCategory);
+                    currentTrip.setmTripCatergoryId(mTripCategoryId);
+                }
 
-                    //Update Trip ImagePath and URI if new image is selected.
-                    if(mUri!=null)
-                    {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        Log.i("NOTE-TPV","Updating trip image information");
-                        mTripImagePath = mPlaceName.getText().toString().replaceAll(" ", "_").toLowerCase()
-                                + "_" + String.valueOf(timestamp.getTime()) + "_" + user.getUid().toString().toLowerCase() + ".jpg";
-                        mStorage.child(FIREBASE_PHOTO_LIST).child(currentTrip.getmTripImagePath()).delete();
-                        StorageReference filePath = mStorage.child(FIREBASE_PHOTO_LIST).child(mTripImagePath);
-                        currentTrip.setmTripImagePath(mTripImagePath);
+                //Update description if changed
+                if(!mPlaceDescription.getText().toString().equalsIgnoreCase(currentTrip.getmTripDescription()) || currentTrip.getmTripDescription()==null)
+                    currentTrip.setmTripDescription(mPlaceDescription.getText().toString().trim());
 
-                        filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                imageUrl = taskSnapshot.getDownloadUrl();
+                //Update location if changed
+                if(!mPlaceLocation.getText().toString().equalsIgnoreCase(currentTrip.getmTripCity()) || currentTrip.getmTripCity()==null)
+                    currentTrip.setmTripCity(mPlaceLocation.getText().toString().trim());
+
+                //Update place name if changed
+                if(!mPlaceName.getText().toString().equalsIgnoreCase(currentTrip.getmTripPlaceName()) || currentTrip.getmTripPlaceName()==null)
+                    currentTrip.setmTripPlaceName(mPlaceName.getText().toString().trim());
+
+                //Update Trip ImagePath and URI if new image is selected.
+                if(mUri!=null)
+                {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    Log.i("NOTE-TPV","Updating trip image information");
+                    mTripImagePath = mPlaceName.getText().toString().replaceAll(" ", "_").toLowerCase()
+                            + "_" + String.valueOf(timestamp.getTime()) + "_" + Objects.requireNonNull(user).getUid().toLowerCase() + ".jpg";
+
+                    mStorage.child(FIREBASE_PHOTO_LIST).child(currentTrip.getmTripImagePath()).delete();
+                    StorageReference filePath = mStorage.child(FIREBASE_PHOTO_LIST).child(mTripImagePath);
+                    currentTrip.setmTripImagePath(mTripImagePath);
+
+                    filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageUrl = taskSnapshot.getDownloadUrl();
+                            if (imageUrl != null) {
                                 currentTrip.setImageDownloadUrl(imageUrl.toString());
-                                Log.d("rew", "Image download URL :" + imageUrl);
-                                Log.i("rew",currentTrip.toString());
-                                Toast.makeText(UpdateRideActivity.this, "Uploaded Image", Toast.LENGTH_LONG).show();
                             }
-                        });
-                       // Log.d("rew", "Image download URL :" + imageUrl);
-                       // currentTrip.setImageDownloadUrl(imageUrl.toString());
-                    }
-
-                    //Update Visibility only if changed
-                    if (!mTripVisibility.equalsIgnoreCase(currentTrip.getmTripVisibility()) || currentTrip.getmTripVisibility()==null)
-                        currentTrip.setmTripVisibility(mTripVisibility);
-
-                    //Update Category only if changed
-                    if (!mTripCategory.equalsIgnoreCase(currentTrip.getmTripCategory()) || currentTrip.getmTripCategory()==null)
-                    {
-                        currentTrip.setmTripCategory(mTripCategory);
-                        currentTrip.setmTripCatergoryId(mTripCategoryId);
-                    }
-
-                    //Update description if changed
-                    if(!mPlaceDescription.getText().toString().equalsIgnoreCase(currentTrip.getmTripDescription()) || currentTrip.getmTripDescription()==null)
-                        currentTrip.setmTripDescription(mPlaceDescription.getText().toString().trim());
-
-                    //Update location if changed
-                    if(!mPlaceCity.getText().toString().equalsIgnoreCase(currentTrip.getmTripCity()) || currentTrip.getmTripCity()==null)
-                        currentTrip.setmTripCity(mPlaceCity.getText().toString().trim());
-
-                    //Update place name if changed
-                    if(!mPlaceName.getText().toString().equalsIgnoreCase(currentTrip.getmTripPlaceName()) || currentTrip.getmTripPlaceName()==null)
-                        currentTrip.setmTripPlaceName(mPlaceName.getText().toString().trim());
-
-                    try {
-                            Log.i("rew",currentTrip.toString());
+                            if(validInput()) {
+                                try {
+                                    firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(currentTrip.getmTripId()).setValue(currentTrip);
+                                    finish();
+                                } catch (Exception e) {
+                                    Log.d("TPV-NOTE", "Exception: " + e);
+                                }
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    mTripImagePath = currentTrip.getmTripImagePath();
+                    if(validInput()) {
+                        try {
                             firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(currentTrip.getmTripId()).setValue(currentTrip);
-                           // firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).up.setValue(currentTrip.getmTripId());
-                            Intent intent = new Intent(UpdateRideActivity.this, MainActivity.class);
                             finish();
-                            startActivity(intent);
                         } catch (Exception e) {
                             Log.d("TPV-NOTE", "Exception: " + e);
                         }
+                    }
                 }
                 break;
 
@@ -311,19 +304,19 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     private void init(){
         Log.d("", "init: initializing");
 
-        mGoogleApiClient = new GoogleApiClient
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
 
-        mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
+        PlaceAutocompleteAdapter mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
                 LAT_LNG_BOUNDS, null);
 
-        mSearchText.setAdapter(mPlaceAutocompleteAdapter);
+        mPlaceLocation.setAdapter(mPlaceAutocompleteAdapter);
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mPlaceLocation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH
@@ -344,7 +337,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     private void geoLocate(){
         Log.d("rew", "geoLocate: geolocating");
 
-        String searchString = mSearchText.getText().toString();
+        String searchString = mPlaceLocation.getText().toString();
 
         Geocoder geocoder = new Geocoder(UpdateRideActivity.this);
         List<Address> list = new ArrayList<>();
@@ -373,7 +366,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                mLocationPermissionsGranted = true;
+                boolean mLocationPermissionsGranted = true;
 
             }else{
                 ActivityCompat.requestPermissions(this,
@@ -390,7 +383,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d("rew", "onRequestPermissionsResult: called.");
-        mLocationPermissionsGranted = false;
+        boolean mLocationPermissionsGranted = false;
 
         switch(requestCode){
             case LOCATION_PERMISSION_REQUEST_CODE:{
@@ -419,9 +412,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(parent.getContext(),
-                "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                Toast.LENGTH_SHORT).show();
         mTripCategory = parent.getItemAtPosition(position).toString();
         mTripCategoryId = position;
     }

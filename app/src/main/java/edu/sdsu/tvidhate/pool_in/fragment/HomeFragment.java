@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment implements SharedConstants
 {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String searchKeyword="";
 
     private ProgressDialog progressDialog;
     private OnFragmentInteractionListener mListener;
@@ -83,6 +84,8 @@ public class HomeFragment extends Fragment implements SharedConstants
         if (getArguments() != null) {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
+            searchKeyword = getArguments().getString(KEYWORD);
+            Log.i("WHAT+H",searchKeyword);
         }
     }
 
@@ -93,44 +96,10 @@ public class HomeFragment extends Fragment implements SharedConstants
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tripDetailsListView = view.findViewById(R.id.trip_list_home);
-      //  ImageButton mSearchButton = view.findViewById(R.id.searchButton);
-       // mSearchText = view.findViewById(R.id.searchTextBox);
-       // Spinner mFilterTripSpinner = view.findViewById(R.id.filterTripSpinner);
 
-        ArrayAdapter dataAdapter = new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.filter_items));
-       // mFilterTripSpinner.setAdapter(dataAdapter);
-
-       /* mFilterTripSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterString = parent.getItemAtPosition(position).toString();
-                Toast.makeText(parent.getContext(), "Selected: " + filterString, Toast.LENGTH_LONG).show();
-                if(TextUtils.isEmpty(mSearchText.getText().toString()))
-                    getRideDetailsOntoTheList(filterString);
-                else
-                    getSpecificRideDetailsOntoTheList(filterString);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                filterString = "";
-            }
-        });
-
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("TPV-NOTE","Search this address : "+mSearchText.getText());
-                if(TextUtils.isEmpty(mSearchText.getText().toString()))
-                    getRideDetailsOntoTheList(filterString);
-                else
-                    getSpecificRideDetailsOntoTheList(filterString);
-            }
-        });
-*/
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getContext());
-        getRideDetailsOntoTheList(filterString);
+        getRideDetailsOntoTheList(searchKeyword);
         return view;
     }
 
@@ -153,8 +122,12 @@ public class HomeFragment extends Fragment implements SharedConstants
                     Trip currentTrip = msgSnapshot.getValue(Trip.class);
                     if(currentTrip.getmTripVisibility()==null)
                         currentTrip.setmTripVisibility(TRIP_VISIBLE);
-                    if(currentTrip.getmTripVisibility().equalsIgnoreCase(TRIP_VISIBLE))
-                        tripDataList.add(currentTrip);
+                    if(currentTrip.getmTripVisibility().equalsIgnoreCase(TRIP_VISIBLE)) {
+                        Log.i("XXXXX",currentTrip.toString());
+                        Log.i("XXXXX",filterString);
+                        if (currentTrip.toString().contains(filterString))
+                            tripDataList.add(currentTrip);
+                    }
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override
                         public int compare(Trip o1, Trip o2) {

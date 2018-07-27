@@ -72,11 +72,13 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
     private ImageView mPlaceImagePreview;
     Spinner mPlaceCategory;
     private Switch mPlaceVisibility;
+    private String mTripVisibility;
     private String mTripImagePath;
     private String mTripCategory = "";
     private User mTripPoster;
     private int mTripCategoryId;
     private Uri mUri,imageUrl;
+    private Timestamp timestamp;
     private StorageReference firebaseStorageInstanceReference;
 
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
@@ -128,8 +130,6 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
 
         //Map layout components
         Button mResetButton,mSubmitButton,mPlaceImageSelectButton;
-
-
         mPlaceCategory = findViewById(R.id.placeCatergory);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
         mPlaceName = findViewById(R.id.placeName);
@@ -187,13 +187,13 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
 
             case R.id.add_trip_submit:
                 //Add trip to Database
-                String mTripVisibility;
+
                 if (mPlaceVisibility.isChecked())
                     mTripVisibility = mPlaceVisibility.getTextOn().toString();
                 else
                     mTripVisibility = mPlaceVisibility.getTextOff().toString();
 
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                timestamp = new Timestamp(System.currentTimeMillis());
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
@@ -210,34 +210,34 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
 
                             Toast.makeText(AddPlaceActivity.this,"Uploaded Post",Toast.LENGTH_LONG).show();
                             imageUrl = taskSnapshot.getDownloadUrl();
+
+                            //If input is valid post to database and storage
+                            if(validInput())
+                            {
+                                Trip newTrip =  new Trip(timestamp.getTime(),firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).push().getKey(),
+                                        mPlaceName.getText().toString().trim(),mPlaceLocation.getText().toString().trim(),
+                                        mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
+                                        mTripCategoryId, mTripVisibility);
+
+                                try{
+                                    firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(newTrip.getmTripId()).setValue(newTrip);
+                                    firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_PLACES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
+
+                                    Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
+                                    finish();
+                                    startActivity(intent);
+
+                                }catch(Exception e){
+                                    Log.d("TPV-NOTE","Exception: "+e);
+                                }
+                            }else{
+                                Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         }
                     });
                 }else{
                     Toast.makeText(AddPlaceActivity.this,"Add Image", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //If input is valid post to database and storage
-                if(validInput())
-                {
-                    Trip newTrip =  new Trip(timestamp.getTime(),firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).push().getKey(),
-                            mPlaceName.getText().toString().trim(),mPlaceLocation.getText().toString().trim(),
-                            mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
-                            mTripCategoryId, mTripVisibility);
-
-                    try{
-                        firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(newTrip.getmTripId()).setValue(newTrip);
-                        firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_PLACES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-
-                        Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
-                        finish();
-                        startActivity(intent);
-
-                    }catch(Exception e){
-                        Log.d("TPV-NOTE","Exception: "+e);
-                    }
-                }else{
-                    Toast.makeText(AddPlaceActivity.this,VALIDATION_FAILURE, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 break;
@@ -287,7 +287,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
     public void onBackPressed() {
         super.onBackPressed();
         Toast.makeText(AddPlaceActivity.this,"In the on back pressed activity",Toast.LENGTH_LONG).show();
-        //this.finish();
+        finish();
     }
     private void init(){
         Log.d("", "init: initializing");
