@@ -119,7 +119,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
         mPlaceImage = findViewById(R.id.placeImage);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
         mSearchText = findViewById(R.id.placeSearch);
-        mGps = findViewById(R.id.ic_gps);
 
         mBackButton = findViewById(R.id.add_trip_reset_button);
         mUpdateButton = findViewById(R.id.add_trip_submit);
@@ -170,7 +169,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(currentTrip.getmTripId());
+        DatabaseReference people = database.getReference(FIREBASE_PLACE_DETAILS).child(currentTrip.getmTripId());
         people.addValueEventListener(valueEventListener);
     }
 
@@ -290,7 +289,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
                     try {
                             Log.i("rew",currentTrip.toString());
-                            firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(currentTrip.getmTripId()).setValue(currentTrip);
+                            firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(currentTrip.getmTripId()).setValue(currentTrip);
                            // firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_RIDES).child(currentUserDisplayName).up.setValue(currentTrip.getmTripId());
                             Intent intent = new Intent(UpdateRideActivity.this, MainActivity.class);
                             finish();
@@ -340,15 +339,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             }
         });
 
-        mGps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("rew", "onClick: clicked gps icon");
-                getDeviceLocation();
-            }
-        });
-
-
     }
 
     private void geoLocate(){
@@ -373,38 +363,6 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
 
         }
     }
-
-    private void getDeviceLocation(){
-        Log.d("rew", "getDeviceLocation: getting the devices current location");
-
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        try{
-            if(mLocationPermissionsGranted){
-
-                final Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d("rew", "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
-
-
-
-                        }else{
-                            Log.d("rew", "onComplete: current location is null");
-                            Toast.makeText(UpdateRideActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }catch (SecurityException e){
-            Log.e("rew", "getDeviceLocation: SecurityException: " + e.getMessage() );
-        }
-    }
-
-
 
     private void getLocationPermission(){
         Log.d("rew", "getLocationPermission: getting location permissions");

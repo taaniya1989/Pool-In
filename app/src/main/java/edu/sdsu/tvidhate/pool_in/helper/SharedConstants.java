@@ -38,7 +38,6 @@ public interface SharedConstants {
     String UID = "uid";
     String COMPLETED = "Completed";
     String WAITING = "Waiting";
-    String FIREBASE_MY_RIDES = "my_rides";
 
     String FIREBASE_PLACE_DETAILS = "place_details";
     String FIREBASE_CURRENT_PLACES = "current_places";

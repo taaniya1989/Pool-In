@@ -134,7 +134,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
             }
         };
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(currentTrip.getmTripId());
+        DatabaseReference people = database.getReference(FIREBASE_PLACE_DETAILS).child(currentTrip.getmTripId());
         people.addValueEventListener(valueEventListener);
         placeVisibility.setVisibility(View.INVISIBLE);
         if(phNo.equals(posterContact)){
@@ -193,7 +193,7 @@ public class TripDetailsActivity extends AppCompatActivity implements SharedCons
                     public void onClick(final DialogInterface dialogInterface, int n) {
 
                         firebaseDatabaseInstanceReference.child(FIREBASE_REQUESTS).child(posterContact).removeValue();
-                        firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).child(uid).removeValue();
+                        firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(uid).removeValue();
                         firebaseStorageInstanceReference.child(FIREBASE_PHOTO_LIST).child(placeImagePath).delete();
                         dialogInterface.dismiss();
                         finish();

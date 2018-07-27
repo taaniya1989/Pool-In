@@ -196,7 +196,7 @@ public class HomeFragment extends Fragment implements SharedConstants
             }
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES);
+        DatabaseReference people = database.getReference(FIREBASE_PLACE_DETAILS);
         people.addValueEventListener(valueEventListener);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(LOADING);
@@ -262,7 +262,7 @@ public class HomeFragment extends Fragment implements SharedConstants
             }
         };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference people = database.getReference(FIREBASE_MY_RIDES);
+        DatabaseReference people = database.getReference(FIREBASE_PLACE_DETAILS);
         people.addValueEventListener(valueEventListener);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(LOADING);

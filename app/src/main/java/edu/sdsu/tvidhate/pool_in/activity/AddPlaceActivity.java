@@ -96,8 +96,6 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
 
         setContentView(R.layout.activity_add_place);
 
-       // mGps =  findViewById(R.id.ic_gps);
-
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabaseInstance = FirebaseDatabase.getInstance();
         firebaseDatabaseInstanceReference = firebaseDatabaseInstance.getReference();
@@ -222,7 +220,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
                 //If input is valid post to database and storage
                 if(validInput())
                 {
-                    Trip newTrip =  new Trip(timestamp.getTime(),firebaseDatabaseInstanceReference.child(FIREBASE_MY_RIDES).push().getKey(),
+                    Trip newTrip =  new Trip(timestamp.getTime(),firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).push().getKey(),
                             mPlaceName.getText().toString().trim(),mPlaceLocation.getText().toString().trim(),
                             mTripPoster,mTripImagePath,imageUrl.toString(),mPlaceDescription.getText().toString().trim(),mTripCategory,
                             mTripCategoryId, mTripVisibility);
@@ -322,15 +320,6 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
             }
         });
 
-//        mGps.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("rew", "onClick: clicked gps icon");
-//                getDeviceLocation();
-//            }
-//        });
-
-
     }
 
     private void geoLocate(){
@@ -355,35 +344,6 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
 
         }
     }
-
-    private void getDeviceLocation(){
-        Log.d("rew", "getDeviceLocation: getting the devices current location");
-
-        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        try{
-            if(mLocationPermissionsGranted){
-
-                final Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d("rew", "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
-                        }else{
-                            Log.d("rew", "onComplete: current location is null");
-                            Toast.makeText(AddPlaceActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }catch (SecurityException e){
-            Log.e("rew", "getDeviceLocation: SecurityException: " + e.getMessage() );
-        }
-    }
-
-
 
     private void getLocationPermission(){
         Log.d("rew", "getLocationPermission: getting location permissions");

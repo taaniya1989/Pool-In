@@ -71,7 +71,7 @@ public class RideHistoryDetailsActivity extends AppCompatActivity implements Sha
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         if (uidFromIntent != null)
         {
-            DatabaseReference people = database.getReference(FIREBASE_MY_RIDES).child(uidFromIntent);
+            DatabaseReference people = database.getReference(FIREBASE_PLACE_DETAILS).child(uidFromIntent);
             people.addValueEventListener(valueEventListener);
         }
 
