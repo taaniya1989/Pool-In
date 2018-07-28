@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:background="#f0f0f4"
             android:ems="10"
-            android:hint="Search"
+            android:hint="@string/placeLocation"
             android:inputType="textCapWords"
             android:padding="@dimen/ten_dp"
             android:textColor="#000"
@@ -98,8 +98,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/placeImage"
                 android:src="@drawable/ic_action_home"
-                android:layout_margin="10dp"
-                android:layout_weight="6"
+                android:layout_margin="@dimen/five_dp"
+                android:layout_weight="7"
                 />
 
             <LinearLayout
@@ -108,13 +108,13 @@
                 android:layout_gravity="end"
                 android:layout_margin="8dp"
                 android:gravity="end"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/add_trip_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimary"
                     android:nextFocusForward="@id/add_trip_submit"
@@ -124,8 +124,8 @@
 
                 <Button
                     android:id="@+id/add_trip_image_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimary"
                     android:nextFocusForward="@id/add_trip_submit"

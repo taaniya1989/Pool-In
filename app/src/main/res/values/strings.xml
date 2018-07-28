@@ -43,7 +43,7 @@
     <string name="user">User Details</string>
     <string name="action_info">Search</string>
     <string name="app_info">This app is designed for users looking for new exciting places to visit and users who want to share their experiences</string>
-    <string name="searchByLocation">Search Location</string>
+    <string name="searchByLocation">Search</string>
     <string name="fromStreet">From Street</string>
     <string name="fromNeighborhood">Neighborhood</string>
     <string name="fromPinCode">Pincode</string>
@@ -60,10 +60,10 @@
     <string name="date_text">Date:</string>
     <string name="time_text">Time:</string>
     <string name="userName">Username</string>
-    <string name="placeTitle">Place Name</string>
+    <string name="placeTitle">Title</string>
     <string name="placeCity">City</string>
     <string name="select_image">Select Image</string>
-    <string name="placeDescription">Place Description</string>
+    <string name="placeDescription">Description</string>
 
     <string name="radio_visible">true</string>
     <string name="radio_invisible">false</string>
@@ -99,4 +99,5 @@
     <string name="keyword">Search Keyword</string>
     <string name="search">Search</string>
     <string name="about">About App</string>
+    <string name="placeLocation">Location</string>
 </resources>
