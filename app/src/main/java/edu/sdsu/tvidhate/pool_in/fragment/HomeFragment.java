@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment implements SharedConstants
     private ListView tripDetailsListView;
     private FirebaseAuth auth;
     private EditText mSearchText;
+    private ImageButton mSearchButton;
     private String filterString = "";
 
     TripDetailsAdapter listadapter;
@@ -96,7 +98,15 @@ public class HomeFragment extends Fragment implements SharedConstants
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tripDetailsListView = view.findViewById(R.id.trip_list_home);
+        mSearchText = view.findViewById(R.id.searchTextBox);
+        mSearchButton = view.findViewById(R.id.searchButton);
 
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSpecificRideDetailsOntoTheList(mSearchText.getText().toString().trim());
+            }
+        });
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getContext());
         getRideDetailsOntoTheList(searchKeyword);
@@ -108,7 +118,7 @@ public class HomeFragment extends Fragment implements SharedConstants
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void getRideDetailsOntoTheList(final String filterString) {
+    private void getRideDetailsOntoTheList(String filterString) {
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -124,9 +134,9 @@ public class HomeFragment extends Fragment implements SharedConstants
                         currentTrip.setmTripVisibility(TRIP_VISIBLE);
                     if(currentTrip.getmTripVisibility().equalsIgnoreCase(TRIP_VISIBLE)) {
                         Log.i("XXXXX",currentTrip.toString());
-                        Log.i("XXXXX",filterString);
-                        if (currentTrip.toString().contains(filterString))
-                            tripDataList.add(currentTrip);
+                        //Log.i("XXXXX",filterString);
+                       // if (currentTrip.toString().contains(filterString))
+                        tripDataList.add(currentTrip);
                     }
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override
@@ -176,7 +186,7 @@ public class HomeFragment extends Fragment implements SharedConstants
         progressDialog.show();
     }
 
-    private void getSpecificRideDetailsOntoTheList(final String filterString) {
+    private void getSpecificRideDetailsOntoTheList(String filterString) {
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -194,7 +204,7 @@ public class HomeFragment extends Fragment implements SharedConstants
                     placeName = currentTrip.getmTripPlaceName().toLowerCase();
                     placeCity = currentTrip.getmTripCity().toLowerCase();
 
-                    if((placeName.contains(searchText) || placeCity.contains(searchText)))
+                    if((currentTrip.toString().toLowerCase().contains(mSearchText.getText().toString().toLowerCase().trim())))
                         tripDataList.add(currentTrip);
                     Collections.sort(tripDataList, new Comparator<Trip>() {
                         @Override

@@ -205,13 +205,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_app_info) {
-            Intent appInfo = new Intent(MainActivity.this, SearchActivity.class);
-            startActivity(appInfo);
-            finish();
-            return true;
-        }
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_app_info) {
+////            Intent appInfo = new Intent(MainActivity.this, SearchActivity.class);
+////            startActivity(appInfo);
+////            finish();
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 
