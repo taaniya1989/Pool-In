@@ -80,6 +80,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
     private Uri mUri,imageUrl;
     private Timestamp timestamp;
     private StorageReference firebaseStorageInstanceReference;
+    private Button mSubmitButton;
 
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
             new LatLng(-40, -168), new LatLng(71, 136));
@@ -129,7 +130,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
         people.addValueEventListener(valueEventListener);
 
         //Map layout components
-        Button mResetButton,mSubmitButton,mPlaceImageSelectButton;
+        Button mResetButton,mPlaceImageSelectButton;
         mPlaceCategory = findViewById(R.id.placeCatergory);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
         mPlaceName = findViewById(R.id.placeName);
@@ -188,6 +189,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
             case R.id.add_trip_submit:
                 //Add trip to Database
 
+
                 if (mPlaceVisibility.isChecked())
                     mTripVisibility = mPlaceVisibility.getTextOn().toString();
                 else
@@ -208,6 +210,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                            mSubmitButton.setVisibility(View.INVISIBLE);
                             Toast.makeText(AddPlaceActivity.this,"Uploaded Post",Toast.LENGTH_LONG).show();
                             imageUrl = taskSnapshot.getDownloadUrl();
 
@@ -222,7 +225,6 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
                                 try{
                                     firebaseDatabaseInstanceReference.child(FIREBASE_PLACE_DETAILS).child(newTrip.getmTripId()).setValue(newTrip);
                                     firebaseDatabaseInstanceReference.child(FIREBASE_CURRENT_PLACES).child(currentUserDisplayName).push().setValue(newTrip.getmTripId());
-
                                     Intent intent = new Intent(AddPlaceActivity.this, MainActivity.class);
                                     finish();
                                     startActivity(intent);
@@ -289,6 +291,7 @@ public class AddPlaceActivity extends AppCompatActivity implements SharedConstan
         Toast.makeText(AddPlaceActivity.this,"In the on back pressed activity",Toast.LENGTH_LONG).show();
         finish();
     }
+
     private void init(){
         Log.d("", "init: initializing");
 

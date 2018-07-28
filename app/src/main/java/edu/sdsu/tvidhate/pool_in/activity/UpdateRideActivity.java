@@ -69,6 +69,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
     private DatabaseReference firebaseDatabaseInstanceReference;
     private Uri mUri = null;
     private Uri imageUrl;
+    private Button mUpdateButton;
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -101,7 +102,7 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
             currentTrip = (Trip) intent.getSerializable(TRIP_DETAILS_SERIALIZABLE);
         }
 
-        Button mBackButton,mUpdateButton;
+        Button mBackButton;
 
         mPlaceCategory = findViewById(R.id.placeCatergory);
         mPlaceVisibility = findViewById(R.id.placeVisibility);
@@ -264,6 +265,8 @@ public class UpdateRideActivity extends AppCompatActivity implements SharedConst
                     filePath.putFile(mUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            mUpdateButton.setVisibility(View.INVISIBLE);
                             imageUrl = taskSnapshot.getDownloadUrl();
                             if (imageUrl != null) {
                                 currentTrip.setImageDownloadUrl(imageUrl.toString());
